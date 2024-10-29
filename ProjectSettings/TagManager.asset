@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Lootable
+  - Talkable
   layers:
   - Default
   - TransparentFX
@@ -11,17 +13,17 @@ TagManager:
   - 
   - Water
   - UI
+  - Environment
+  - LootableObject
+  - TalkableObject
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BackStab
+  - CharacterColliderBlocker
+  - Controller
+  - Character
+  - Player
   - 
   - 
   - 

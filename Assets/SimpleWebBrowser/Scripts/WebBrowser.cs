@@ -278,8 +278,6 @@ namespace SimpleWebBrowser {
         }
 
 
-        public event BrowserEngine.PageLoaded OnPageLoaded;
-
         
 
 

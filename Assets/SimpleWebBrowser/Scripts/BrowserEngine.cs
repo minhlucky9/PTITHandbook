@@ -169,7 +169,7 @@ namespace SimpleWebBrowser
                     _pluginProcess.Start();
                     Initialized = false;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //log the file
                     Debug.Log("FAILED TO START SERVER FROM:" + PluginServerPath + @"\SharedPluginServer.exe");
@@ -198,7 +198,7 @@ namespace SimpleWebBrowser
                     _connected = true;
                     
                 }
-                catch (Exception e) {
+                catch (Exception) {
                     if (_inCommServer != null) _inCommServer.Dispose();
                     if (_outCommServer != null) _outCommServer.Dispose();
                     _pluginProcess.Dispose();
@@ -517,7 +517,7 @@ namespace SimpleWebBrowser
                     }
 
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Debug.Log("Error reading from socket,waiting for plugin server to start...");
                 }
@@ -564,7 +564,7 @@ namespace SimpleWebBrowser
                     _mainTexArray.ReleaseReadLock();
                 }
                 else {
-                    int i = 0;
+                   
                 }
             }
         }
