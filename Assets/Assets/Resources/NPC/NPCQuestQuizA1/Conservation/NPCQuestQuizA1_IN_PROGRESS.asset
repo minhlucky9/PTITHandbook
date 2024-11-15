@@ -23,7 +23,7 @@ MonoBehaviour:
     voice: {fileID: 0}
     possibleResponses:
     - message: "D\u1EA1, em s\u1EB5n s\xE0ng r\u1ED3i \u1EA1"
-      icon: {fileID: 21300000, guid: 0dc3836fd00185541bf57db184abd393, type: 3}
+      icon: {fileID: 21300000, guid: ed9b1502b8803f04f8c7ebb1d546adef, type: 3}
       nextDialogId: 
       executedFunction: 3
     - message: "D\u1EA1, em ch\u01B0a"
