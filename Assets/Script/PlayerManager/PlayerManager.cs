@@ -141,8 +141,8 @@ namespace PlayerController
         public void CheckForInteractableObject()
         {
             RaycastHit hit;
-
-            if(Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 1f, talkableMask))
+            //sphere cast cannot detect collider in overlap sphere
+            if(Physics.SphereCast(transform.position - transform.forward * 0.5f, 0.5f, transform.forward, out hit, 1f, talkableMask))
             {
                 if (hit.collider.tag == "Talkable")
                 {

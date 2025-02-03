@@ -1,4 +1,5 @@
 using Interaction;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class Quest
     public QuestState state;
     public int currentQuestStepIndex;
     public QuestStepState[] questStepStates;
+
+    public Action OnQuestFinish;
 
     public bool isCurrentStepExists() => (currentQuestStepIndex < info.questSteps.Count);
 
@@ -64,6 +67,7 @@ public class Quest
         } 
         else
         {
+            OnQuestFinish?.Invoke();
             ChangeQuestState(QuestState.FINISHED);
             return false;
         }

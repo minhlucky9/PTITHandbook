@@ -30,6 +30,7 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: dialog2
       executedFunction: 1
+    nodePosition: {x: 10, y: 10}
   - dialogId: dialog2
     message: "Kh\xF4ng sao, em c\u1EE9 ti\u1EBFp t\u1EE5c t\xECm hi\u1EC3u. H\xE3y
       quay l\u1EA1i khi em \u0111\xE3 chu\u1EA9n b\u1ECB s\u1EB5n s\xE0ng nh\xE9."
@@ -39,3 +40,4 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
+    nodePosition: {x: 10, y: 10}

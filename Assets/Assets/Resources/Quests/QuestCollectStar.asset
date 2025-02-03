@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b8fb76b99894d48bb526e5bb6840c2, type: 3}
+  m_Name: QuestCollectStar
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: QuestCollectStar
+  displayName: "Thu th\u1EADp c\xE1c ng\xF4i sao"
+  levelRequirement: 1
+  questPrerequisites: []
+  questSteps:
+  - stepId: step1
+    missionType: 0
+    stepName: "Quang c\xF3 chuy\u1EC7n mu\u1ED1n n\xF3i v\u1EDBi b\u1EA1n"
+    stepDescription: "H\xE3y t\xECm Quang \u0111ang \u0111\u1EE9ng \u1EDF c\u1EA1nh
+      nh\xE0 g\u1EEDi xe, \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u nhi\u1EC7m v\u1EE5"
+    npcId: NPCQuang
+    npcStatus: 1
+    conservation: {fileID: 11400000, guid: debb9f7b10a4b454487d29fb96af4e16, type: 2}
+    nextStep: step2
+  - stepId: step2
+    missionType: 1
+    stepName: "Thu th\u1EADp ng\xF4i sao"
+    stepDescription: "Thu th\u1EADp \u0111\u1EE7 15 ng\xF4i sao \u0111\u1EC3 nh\u1EADn
+      ph\u1EA7n qu\xE0 t\u1EEB Quang"
+    npcId: NPCQuang
+    npcStatus: 2
+    conservation: {fileID: 11400000, guid: 371ca145fdfe2c64aa429940b7c1b171, type: 2}
+    nextStep: step3
+  - stepId: step3
+    missionType: 0
+    stepName: "G\u1EB7p Quang \u0111\u1EC3 nh\u1EADn ph\u1EA7n th\u01B0\u1EDFng"
+    stepDescription: "\u0110\u1EBFn g\u1EB7p Quang, \u0111\u1EC3 nh\u1EADn ph\u1EA7n
+      th\u01B0\u1EDFng x\u1EE9ng \u0111\xE1ng cho s\u1EF1 c\u1ED1 g\u1EAFng c\u1EE7a
+      b\u1EA1n."
+    npcId: NPCQuang
+    npcStatus: 3
+    conservation: {fileID: 11400000, guid: c453cda50e7c4f74589abd1e36c8f98f, type: 2}
+    nextStep: 
+  goldReward: 50
+  experienceReward: 250
+  itemRewards: []

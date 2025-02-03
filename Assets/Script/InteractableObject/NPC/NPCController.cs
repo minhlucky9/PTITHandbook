@@ -1,5 +1,6 @@
 using GameManager;
 using Interaction;
+using Interaction.Minigame;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class NPCController : TalkInteraction
     public NPCInfoSO npcInfo;
     public NPCState currentNPCState;
     Dictionary<string, NPCConservationSO> npcConservationMap;
-    Dictionary<string, QuizConservationSO> quizConservationMap;
+    Dictionary<string, MinigameDataSO> minigameDataMap;
 
     [HideInInspector] 
     public NPCConservationSO currentDialogConservation;
@@ -18,7 +19,6 @@ public class NPCController : TalkInteraction
     [Header("Quest Mission")]
     string questId;
     QuestStep questStep;
-    QuizManager quizManager;
 
     [Header("State Symbol")]
     public GameObject iconQuestAvailable;
@@ -28,11 +28,10 @@ public class NPCController : TalkInteraction
     public override void Awake()
     {
         base.Awake();
-        quizManager = FindObjectOfType<QuizManager>();
         questManager = FindAnyObjectByType<QuestManager>();
         //create data map
         npcConservationMap = CreateNPCConservationMap();
-        quizConservationMap = CreateQuizConservationMap();
+        minigameDataMap = CreateMinigameDataMap();
     }
 
     public override void Interact()
@@ -62,22 +61,22 @@ public class NPCController : TalkInteraction
         return npcConservationMap;
     }
 
-    private Dictionary<string, QuizConservationSO> CreateQuizConservationMap()
+    private Dictionary<string, MinigameDataSO> CreateMinigameDataMap()
     {
         // loads all QuestInfo Scriptable Objects under the Assets/Resources/Quests folder
-        QuizConservationSO[] allConservations = Resources.LoadAll<QuizConservationSO>("NPC/" + npcInfo.npcId);
+        MinigameDataSO[] allMinigames = Resources.LoadAll<MinigameDataSO>("NPC/" + npcInfo.npcId);
 
         // Create the quest map
-        Dictionary<string, QuizConservationSO> npcConservationMap = new Dictionary<string, QuizConservationSO>();
-        foreach (QuizConservationSO conservation in allConservations)
+        Dictionary<string, MinigameDataSO> npcMinigameDataMap = new Dictionary<string, MinigameDataSO>();
+        foreach (MinigameDataSO minigame in allMinigames)
         {
-            if (npcConservationMap.ContainsKey(conservation.conservationId))
+            if (npcMinigameDataMap.ContainsKey(minigame.minigameId))
             {
-                Debug.LogWarning("Duplicate ID found when creating npc conservation map: " + conservation.conservationId);
+                Debug.LogWarning("Duplicate ID found when creating minigame data map: " + minigame.minigameId);
             }
-            npcConservationMap.Add(conservation.conservationId, conservation);
+            npcMinigameDataMap.Add(minigame.minigameId, minigame);
         }
-        return npcConservationMap;
+        return npcMinigameDataMap;
     }
     #endregion
 
@@ -88,14 +87,14 @@ public class NPCController : TalkInteraction
         {
             case StepMissionType.TALKING:
                 break;
-            case StepMissionType.QUIZ:
-                string quizId = questId + "_" + questStep.stepId;
-                //find quiz in quiz map
-                QuizConservationSO quizData = quizConservationMap[quizId];
-                quizManager.InitAndStartQuizData(gameObject, quizData);
+
+            case StepMissionType.MINIGAME:
+                string minigameId = questId + "_" + questStep.stepId;
+                //find minigame in minigame map
+                MinigameDataSO minigameData = minigameDataMap[minigameId];
+                minigameData.Init(gameObject);
                 break;
-            case StepMissionType.MAZE:
-                break;
+
         }
     }
 
@@ -117,6 +116,12 @@ public class NPCController : TalkInteraction
         StopInteract();
         ResetNPC();
         questManager.OnFinishQuestStep(questId);
+    }
+
+    public void FinishQuestStepThenStartMinigame()
+    {
+        FinishQuestStep();
+        StartQuestMinigame();
     }
 
     public void ResetNPC()

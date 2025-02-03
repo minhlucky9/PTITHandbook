@@ -8,12 +8,18 @@ namespace GameManager
 {
     public class QuestManager : MonoBehaviour
     {
+        public static QuestManager instance;
         Dictionary<string, NPCController> npcMap;
-        Dictionary<string, Quest> questMap;
+        [HideInInspector] public Dictionary<string, Quest> questMap;
         PlayerStats playerStats;
    
         [Header("Config")]
         [SerializeField] private bool loadQuestState = true;
+
+        private void Awake()
+        {
+            instance = this;
+        }
 
         // Start is called before the first frame update
         void Start()

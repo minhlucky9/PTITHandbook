@@ -58,11 +58,15 @@ namespace Interaction
         public AudioClip voice;
         public List<DialogResponse> possibleResponses;
 
+        //editor
+        [HideInInspector] public Vector2 nodePosition;
+
         public DialogConservation()
         {
             possibleResponses = new List<DialogResponse>();
             dialogId = "";
             message = "";
+            nodePosition = new Vector2(10, 10);
         }
     }
 
@@ -93,12 +97,14 @@ namespace Interaction
         //Quest step handle - NPC Controller
         FinishQuestStep,
         StartQuestMinigame,
-        
+        FinishQuestStepThenStartMinigame,
+        OnQuestMinigameFail,
+        OnQuestMinigameSuccess,
+
         //Quiz handle - Quiz Manager
         NextQuiz,
         AnswerCorrect,
-        AnswerWrong,
-        OnQuestMinigameFail,
-        OnQuestMinigameSuccess
+        AnswerWrong
+        
     }
 }

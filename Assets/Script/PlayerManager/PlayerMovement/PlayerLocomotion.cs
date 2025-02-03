@@ -248,7 +248,6 @@ namespace PlayerController
                 RaycastHit hitUpper45;
                 if (!Physics.Raycast(startTestStepPosition + new Vector3(0, stepHeight, 0), foward, out hitUpper45, maxDistance + 0.3f, cameraHandle.ignoreLayers))
                 {
-
                     Vector3 move = moveDirection.normalized + Vector3.up;
                     SetRigidbodyVelocity(currentRunningSpeed * move.normalized);
                     return;
@@ -330,7 +329,8 @@ namespace PlayerController
             Vector3 origin = myTransform.position;
             origin.y += groundDetectionRayStartPoint;
 
-            if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.4f))
+            LayerMask ignoreRaycastMask = (LayerMask.GetMask("Environment"));
+            if (Physics.SphereCast(origin + Vector3.down * stepHeight, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.4f, ignoreRaycastMask))
             {
                 moveDirection = Vector3.zero;
 

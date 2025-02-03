@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using Interaction.Minigame;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Interaction
 {
-    [RequireComponent(typeof(ConservationManager))]
     public class QuizManager : MonoBehaviour
     {
+        public static QuizManager instance;
+
         GameObject targetNPC;
         QuizConservationSO quizData;
         ConservationManager conservationManager;
@@ -18,7 +20,8 @@ namespace Interaction
 
         private void Awake()
         {
-            conservationManager = GetComponent<ConservationManager>();
+            instance = this;
+            conservationManager = FindObjectOfType<ConservationManager>();
         }
 
         public void InitAndStartQuizData(GameObject targetNPC, QuizConservationSO quiz)

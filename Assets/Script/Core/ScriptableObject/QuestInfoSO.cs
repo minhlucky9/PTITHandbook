@@ -57,8 +57,7 @@ namespace Interaction
     public enum StepMissionType
     {
         TALKING,
-        QUIZ,
-        MAZE
+        MINIGAME
     }
 }
 

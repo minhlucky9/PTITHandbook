@@ -69,6 +69,7 @@ namespace PlayerController
 
         public void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)
         {
+            //Quaternion pivotTargetRotation = cameraPivotTransform.localRotation;
             if(inputHandle.lockOnFlag == false && currentLockOnTarget == null)
             {
                 lookAngle += (mouseXInput * lookSpeed) * delta;

@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Interaction {
+namespace Interaction.Minigame {
     [CreateAssetMenu(menuName = "Scriptable Objects/Minigame/Quiz Conservation Data")]
-    public class QuizConservationSO : ScriptableObject
+    public class QuizConservationSO : MinigameDataSO
     {
-        public string conservationId;
-        public string questId;
-        public string stepId;
         public int numberOfQuestion;
         public int numberOfMaxWrong;
         public List<QuestionAndAnswer> qnas;
         public DialogConservation quizIntro;
-        private void OnValidate()
+
+        public override void Init(GameObject targetGameObject)
         {
-#if UNITY_EDITOR
-            conservationId = questId + "_" + stepId;
-#endif
+            QuizManager.instance.InitAndStartQuizData(targetGameObject, this);
         }
     }
 

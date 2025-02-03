@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: star
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 89bd91156a7009e43a760613a06c1187,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -94,7 +99,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 89bd91156a7009e43a760613a06c1187,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5731535642952480920}
+      addedObject: {fileID: 8707442211301363583}
   m_SourcePrefab: {fileID: 100100000, guid: 89bd91156a7009e43a760613a06c1187, type: 3}
 --- !u!1 &7590494231003351841 stripped
 GameObject:
@@ -123,7 +128,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.09051016, y: 0.020000013, z: 0.0863596}
   m_Center: {x: 6.5627705e-11, y: 0.00000006200329, z: 0.0044041937}
---- !u!114 &5731535642952480920
+--- !u!114 &8707442211301363583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,10 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7590494231003351841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e100c8af8870e2342a7e316b9b25914a, type: 3}
+  m_Script: {fileID: 11500000, guid: dd268a814ff3de147949f225865d300e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeedZ: 1
-  rotateSpeedX: 0
-  respawnTimeSeconds: 8
-  goldGained: 1
+  rotationSpeed: {x: 0, y: 60, z: 0}
