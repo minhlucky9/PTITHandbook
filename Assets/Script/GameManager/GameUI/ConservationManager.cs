@@ -8,6 +8,7 @@ namespace Interaction
 {
     public class ConservationManager : MonoBehaviour
     {
+        public static ConservationManager instance;
         [Header("NPC Message")]
         public UIAnimationController messageContainer;
         public TMP_Text npcMessage;
@@ -21,6 +22,11 @@ namespace Interaction
 
         GameObject targetNPC;
         NPCConservationSO conservationData;
+
+        private void Awake()
+        {
+            instance = this;
+        }
 
         public void InitConservation(GameObject npc, NPCConservationSO conservation)
         {

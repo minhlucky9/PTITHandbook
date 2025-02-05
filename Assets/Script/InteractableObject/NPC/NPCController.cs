@@ -12,6 +12,7 @@ public class NPCController : TalkInteraction
     public NPCState currentNPCState;
     Dictionary<string, NPCConservationSO> npcConservationMap;
     Dictionary<string, MinigameDataSO> minigameDataMap;
+    Dictionary<string, FunctionalWindowDataSO> functionalDataMap;
 
     [HideInInspector] 
     public NPCConservationSO currentDialogConservation;
@@ -21,6 +22,7 @@ public class NPCController : TalkInteraction
     QuestStep questStep;
 
     [Header("State Symbol")]
+    public GameObject iconDefault;
     public GameObject iconQuestAvailable;
     public GameObject iconQuestComplete;
     public GameObject iconQuestInProgress;
@@ -32,6 +34,9 @@ public class NPCController : TalkInteraction
         //create data map
         npcConservationMap = CreateNPCConservationMap();
         minigameDataMap = CreateMinigameDataMap();
+        functionalDataMap = CreateFunctionalDataMap();
+        //
+        currentDialogConservation = npcInfo.normalConservation;
     }
 
     public override void Interact()
@@ -40,7 +45,13 @@ public class NPCController : TalkInteraction
         base.Interact();
     }
 
-
+    public void OpenShopFunctionalWindow()
+    {
+        string functionId = FunctionType.Shop.ToString() + "_" + npcInfo.npcId;
+        //find minigame in minigame map
+        FunctionalWindowDataSO functionWindowData = functionalDataMap[functionId];
+        functionWindowData.Init(gameObject);
+    }
 
     #region NPC Data
     private Dictionary<string, NPCConservationSO> CreateNPCConservationMap()
@@ -77,6 +88,24 @@ public class NPCController : TalkInteraction
             npcMinigameDataMap.Add(minigame.minigameId, minigame);
         }
         return npcMinigameDataMap;
+    }
+
+    private Dictionary<string, FunctionalWindowDataSO> CreateFunctionalDataMap()
+    {
+        // loads all QuestInfo Scriptable Objects under the Assets/Resources/Quests folder
+        FunctionalWindowDataSO[] allFunctionals = Resources.LoadAll<FunctionalWindowDataSO>("NPC/" + npcInfo.npcId);
+
+        // Create the quest map
+        Dictionary<string, FunctionalWindowDataSO> npcFunctionalDataMap = new Dictionary<string, FunctionalWindowDataSO>();
+        foreach (FunctionalWindowDataSO functional in allFunctionals)
+        {
+            if (npcFunctionalDataMap.ContainsKey(functional.functionId))
+            {
+                Debug.LogWarning("Duplicate ID found when creating minigame data map: " + functional.functionId);
+            }
+            npcFunctionalDataMap.Add(functional.functionId, functional);
+        }
+        return npcFunctionalDataMap;
     }
     #endregion
 
@@ -167,6 +196,10 @@ public class NPCController : TalkInteraction
         switch (currentNPCState)
         {
             case NPCState.NORMAL:
+                if(iconDefault != null)
+                {
+                    iconDefault.SetActive(true);
+                }
                 break;
 
             case NPCState.HAVE_QUEST:

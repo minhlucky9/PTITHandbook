@@ -104,7 +104,9 @@ namespace Interaction
         //Quiz handle - Quiz Manager
         NextQuiz,
         AnswerCorrect,
-        AnswerWrong
-        
+        AnswerWrong,
+
+        //Functional Window - NPC Controller
+        OpenShopFunctionalWindow
     }
 }

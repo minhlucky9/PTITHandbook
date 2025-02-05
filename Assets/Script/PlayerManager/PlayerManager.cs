@@ -11,6 +11,8 @@ namespace PlayerController
     
     public class PlayerManager : CharacterManager
     {
+        public static PlayerManager instance;
+
         InputHandle inputHandle;
         UIManager uiManager;
         MouseManager mouseManager;
@@ -40,6 +42,8 @@ namespace PlayerController
 
         private void Awake()
         {
+            instance = this;
+
             inputHandle = GetComponent<InputHandle>();
             anim = GetComponentInChildren<Animator>();
             uiManager = FindObjectOfType<UIManager>();

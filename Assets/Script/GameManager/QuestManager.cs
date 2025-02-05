@@ -12,7 +12,7 @@ namespace GameManager
         Dictionary<string, NPCController> npcMap;
         [HideInInspector] public Dictionary<string, Quest> questMap;
         PlayerStats playerStats;
-   
+
         [Header("Config")]
         [SerializeField] private bool loadQuestState = true;
 
@@ -55,13 +55,20 @@ namespace GameManager
         public void OnFinishQuestStep(string questId)
         {
             bool isQuestFinished = !questMap[questId].TryNextStep();
-
+            Quest quest = questMap[questId];
             if (isQuestFinished)
             {
                 Debug.Log("Quest complete..reward");
+                playerStats.ExpGain(quest.info.experienceReward);
+                PlayerInventory.instance.AddGold(quest.info.goldReward);
+
+                for(int i = 0; i < quest.info.itemRewards.Count; i++)
+                {
+                    PlayerInventory.instance.AddItem(quest.info.itemRewards[i].item, quest.info.itemRewards[i].quantity);
+                }
+                
             } else
             {
-                Quest quest = questMap[questId];
                 InitQuestStep(quest.info.questSteps[quest.currentQuestStepIndex], quest.info.id);
             }
         }

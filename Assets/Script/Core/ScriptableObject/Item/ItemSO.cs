@@ -7,7 +7,12 @@ namespace Interaction
     public class ItemSO : ScriptableObject
     {
         public string itemId;
+        public ShopCategorySO category;
         public GameObject prefabs;
+        public bool isStackable;
+        public int maxStackSize;
+
+        public virtual void UseItem() { }
 
         private void OnValidate()
         {

@@ -7,6 +7,7 @@ namespace Core
     public class CharacterStats : MonoBehaviour
     {
         public int characterLevel;
+        public int characterExp = 0;
 
         public int healthLevel = 10;
         public int maxHealth;
@@ -17,6 +18,16 @@ namespace Core
         public float currentStamina;
 
         public bool isDead;
+
+        public void ExpGain(int amount)
+        {
+            characterExp += amount;
+            if(characterExp >= 100)
+            {
+                characterLevel++;
+                characterExp = characterExp % 100;
+            }
+        }
     }
 
 }

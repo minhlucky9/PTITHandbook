@@ -330,7 +330,7 @@ namespace PlayerController
             origin.y += groundDetectionRayStartPoint;
 
             LayerMask ignoreRaycastMask = (LayerMask.GetMask("Environment"));
-            if (Physics.SphereCast(origin + Vector3.down * stepHeight, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.4f, ignoreRaycastMask))
+            if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.4f, ignoreRaycastMask))
             {
                 moveDirection = Vector3.zero;
 
