@@ -80,7 +80,7 @@ namespace PlayerController
                 Vector3 rotation = Vector3.zero;
                 rotation.y = lookAngle;
                 Quaternion targetRotation = Quaternion.Euler(rotation);
-                myTransform.rotation = targetRotation;
+                myTransform.rotation = Quaternion.Slerp(myTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
                 rotation = Vector3.zero;
                 rotation.x = pivotAngle;

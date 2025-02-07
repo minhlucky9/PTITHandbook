@@ -21,5 +21,17 @@ public class ShopProductUI : MonoBehaviour
         priceText.text = item.price.ToString();
         valueText.text = item.value;
         valueIcon.sprite = item.valueIcon;
+        //
+        buyBtn.onClick.AddListener(delegate
+        {
+            bool isBuySuccess = shopItem.TryBuyItem();
+            if(isBuySuccess)
+            {
+                Debug.Log("Success");
+            } else
+            {
+                Debug.Log("Fail");
+            }
+        });
     }
 }

@@ -32,8 +32,8 @@ public struct ShopItem
     public string value;
     public Sprite valueIcon;
 
-    public void BuyItem()
+    public bool TryBuyItem()
     {
-
+        return PlayerInventory.instance.TryBuyItem(price, itemInfo);
     }
 }

@@ -21,16 +21,15 @@ public class PlayerInventory : MonoBehaviour
 
     public event Action<int> OnGoldChanged;
 
-    public ItemSO item;
-
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
-        item.UseItem();
+        
+        inventoryItems = new List<InventoryItem>();
+        for(int i = 0; i < Size; i ++)
+        {
+            inventoryItems.Add(InventoryItem.GetEmptyItem());
+        }
     }
 
     public void AddGold(int amount)
@@ -44,6 +43,23 @@ public class PlayerInventory : MonoBehaviour
         gold -= amount;
         OnGoldChanged?.Invoke(-amount);
     }
+
+    public bool TryBuyItem(int price, ItemSO item, int quantity = 1)
+    {
+        int cost = price * quantity;
+        if (gold >= cost)
+        {
+            SubtractGold(cost);
+            AddItem(item, quantity);
+            return true;
+        } 
+        else
+        {
+            return false;
+        }
+    }
+
+    
 
     public int AddItem(ItemSO item, int quantity)
     {
@@ -198,6 +214,7 @@ public class PlayerInventory : MonoBehaviour
     }
 }
 
+[Serializable]
 public struct InventoryItem
 {
     public int quantity;
