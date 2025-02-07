@@ -12,8 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c4af2c76fc3794b9bbbb79cf57f465, type: 3}
   m_Name: Shop_NPCShop
   m_EditorClassIdentifier: 
+  functionId: Shop_NPCShop
+  type: 0
   npcId: NPCShop
-  shopItems:
-  - itemInfo: {fileID: 11400000, guid: 045a9f4784283d141b6fe48558cc851c, type: 2}
-    price: 100
-    amount: 5
+  shopCategories:
+  - categoryName: Food
+    iconInShop: {fileID: 21300000, guid: 691aff96465a0eb48b35e5259fdfb359, type: 3}
+    shopItems:
+    - itemInfo: {fileID: 11400000, guid: e78db27455d55f544b20aca346e8528a, type: 2}
+      price: 15
+      value: 30
+      valueIcon: {fileID: 21300000, guid: 50f4ebc1bf314eb4abc3712a1469bd9d, type: 3}
+    - itemInfo: {fileID: 11400000, guid: c54999f39bc9e9e44a76c1a213c35acf, type: 2}
+      price: 20
+      value: 50
+      valueIcon: {fileID: 21300000, guid: 50f4ebc1bf314eb4abc3712a1469bd9d, type: 3}
+    - itemInfo: {fileID: 11400000, guid: e2e707678bda87041a1438b8b03b0ee5, type: 2}
+      price: 25
+      value: 75
+      valueIcon: {fileID: 21300000, guid: 50f4ebc1bf314eb4abc3712a1469bd9d, type: 3}
+  - categoryName: Drink
+    iconInShop: {fileID: 21300000, guid: 92e0fbc7523a69040a298c1e641d8fd6, type: 3}
+    shopItems:
+    - itemInfo: {fileID: 11400000, guid: 045a9f4784283d141b6fe48558cc851c, type: 2}
+      price: 10
+      value: 
+      valueIcon: {fileID: 21300000, guid: 8159b5348e27d3f4e870b686c677e23b, type: 3}
+    - itemInfo: {fileID: 11400000, guid: 12e79fac31178504ca655eae8781ebd1, type: 2}
+      price: 5
+      value: 2X
+      valueIcon: {fileID: 21300000, guid: e4a4c53a790262b42a74adb6d72765b0, type: 3}

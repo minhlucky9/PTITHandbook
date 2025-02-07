@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum BuffType { LockStaminaBuff, IncreaseFullness }
+public enum BuffType { LockStaminaBuff, RegenHP, SpeedMultiplierBuff }
 
 [Serializable]
 public class BuffEffect
@@ -33,6 +33,8 @@ public class BuffEffect
 
     public virtual void ApplyEffect() { }
 
+    public virtual void RemoveEffect() { }
+    public virtual void OverrideEffect() { }
 }
 
 
@@ -45,11 +47,22 @@ public class LockStaminaBuff : BuffEffect
     }
 }
 
-public class IncreaseFullness : BuffEffect
+public class SpeedMultiplierBuff : BuffEffect
+{
+    public override void ApplyEffect()
+    {
+        base.ApplyEffect();
+        Debug.Log("SpeedMultiplierBuff " + effectDuration.ToString());
+    }
+}
+
+public class RegenHP : BuffEffect
 {
     public override void ApplyEffect()
     {
         base.ApplyEffect();
         Debug.Log("LockStamina " + effectDuration.ToString());
     }
+
+    
 }

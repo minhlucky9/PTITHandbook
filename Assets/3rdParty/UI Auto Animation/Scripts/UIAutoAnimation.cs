@@ -976,11 +976,13 @@ public class UIAutoAnimation : MonoBehaviour
         {
             for (int i = 0; i < layoutGroupList.Length; i++)
             {
-                layoutGroupList[i].CalculateLayoutInputVertical();
-                layoutGroupList[i].SetLayoutVertical();
+                //layoutGroupList[i].CalculateLayoutInputVertical();
+                //layoutGroupList[i].SetLayoutVertical();
 
-                layoutGroupList[i].CalculateLayoutInputHorizontal();
-                layoutGroupList[i].SetLayoutHorizontal();
+                //layoutGroupList[i].CalculateLayoutInputHorizontal();
+                //layoutGroupList[i].SetLayoutHorizontal();
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)layoutGroupList[i].gameObject.transform);
             }
         }
     }

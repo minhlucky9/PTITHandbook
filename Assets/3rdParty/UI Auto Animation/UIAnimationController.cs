@@ -55,5 +55,7 @@ public class UIAnimationController : MonoBehaviour
     public void UpdateCanvasGroup()
     {
         canvasGroup.alpha = isActive ? 1 : 0;
+        canvasGroup.blocksRaycasts = isActive;
+        canvasGroup.interactable = isActive;
     }
 }

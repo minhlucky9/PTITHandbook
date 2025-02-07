@@ -7,18 +7,21 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Objects/Functional/Shop Data")]
 public class ShopWindowDataSO : FunctionalWindowDataSO
 {
-    public List<ShopItem> shopItems;
+    public List<ShopCategory> shopCategories;
 
     public override void Init(GameObject target)
     {
         base.Init(target);
         ShopWindowManager.instance.OpenWindow(this);
     }
+}
 
-    public void BuyItem(int index)
-    {
-
-    }
+[Serializable]
+public class ShopCategory
+{
+    public string categoryName;
+    public Sprite iconInShop;
+    public List<ShopItem> shopItems;
 }
 
 [Serializable]
@@ -26,5 +29,11 @@ public struct ShopItem
 {
     public ItemSO itemInfo;
     public int price;
-    public int amount;
+    public string value;
+    public Sprite valueIcon;
+
+    public void BuyItem()
+    {
+
+    }
 }

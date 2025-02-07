@@ -30,7 +30,7 @@ namespace PlayerController
         private float pivotAngle;
         public float minimumPivot = -35;
         public float maximumPivot = 35;
-
+        public float rotationSpeed = 1;
         public float cameraSphereRadius = 0.2f;
         public float cameraCollisionOffset = 0.2f;
         public float minimumCollisionOffset = 0.2f;
@@ -86,7 +86,7 @@ namespace PlayerController
                 rotation.x = pivotAngle;
 
                 targetRotation = Quaternion.Euler(rotation);
-                cameraPivotTransform.localRotation = targetRotation;
+                cameraPivotTransform.localRotation = Quaternion.Slerp(cameraPivotTransform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
             } 
             else
             {
@@ -104,7 +104,8 @@ namespace PlayerController
                 targetRotation = Quaternion.LookRotation(direction);
                 Vector3 eulerAngle = targetRotation.eulerAngles;
                 eulerAngle.y = 0;
-                cameraPivotTransform.localEulerAngles = eulerAngle;
+                //cameraPivotTransform.localEulerAngles = eulerAngle;
+                cameraPivotTransform.localRotation = Quaternion.Slerp(cameraPivotTransform.localRotation, Quaternion.Euler(eulerAngle), rotationSpeed * Time.deltaTime);
             }
 
             
