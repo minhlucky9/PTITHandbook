@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+
 public class NodeEditor : EditorWindow
 {
 	private Vector2 scrollPosition; // Stores the scroll offset
@@ -193,3 +195,6 @@ public class NodeEditor : EditorWindow
 	}
 	#endregion
 }
+
+
+#endif

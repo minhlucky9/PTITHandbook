@@ -10,7 +10,7 @@ public class PlayerInventory : MonoBehaviour
     public static PlayerInventory instance;
 
     [SerializeField]
-    private List<InventoryItem> inventoryItems;
+    public List<InventoryItem> inventoryItems;
 
     public int gold = 0;
 
@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
 
     public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
 
-    public event Action<int> OnGoldChanged;
+    public event Action<int, int> OnGoldChanged;
 
     private void Awake()
     {
@@ -35,13 +35,13 @@ public class PlayerInventory : MonoBehaviour
     public void AddGold(int amount)
     {
         gold += amount;
-        OnGoldChanged?.Invoke(amount);
+        OnGoldChanged?.Invoke(amount, gold);
     }
 
     public void SubtractGold(int amount)
     {
         gold -= amount;
-        OnGoldChanged?.Invoke(-amount);
+        OnGoldChanged?.Invoke(-amount, gold);
     }
 
     public bool TryBuyItem(int price, ItemSO item, int quantity = 1)
@@ -59,7 +59,18 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    
+    public bool TryUseItem(int slotIndex, int quantity = 1)
+    {
+        if(inventoryItems[slotIndex].quantity >= quantity)
+        {
+            inventoryItems[slotIndex].item.UseItem();
+            RemoveItem(slotIndex, quantity);
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 
     public int AddItem(ItemSO item, int quantity)
     {

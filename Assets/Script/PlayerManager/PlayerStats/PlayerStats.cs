@@ -8,6 +8,7 @@ namespace PlayerStatsController
 {
     public class PlayerStats : CharacterStats
     {
+        public static PlayerStats instance;
         PlayerManager playerManager;
         HealthBar healthBar;
         StaminaBar staminaBar;
@@ -19,6 +20,7 @@ namespace PlayerStatsController
         public int soulCount;
         private void Awake()
         {
+            instance = this;
             healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindAnyObjectByType<StaminaBar>();
             playerManager = GetComponent<PlayerManager>();
@@ -46,7 +48,7 @@ namespace PlayerStatsController
 
         private float SetMaxStaminaFromStaminaLevel()
         {
-            maxStamina = staminaLevel * 10;
+            maxStamina = staminaLevel * 20;
             return maxStamina;
         }
 
@@ -88,8 +90,22 @@ namespace PlayerStatsController
             isDead = true;
         }
 
+        public void IncreaseSpeedMultiplier(float amount)
+        {
+            speedMultiplier = speedMultiplier + amount;
+        }
+
+        public void ReduceSpeedMultiplier(float amount)
+        {
+            speedMultiplier -= amount;
+            speedMultiplier = Mathf.Clamp(speedMultiplier, 1, float.PositiveInfinity);
+        }
+
         public void ReduceStamina(int amount)
         {
+            if (isLockStamina) return;
+
+            regenerationStaminaTimer = 0;
             currentStamina -= amount;
             staminaBar.SetCurrentStamina((int)currentStamina);
         }

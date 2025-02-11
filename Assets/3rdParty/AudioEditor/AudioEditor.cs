@@ -2,6 +2,8 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
+#if UNITY_EDITOR
+
 public class AudioEditor : EditorWindow
 {
     private AudioSource previewAudioSource;
@@ -356,3 +358,5 @@ public class AudioEditor : EditorWindow
         File.WriteAllBytes(path, wavData);
     }
 }
+
+#endif

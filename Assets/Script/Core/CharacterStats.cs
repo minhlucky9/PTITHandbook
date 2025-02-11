@@ -13,9 +13,13 @@ namespace Core
         public int maxHealth;
         public int currentHealth;
 
+        [Header("Movement Stats")]
         public int staminaLevel = 10;
         public float maxStamina;
         public float currentStamina;
+        public float speedMultiplier = 1;
+        public bool isLockStamina = false;
+
 
         public bool isDead;
 

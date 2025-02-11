@@ -207,7 +207,7 @@ namespace PlayerController
                 playerManager.isSprinting = false;
             }
 
-            moveDirection *= currentRunningSpeed;
+            moveDirection *= CalculateRunningSpeed(currentRunningSpeed);
 
             Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             SetRigidbodyVelocity(projectedVelocity);
@@ -249,7 +249,7 @@ namespace PlayerController
                 if (!Physics.Raycast(startTestStepPosition + new Vector3(0, stepHeight, 0), foward, out hitUpper45, maxDistance + 0.3f, cameraHandle.ignoreLayers))
                 {
                     Vector3 move = moveDirection.normalized + Vector3.up;
-                    SetRigidbodyVelocity(currentRunningSpeed * move.normalized);
+                    SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
                     return;
                 }
             }
@@ -262,7 +262,7 @@ namespace PlayerController
                 if (!Physics.Raycast(startTestStepPosition + new Vector3(0, stepHeight, 0), left, out hitUpper45, maxDistance, cameraHandle.ignoreLayers))
                 {
                     Vector3 move = moveDirection.normalized + Vector3.up;
-                    SetRigidbodyVelocity(currentRunningSpeed * move.normalized);
+                    SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
                     return;
                 }
             }
@@ -275,7 +275,7 @@ namespace PlayerController
                 {
 
                     Vector3 move = moveDirection.normalized + Vector3.up;
-                    SetRigidbodyVelocity(currentRunningSpeed * move.normalized);
+                    SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
                     return;
                 }
             }
@@ -344,7 +344,7 @@ namespace PlayerController
                 }
             }
             //change velocity of rigidbody
-            Vector3 velocity = moveDirection.normalized * currentRunningSpeed - fallingVelocity * Vector3.up;
+            Vector3 velocity = moveDirection.normalized * CalculateRunningSpeed(currentRunningSpeed) - fallingVelocity * Vector3.up;
 
             if (playerManager.isJumping)
             {
@@ -497,6 +497,11 @@ namespace PlayerController
         }
 
         #endregion
+
+        public float CalculateRunningSpeed(float speed)
+        {
+            return speed * playerStats.speedMultiplier;
+        }
 
         public void SetRigidbodyVelocity(Vector3 velocity)
         {

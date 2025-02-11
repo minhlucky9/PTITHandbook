@@ -1,3 +1,5 @@
+using PlayerController;
+using PlayerStatsController;
 using System;
 using UnityEngine;
 
@@ -17,7 +19,7 @@ public class BuffEffect
         if (fxType != null)
         {
             BuffEffect buff = (BuffEffect)Activator.CreateInstance(fxType);
-            buff.Init(this).ApplyEffect();
+            PlayerBuffManager.instance.RegistBuff(buff.Init(this));
         }
     }
 
@@ -31,10 +33,30 @@ public class BuffEffect
         return this;
     }
 
-    public virtual void ApplyEffect() { }
+    public bool isBuffDurationRunOut(float deltaTime)
+    {
+        effectDuration -= deltaTime;
+        Debug.Log(type.ToString() + " " + effectDuration);
+        if(effectDuration > 0)
+        {
+            return false;
+        } 
+        else
+        {
+            return true;
+        }
+    }
 
+    public virtual void ApplyEffect() { }
     public virtual void RemoveEffect() { }
-    public virtual void OverrideEffect() { }
+    public virtual void OverrideEffect(BuffEffect fx) 
+    {
+        //remove current fx
+        RemoveEffect();
+        //apply new fx
+        Init(fx);
+        ApplyEffect();
+    }
 }
 
 
@@ -43,7 +65,13 @@ public class LockStaminaBuff : BuffEffect
     public override void ApplyEffect()
     {
         base.ApplyEffect();
-        Debug.Log("LockStamina " + effectDuration.ToString());
+        PlayerStats.instance.isLockStamina = true;
+    }
+
+    public override void RemoveEffect()
+    {
+        base.RemoveEffect();
+        PlayerStats.instance.isLockStamina = false;
     }
 }
 
@@ -52,7 +80,13 @@ public class SpeedMultiplierBuff : BuffEffect
     public override void ApplyEffect()
     {
         base.ApplyEffect();
-        Debug.Log("SpeedMultiplierBuff " + effectDuration.ToString());
+        PlayerStats.instance.IncreaseSpeedMultiplier(value);
+    }
+
+    public override void RemoveEffect()
+    {
+        base.RemoveEffect();
+        PlayerStats.instance.ReduceSpeedMultiplier(value);
     }
 }
 
@@ -61,7 +95,7 @@ public class RegenHP : BuffEffect
     public override void ApplyEffect()
     {
         base.ApplyEffect();
-        Debug.Log("LockStamina " + effectDuration.ToString());
+        PlayerStats.instance.HealPlayer((int)value);
     }
 
     

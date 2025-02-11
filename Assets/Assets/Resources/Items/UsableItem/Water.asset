@@ -22,6 +22,6 @@ MonoBehaviour:
   maxStackSize: 10
   buffs:
   - type: 2
-    value: 2
+    value: 0.5
     isPermanent: 0
     effectDuration: 60

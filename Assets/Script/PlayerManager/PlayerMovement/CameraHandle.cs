@@ -1,6 +1,7 @@
 using Core;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace PlayerController
@@ -44,7 +45,7 @@ namespace PlayerController
         public Transform leftLockTarget;
         public Transform rightLockTarget;
         public float maximumLockOnDistance = 30;
-
+        public TMP_Text inputText;
         private void Awake()
         {
             singleton = this;
@@ -72,6 +73,10 @@ namespace PlayerController
             //Quaternion pivotTargetRotation = cameraPivotTransform.localRotation;
             if(inputHandle.lockOnFlag == false && currentLockOnTarget == null)
             {
+                inputText.text = mouseXInput + " " + mouseYInput;
+                //Debug.Log(mouseXInput + " " + mouseYInput);
+                //mouseXInput = Mathf.Clamp(mouseXInput, -1, 1);
+                //mouseYInput = Mathf.Clamp(mouseYInput, -1, 1);
                 lookAngle += (mouseXInput * lookSpeed) * delta;
                 pivotAngle -= (mouseYInput * pivotSpeed) * delta;
 

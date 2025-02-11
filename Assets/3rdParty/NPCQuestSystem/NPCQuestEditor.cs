@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 namespace NPCQuestSystem.Editor
 {
     public class NPCQuestEditor : EditorWindow
@@ -71,3 +73,5 @@ namespace NPCQuestSystem.Editor
         }
     }
 }
+
+#endif

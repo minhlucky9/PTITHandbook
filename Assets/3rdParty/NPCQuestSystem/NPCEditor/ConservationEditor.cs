@@ -1,8 +1,8 @@
 using Interaction;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
 
 public class ConservationEditor : NodeEditor
 {
@@ -204,3 +204,5 @@ public class ConservationEditor : NodeEditor
 		Repaint();
 	}
 }
+
+#endif
