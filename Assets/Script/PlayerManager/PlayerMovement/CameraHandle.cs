@@ -45,7 +45,12 @@ namespace PlayerController
         public Transform leftLockTarget;
         public Transform rightLockTarget;
         public float maximumLockOnDistance = 30;
-        public TMP_Text inputText;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        float mouseSensitivity = 0.003f;
+#else
+        float mouseSensitivity = 0.01f; //editor / PC
+#endif
         private void Awake()
         {
             singleton = this;
@@ -58,7 +63,7 @@ namespace PlayerController
 
         private void Start()
         {
-            environmentLayer = LayerMask.NameToLayer("Environment");
+            environmentLayer = 1 << LayerMask.NameToLayer("Environment");
         }
 
         public void FollowTarget(float delta)
@@ -73,12 +78,8 @@ namespace PlayerController
             //Quaternion pivotTargetRotation = cameraPivotTransform.localRotation;
             if(inputHandle.lockOnFlag == false && currentLockOnTarget == null)
             {
-                inputText.text = mouseXInput + " " + mouseYInput;
-                //Debug.Log(mouseXInput + " " + mouseYInput);
-                //mouseXInput = Mathf.Clamp(mouseXInput, -1, 1);
-                //mouseYInput = Mathf.Clamp(mouseYInput, -1, 1);
-                lookAngle += (mouseXInput * lookSpeed) * delta;
-                pivotAngle -= (mouseYInput * pivotSpeed) * delta;
+                lookAngle += (mouseXInput * lookSpeed) * mouseSensitivity;
+                pivotAngle -= (mouseYInput * pivotSpeed) * mouseSensitivity;
 
                 pivotAngle = Mathf.Clamp(pivotAngle, minimumPivot, maximumPivot);
 

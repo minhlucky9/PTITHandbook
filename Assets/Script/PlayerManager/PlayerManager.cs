@@ -36,7 +36,7 @@ namespace PlayerController
         public bool isGrounded;
         public bool isOnWall;
         public bool canDoubleJump;
-
+        public bool isClimbable;
         LayerMask lootableMask;
         LayerMask talkableMask;
 
@@ -89,12 +89,12 @@ namespace PlayerController
             playerLocomotion.HandleRollingAndSprinting(delta);
             playerStats.RegenerateStamina();
             CheckForInteractableObject();
+            //
         }
 
         private void FixedUpdate()
         {
             float delta = Time.deltaTime;
-            
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
             playerLocomotion.HandleStepping(delta);

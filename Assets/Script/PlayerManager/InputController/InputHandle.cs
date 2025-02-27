@@ -15,7 +15,8 @@ namespace PlayerController
         public float mouseX;
         public float mouseY;
 
-        public bool b_input;
+        public bool sprint_input;
+        public bool roll_input;
         public bool jump_input;
         public bool inventory_input;
         public bool pick_up;
@@ -25,7 +26,7 @@ namespace PlayerController
         public bool rollFlag;
         public bool lockOnFlag;
         public bool sprintFlag;
-        public float rollInputTimer;
+        public float sprintInputTimer;
         
 
         PlayerControls inputActions;
@@ -63,8 +64,12 @@ namespace PlayerController
                 inputActions.PlayerAction.Jump.performed += i => jump_input = true;
                 inputActions.PlayerAction.Inventory.performed += i => inventory_input = true;
 
-                inputActions.PlayerAction.Roll.performed += i => b_input = true;
-                inputActions.PlayerAction.Roll.canceled += i => b_input = false;
+                inputActions.PlayerAction.Roll.performed += i => roll_input = true;
+                inputActions.PlayerAction.Roll.canceled += i => roll_input = false;
+
+                inputActions.PlayerAction.Sprint.performed += i => sprint_input = true;
+                inputActions.PlayerAction.Sprint.canceled += i => sprint_input = false;
+                
 
                 inputActions.PlayerAction.LockOn.performed += i => lock_on_input = true;
 
@@ -86,7 +91,7 @@ namespace PlayerController
 
         public bool isMoveInputsPressed()
         {
-            if(movementInput != Vector2.zero || jump_input || b_input)
+            if(movementInput != Vector2.zero || jump_input || roll_input)
                 return true;
           
             return false;  
@@ -104,31 +109,23 @@ namespace PlayerController
 
         private void HandleRollInput(float delta)
         {
-            if (b_input)
+            rollFlag = roll_input;
+
+            if (sprint_input)
             {
-                rollInputTimer += delta;
-                
-                if(playerStats.currentStamina <= 0)
+                if (playerStats.currentStamina <= 0)
                 {
-                    b_input = false;
+                    sprint_input = false;
                     sprintFlag = false;
                 }
-                
-                if(moveAmount > 0.5f && playerStats.currentStamina > 0)
+
+                if (moveAmount > 0.5f && playerStats.currentStamina > 0)
                 {
                     sprintFlag = true;
                 }
             } else
             {
                 sprintFlag = false;
-
-                if (rollInputTimer > 0 && rollInputTimer < 0.5f)
-                {
-                    sprintFlag = false;
-                    rollFlag = true;
-                }
-
-                rollInputTimer = 0;
             }
         }
 

@@ -75,12 +75,12 @@ namespace PlayerController
 
         void Start()
         {
-
             cameraObject = Camera.main.transform;
             myTransform = transform;
             animatorHandle.Initialized();
 
             playerManager.isGrounded = true;
+            playerManager.isClimbable = true;
             ignoreForGroundCheck = ~(1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("CharacterColliderBlocker"));
 
             Physics.IgnoreCollision(characterCollider, characterCollisionBlockerCollider, true);
@@ -209,10 +209,8 @@ namespace PlayerController
 
             moveDirection *= CalculateRunningSpeed(currentRunningSpeed);
 
-            Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
+            Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector).normalized * CalculateRunningSpeed(currentRunningSpeed);
             SetRigidbodyVelocity(projectedVelocity);
-
-
 
             if (inputHandle.lockOnFlag && inputHandle.sprintFlag == false)
             {
@@ -235,47 +233,37 @@ namespace PlayerController
             if (playerManager.isInteracting)
                 return;
 
+            if (playerManager.isOnWall)
+                return;
+
             if (playerManager.isInAir || playerManager.isJumping)
                 return;
 
+            if (moveDirection.magnitude == 0) return;
+
             RaycastHit hitLower45;
             Vector3 startTestStepPosition = transform.position;
-            float maxDistance = 0.3f;
+            float maxDistance = 0.6f;
 
             Vector3 foward = moveDirection.normalized;
-            if (Physics.Raycast(startTestStepPosition, foward, out hitLower45, maxDistance + 0.3f, cameraHandle.ignoreLayers))
+            Collider[] hitLowers = Physics.OverlapBox(startTestStepPosition, new Vector3(maxDistance, 0, maxDistance), Quaternion.identity, cameraHandle.environmentLayer); 
+            
+            if (hitLowers.Length > 0)
             {
-                RaycastHit hitUpper45;
-                if (!Physics.Raycast(startTestStepPosition + new Vector3(0, stepHeight, 0), foward, out hitUpper45, maxDistance + 0.3f, cameraHandle.ignoreLayers))
+                Collider[] hitUppers = Physics.OverlapBox(startTestStepPosition + new Vector3(0, stepHeight, 0), new Vector3(maxDistance, 0, maxDistance), Quaternion.identity, cameraHandle.environmentLayer);
+                if (hitUppers.Length == 0)
                 {
-                    Vector3 move = moveDirection.normalized + Vector3.up;
-                    SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
-                    return;
-                }
-            }
-
-            Vector3 side = Vector3.Cross(transform.up, moveDirection.normalized);
-            Vector3 left = (foward + side).normalized;
-            if (Physics.Raycast(startTestStepPosition, left, out hitLower45, maxDistance, cameraHandle.ignoreLayers))
-            {
-                RaycastHit hitUpper45;
-                if (!Physics.Raycast(startTestStepPosition + new Vector3(0, stepHeight, 0), left, out hitUpper45, maxDistance, cameraHandle.ignoreLayers))
-                {
-                    Vector3 move = moveDirection.normalized + Vector3.up;
-                    SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
-                    return;
-                }
-            }
-
-            Vector3 right = (foward - side).normalized;
-            if (Physics.Raycast(startTestStepPosition, right, out hitLower45, maxDistance, cameraHandle.ignoreLayers))
-            {
-                RaycastHit hitUpper45;
-                if (!Physics.Raycast(startTestStepPosition + new Vector3(0, stepHeight, 0), right, out hitUpper45, maxDistance, cameraHandle.ignoreLayers))
-                {
-
-                    Vector3 move = moveDirection.normalized + Vector3.up;
-                    SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
+                    //fix calculate raycast with all collider
+                    bool a = hitLowers[0].Raycast(new Ray(startTestStepPosition, foward), out hitLower45, 0.5f);
+                    Debug.Log("stepping " + a + " " + Vector3.Dot(hitLower45.normal, transform.up));
+                    bool canClimbSlope = Vector3.Dot(hitLower45.normal, transform.up) < 0.1f;
+             
+                    if (a && canClimbSlope)
+                    {
+                        Vector3 move = moveDirection.normalized + Vector3.up;
+                        SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
+                    }
+                    
                     return;
                 }
             }
@@ -292,6 +280,8 @@ namespace PlayerController
             if (playerStats.currentStamina <= 0)
                 return;
 
+            
+
             if (inputHandle.rollFlag)
             {
                 moveDirection += cameraObject.forward * inputHandle.vertical;
@@ -301,6 +291,7 @@ namespace PlayerController
                 if (inputHandle.moveAmount > 0)
                 {
                     animatorHandle.PlayTargetAnimation("Rolling", true);
+                    animatorHandle.anim.SetBool("usingAnimationMove", true);
                     moveDirection.y = 0;
                     Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = rollRotation;
@@ -329,21 +320,34 @@ namespace PlayerController
             Vector3 origin = myTransform.position;
             origin.y += groundDetectionRayStartPoint;
 
-            LayerMask ignoreRaycastMask = (LayerMask.GetMask("Environment"));
-            if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.4f, ignoreRaycastMask))
+            //check wall to climb
+            if(playerManager.isJumping && playerManager.isInAir && playerManager.isClimbable)
             {
-                moveDirection = Vector3.zero;
-
-                bool climbable = (hit.collider.gameObject.layer == cameraHandle.environmentLayer);
-
-                if (playerManager.isJumping && playerManager.isInAir && climbable)
+                if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.3f, cameraHandle.environmentLayer))
                 {
-                    //start climp wall
-                    animatorHandle.StartClimbing();
-                    wallNormal = hit.normal;
+                    moveDirection = Vector3.zero;
+                    
+                    bool climbable = (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"));
+                    float dotTest = Mathf.Abs( Vector3.Dot(hit.normal, transform.up) );
+
+                    if (climbable && dotTest < 0.2f)
+                    {
+                        //start climp wall
+                        Debug.Log("asd");
+                        animatorHandle.StartClimbing();
+                        playerManager.isClimbable = false;
+                        targetPosition = hit.point + hit.normal * 0.31f;
+                        wallNormal = hit.normal;
+                        return;
+                    }
                 }
             }
+
             //change velocity of rigidbody
+            if(moveDirection.magnitude < 0.05f) 
+            { 
+                moveDirection = Vector3.zero; 
+            }
             Vector3 velocity = moveDirection.normalized * CalculateRunningSpeed(currentRunningSpeed) - fallingVelocity * Vector3.up;
 
             if (playerManager.isJumping)
@@ -366,8 +370,7 @@ namespace PlayerController
                 {
                     normalVector = hit.normal;
                     Vector3 tp = hit.point;
-                    targetPosition.y = tp.y;
-
+                    targetPosition.y = tp.y + 0.02f;
                     playerManager.isGrounded = true;
 
                     if (playerManager.isInAir)
@@ -384,6 +387,7 @@ namespace PlayerController
 
                         inAirTimer = 0;
                         playerManager.isInAir = false;
+                        playerManager.isClimbable = true;
                         this.moveDirection = Vector3.zero;
                         animatorHandle.StopJumping();
                         animatorHandle.StopDoubleJump();
@@ -391,6 +395,7 @@ namespace PlayerController
                 }
                 else
                 {
+                    
                     if (playerManager.isGrounded)
                     {
                         playerManager.isGrounded = false;
@@ -418,7 +423,7 @@ namespace PlayerController
                 }
                 else
                 {
-                    myTransform.position = targetPosition;
+                    myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
                 }
 
                 if(!playerManager.isJumping) 
@@ -435,9 +440,63 @@ namespace PlayerController
         {
             if(playerManager.isOnWall)
             {
-                if(inAirTimer > 0.6f)
+                //remove gravity
+                SetRigidbodyVelocity(Vector3.zero);
+                
+                //move close to wall
+                if(playerManager.isClimbable == false)
                 {
+                    if (Vector3.Distance(myTransform.position, targetPosition) < 0.02f)
+                    {
+                        myTransform.position = targetPosition;
+                        playerManager.isClimbable = true;
+                    } else
+                    {
+                        myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime * 5f);
+                    }
+                    return;
+                }
+
+                //handle rotation
+                RaycastHit hit;
+                Debug.DrawRay(transform.position, -wallNormal);
+                if (Physics.SphereCast(transform.position, 0.3f, -wallNormal, out hit, 0.6f))
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(-hit.normal, transform.up);
+                    wallNormal = wallNormal + hit.normal;
+                    wallNormal.Normalize();
+                    transform.forward = -wallNormal;
+                    
+                    //
+                    //wallNormal = hit.normal;
+                }
+                else
+                {
+                    //if(Vector3.Angle(transform.forward)
                     animatorHandle.StopClimbing();
+                    return;
+                }
+
+                if (inputHandle.moveAmount > 0)
+                {
+                    Vector3 right = Vector3.Cross(wallNormal, transform.up);
+                    Vector3 forward = Vector3.Cross(right, wallNormal);
+                    Vector3 climbDirection = forward * inputHandle.vertical;
+                    climbDirection += right * inputHandle.horizontal;
+                    climbDirection.Normalize();
+
+                    Vector3 projectedVelocity = Vector3.ProjectOnPlane(climbDirection, wallNormal).normalized;
+                    SetRigidbodyVelocity(projectedVelocity);
+                    animatorHandle.anim.SetBool("isClimbing", true);
+                    inAirTimer = 0f;
+                } else
+                {
+                    animatorHandle.anim.SetBool("isClimbing", false);
+                }
+
+                if (inAirTimer > 1.6f)
+                {
+                    //animatorHandle.StopClimbing();
                 }
             }
         }
@@ -447,53 +506,57 @@ namespace PlayerController
             if (playerManager.usingAnimationMove)
                 return;
 
-            if (playerManager.isInteracting && !playerManager.isOnWall && !playerManager.canDoubleJump)
+            if (playerManager.isInteracting && !playerManager.isOnWall && !playerManager.isInAir)
                 return;
 
-            if (playerStats.currentStamina <= 0)
-                return;
+            //if (playerStats.currentStamina <= 0)
+            //    return;
 
             if (inputHandle.jump_input)
             {
                 if(playerManager.isOnWall)
                 {
-                    animatorHandle.StopClimbing();
-                    animatorHandle.PlayTargetAnimation("Jump", true);
-                    moveDirection = Vector3.Reflect(moveDirection, wallNormal);
-                    animatorHandle.StartJumping();
+                    animatorHandle.PlayTargetAnimation("JumpFromWall", true);
+                    animatorHandle.anim.SetBool("usingAnimationMove", true);
+                 
                     fallingVelocity = 0;
                     return;
                 }
 
-                if(playerManager.canDoubleJump)
+                if(playerManager.canDoubleJump && playerManager.isInAir)
                 {
-                    animatorHandle.PlayTargetAnimation("Rolling", true);
+                    animatorHandle.PlayTargetAnimation("DoubleJump", true);
                     animatorHandle.StartJumping();
+                    playerManager.isClimbable = false;
                     fallingVelocity = 0;
                     return;
                 }
 
-                if (inputHandle.moveAmount > 0)
+                if (inputHandle.moveAmount > 0 && rigidbody.velocity.magnitude > 0.1f)
                 {
-                    moveDirection = cameraObject.forward * inputHandle.vertical;
-                    moveDirection += cameraObject.right * inputHandle.horizontal;
+                    //moveDirection = cameraObject.forward * inputHandle.vertical;
+                    //moveDirection += cameraObject.right * inputHandle.horizontal;
+                    //moveDirection.y = 0;
+                    //moveDirection.Normalize();
                     animatorHandle.PlayTargetAnimation("Jump", true);
-
-                    moveDirection.y = 0;
-                    moveDirection.Normalize();
+                    
                     Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = jumpRotation;
-
                     animatorHandle.StartJumping();
                 }
                 else
                 {
                     animatorHandle.PlayTargetAnimation("Jump", true);
-                    moveDirection = Vector3.zero;
+                    moveDirection = transform.forward * 0.01f;
                     animatorHandle.StartJumping();
-                    
                 }
             }
+        }
+
+        public void ReflectMoveDirection()
+        {
+            moveDirection = wallNormal * CalculateRunningSpeed(currentRunningSpeed);
+            //Vector3.Reflect(moveDirection, wallNormal);
         }
 
         #endregion

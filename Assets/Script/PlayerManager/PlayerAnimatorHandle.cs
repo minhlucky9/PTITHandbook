@@ -94,7 +94,16 @@ namespace PlayerController
         public void StopClimbing()
         {
             anim.SetBool("isOnWall", false);
+            playerManager.isClimbable = false;
             playerLocomotion.rigidbody.WakeUp();
+        }
+
+        public void StartJumpingFromWall()
+        {
+            anim.SetBool("usingAnimationMove", false);
+            StopClimbing();
+            StartJumping();
+            playerLocomotion.ReflectMoveDirection();
         }
 
         public void StartJumping()
@@ -157,12 +166,15 @@ namespace PlayerController
             if (playerManager.isInteracting == false)
                 return;
 
+            if (playerManager.usingAnimationMove == false)
+                return;
+
             float delta = Time.deltaTime;
             playerLocomotion.rigidbody.drag = 0;
 
             Vector3 deltaPosition = anim.deltaPosition;
             deltaPosition.y = 0;
-            Vector3 velocity = deltaPosition / delta;
+            Vector3 velocity = deltaPosition * playerStats.speedMultiplier / delta;
             playerLocomotion.SetRigidbodyVelocity(velocity);
         }
     }

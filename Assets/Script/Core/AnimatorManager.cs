@@ -1,3 +1,4 @@
+using PlayerController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace Core
             anim.applyRootMotion = isInteracting;
             anim.SetBool("canRotate", false);
             anim.SetBool("isInteracting", isInteracting);
+
+            PlayerManager.instance.isInteracting = isInteracting;
+
             StartCoroutine(RunAnimation(targetAnim, delay));
         }
 
