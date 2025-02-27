@@ -19,36 +19,76 @@ MonoBehaviour:
   startFromFirstDialog: 0
   dialogs:
   - dialogId: dialog1
-    message: "Ch\xE0o em. \nCh\xFAc em c\xF3 m\u1ED9t ng\xE0y t\u1ED1t l\xE0nh."
+    message: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+      x
+
+      x
+
+      x
+
+      x
+
+      x
+
+
+      x
+
+      x'
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em c\u1EA3m \u01A1n anh \u1EA1."
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
-    nodePosition: {x: 34, y: 198}
+    nodePosition: {x: 873.2001, y: 41.19999}
   - dialogId: dialog2
-    message: 
+    message: xxx
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 301, y: 382}
+    nodePosition: {x: 105.80002, y: 278.8}
   - dialogId: dialog3
     message: 
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 329, y: 37}
+    nodePosition: {x: 147.40002, y: 52.200027}
   - dialogId: dialog5
     message: 
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 701, y: 49}
+    nodePosition: {x: 33.799973, y: 433}
   - dialogId: dialog6
     message: 
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 1085, y: 266}
+    nodePosition: {x: 287.39996, y: 353.19998}
   - dialogId: dialog4
-    message: 
+    message: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 674, y: 380}
+    nodePosition: {x: 578, y: 231.19995}
+  - dialogId: dialog7
+    message: 
+    nodeSize: {x: 200, y: 100}
+    voice: {fileID: 0}
+    possibleResponses: []
+    nodePosition: {x: 384.80002, y: 151.59998}
+  - dialogId: dialog8
+    message: 
+    nodeSize: {x: 200, y: 100}
+    voice: {fileID: 0}
+    possibleResponses: []
+    nodePosition: {x: 947.2, y: 389.2}
+  - dialogId: dialog9
+    message: 
+    nodeSize: {x: 200, y: 100}
+    voice: {fileID: 0}
+    possibleResponses: []
+    nodePosition: {x: 774.4, y: 432.40002}

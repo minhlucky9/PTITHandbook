@@ -20,6 +20,7 @@ MonoBehaviour:
   dialogs:
   - dialogId: dialog1
     message: "Hay em \u01A1i, ph\u1EA7n th\u01B0\u1EDFng c\u1EE7a em \u0111\xE2y"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em c\u1EA3m \u01A1n a \u1EA1."

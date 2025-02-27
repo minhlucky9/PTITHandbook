@@ -20,6 +20,7 @@ MonoBehaviour:
   dialogs:
   - dialogId: dialog1
     message: "C\xF3 vi\u1EC7c g\xEC th\u1EBF em?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em \u0111ang \u0111i kh\xE1m ph\xE1 h\u1ECDc vi\u1EC7n th\xF4i \u1EA1"
@@ -34,6 +35,7 @@ MonoBehaviour:
   - dialogId: dialog2
     message: "Em mu\u1ED1n v\u1EEBa kh\xE1m ph\xE1 h\u1ECDc vi\u1EC7n v\u1EEBa c\xF3
       ph\u1EA7n th\u01B0\u1EDFng kh\xF4ng?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Ui c\xF3 ch\u1EE9 anh!"
@@ -49,6 +51,7 @@ MonoBehaviour:
     message: "\u0110\u01B0\u1EE3c, anh \u0111\xE3 r\u1EA3i r\xE1c c\xE1c ng\xF4i
       sao xung quanh h\u1ECDc vi\u1EC7n r\u1ED3i, n\u1EBFu em t\xECm \u0111\u01B0\u1EE3c
       t\u1EA5t c\u1EA3 anh s\u1EBD c\xF3 th\u01B0\u1EDFng cho em."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"
@@ -58,6 +61,7 @@ MonoBehaviour:
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog4
     message: "Oke em, anh t\u01B0\u1EDFng em \u0111\u1EC3 \xFD \u0111\u1EBFn anh.."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "D\u1EA1 em xin l\u1ED7i"
@@ -67,6 +71,7 @@ MonoBehaviour:
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog5
     message: "Haizz, th\xF4i kh\xF4ng sao, anh ch\u1EDD em quay l\u1EA1i."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"
