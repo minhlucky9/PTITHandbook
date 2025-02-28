@@ -21,6 +21,7 @@ MonoBehaviour:
   - dialogId: dialog1
     message: "Em \u01A1i, b\u1ECDn anh \u0111ang c\xF3 th\u1EED th\xE1ch leo th\xE1p
       n\xE0y, em mu\u1ED1n th\u1EED kh\xF4ng?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em \u0111ang v\u1ED9i l\u1EAFm anh \u1EA1 !"
@@ -35,6 +36,7 @@ MonoBehaviour:
   - dialogId: dialog2
     message: "C\xE1i em sinh vi\xEAn l\xE0y, c\u1EE9 l\xF3i \u0111i\xEAu th\xF4i,
       m\u1EDBi nh\u1EADp h\u1ECDc c\xF3 g\xEC \u0111\xE2u m\xE0 v\u1ED9i"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: ...
@@ -45,6 +47,7 @@ MonoBehaviour:
   - dialogId: dialog3
     message: "\u0110\u01B0\u1EE3c r\u1ED3i, nh\u1EAFm m\u1EAFt v\xE0o \u0111\u1EC3
       d\u1ECBch chuy\u1EBFn \u0111\u1EBFn t\xF2a th\xE1p nh\xE9"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"

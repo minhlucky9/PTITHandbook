@@ -165,7 +165,7 @@ public class NodeEditor : EditorWindow
 		menu.AddItem(new GUIContent("Anwser"), false, () => Debug.Log("Option 2 Selected"));
 	}
 
-	void DrawNodeCurve(Rect start, Rect end)
+	public void DrawNodeCurve(Rect start, Rect end)
 	{
 		Vector3 startPos = new Vector3(start.x + start.width, start.y + start.height / 2, 0);
 		Vector3 endPos = new Vector3(end.x, end.y + end.height / 2, 0);

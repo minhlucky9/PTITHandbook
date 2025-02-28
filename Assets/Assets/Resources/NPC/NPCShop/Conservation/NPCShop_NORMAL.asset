@@ -20,6 +20,7 @@ MonoBehaviour:
   dialogs:
   - dialogId: dialog1
     message: "Ch\xE0o em, c\xF4 c\xF3 th\u1EC3 gi\xFAp g\xEC cho em?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em mu\u1ED1n mua m\u1ED9t ch\xFAt \u0111\u1ED3 \u1EA1"

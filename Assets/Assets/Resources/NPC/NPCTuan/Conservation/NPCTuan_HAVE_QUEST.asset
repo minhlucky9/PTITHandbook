@@ -21,6 +21,7 @@ MonoBehaviour:
   - dialogId: dialog1
     message: "Ch\xE0o em, h\u1ECDc vi\u1EC7n m\xECnh s\u1EAFp c\xF3 l\u1EC5 h\u1ED9i
       \u0111\xF3, em c\xF3 mu\u1ED1n tham gia kh\xF4ng?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Th\xF4i anh \u1EA1, em h\u01B0\u1EDBng n\u1ED9i l\u1EAFm"
@@ -35,6 +36,7 @@ MonoBehaviour:
   - dialogId: dialog2
     message: "Haizz, sinh vi\xEAn th\u1EDDi nay h\u01B0\u1EDBng n\u1ED9i th\u1EBF
       nh\u1EC9?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: ...
@@ -47,6 +49,7 @@ MonoBehaviour:
       t\u1ED5 ch\u1EE9c \u1EDF s\xE2n tr\u01B0\u1EDDng, tr\u01B0\u1EDBc c\u1EEDa
       nh\xE0 A2, n\u1EBFu em thu th\u1EADp \u0111\u1EE7 c\xE1c emoticon trong l\u1EC5
       h\u1ED9i, quay l\u1EA1i \u0111\xE2y em s\u1EBD \u0111\u01B0\u1EE3c th\u01B0\u1EDFng"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"

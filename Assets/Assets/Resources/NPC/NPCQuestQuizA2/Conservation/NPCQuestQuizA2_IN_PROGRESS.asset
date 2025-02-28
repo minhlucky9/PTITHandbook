@@ -20,6 +20,7 @@ MonoBehaviour:
   dialogs:
   - dialogId: dialog1
     message: "Em \u0111\xE3 chu\u1EA9n b\u1ECB s\u1EB5n s\xE0ng r\u1ED3i ch\u1EE9?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "D\u1EA1, em s\u1EB5n s\xE0ng r\u1ED3i \u1EA1"
@@ -34,6 +35,7 @@ MonoBehaviour:
   - dialogId: dialog2
     message: "Kh\xF4ng sao, em c\u1EE9 ti\u1EBFp t\u1EE5c t\xECm hi\u1EC3u. H\xE3y
       quay l\u1EA1i khi em \u0111\xE3 chu\u1EA9n b\u1ECB s\u1EB5n s\xE0ng nh\xE9."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1, em ch\xE0o c\xF4"

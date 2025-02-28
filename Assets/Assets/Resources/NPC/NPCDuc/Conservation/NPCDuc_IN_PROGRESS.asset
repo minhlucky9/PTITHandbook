@@ -21,6 +21,7 @@ MonoBehaviour:
   - dialogId: dialog1
     message: "\u0110\u01B0\u1EE3c r\u1ED3i, nh\u1EAFm m\u1EAFt v\xE0o \u0111\u1EC3
       d\u1ECBch chuy\u1EBFn \u0111\u1EBFn t\xF2a th\xE1p nh\xE9"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"

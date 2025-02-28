@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,6 +55,7 @@ namespace Interaction
         public string dialogId;
         [TextArea(5, 10)]
         public string message;
+        public Vector2 nodeSize = new Vector2(200, 100); // Kích thước mặc định
         public AudioClip voice;
         public List<DialogResponse> possibleResponses;
 

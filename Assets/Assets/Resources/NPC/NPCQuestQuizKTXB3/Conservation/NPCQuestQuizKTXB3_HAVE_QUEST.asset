@@ -21,6 +21,7 @@ MonoBehaviour:
   - dialogId: dialog1
     message: "Xin ch\xE0o, em l\xE0 t\xE2n sinh vi\xEAn m\u1EDBi v\xE0o tr\u01B0\u1EDDng
       \u0111\xFAng kh\xF4ng?"
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "D\u1EA1, \u0111\xFAng r\u1ED3i anh \u1EA1"
@@ -37,6 +38,7 @@ MonoBehaviour:
       \u0111\u1EC3 xem \u0111\u1ED9 hi\u1EC3u bi\u1EBFt c\u1EE7a em v\u1EC1 <color=#06FFE6>\u0111\u1EDDi
       s\u1ED1ng c\u1EE7a sinh vi\xEAn</color> t\u1EA1i h\u1ECDc vi\u1EC7n \u0111\u1EBFn
       \u0111\xE2u nh\xE9."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"
@@ -47,6 +49,7 @@ MonoBehaviour:
   - dialogId: dialog3
     message: "Th\xEC ra l\xE0 v\u1EADy. Mong em c\xF3 kho\u1EA3ng th\u1EDDi gian
       vui v\u1EBB t\u1EA1i tr\u01B0\u1EDDng."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1, em ch\xE0o anh."
@@ -58,6 +61,7 @@ MonoBehaviour:
     message: "C\xE1c th\xF4ng tin v\u1EC1 c\xE2u h\u1ECFi c\xF3 th\u1EC3 \u0111\u01B0\u1EE3c
       t\xECm th\u1EA5y trong \u0111i\u1EC7n tho\u1EA1i c\u1EE7a em. H\xE3y quay l\u1EA1i
       g\u1EB7p anh khi em \u0111\xE3 s\u1EB5n s\xE0ng nh\xE9."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1, em ch\xE0o anh."
