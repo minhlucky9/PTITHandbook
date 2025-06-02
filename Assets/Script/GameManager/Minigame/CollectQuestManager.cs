@@ -1,4 +1,4 @@
-
+﻿
 using GameManager;
 using Interaction.Minigame;
 using System;
@@ -32,11 +32,12 @@ public class CollectQuestManager : MonoBehaviour
         collectQuest.numberToCollect = lootEvent.numberOfLoot;
         collectQuest.OnFinishQuest = () => {
             targetNPC.SendMessage("OnQuestMinigameSuccess");
+            QuestManager.instance.questMap[lootEvent.questId].OnQuestFinish += OnMainQuestComplete;
         };
         collectQuests.Add(lootEvent.minigameId, collectQuest);
 
         //setup quest complete callback
-        QuestManager.instance.questMap[lootEvent.questId].OnQuestFinish += OnMainQuestComplete;
+
     }
 
     public void OnMainQuestComplete()

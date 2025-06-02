@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62bde469a0977f4488098765bf5c53d6, type: 3}
+  m_Name: HienMau
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: HienMau
+  <DialogueGroups>k__BackingField:
+    list:
+    - Key: {fileID: 11400000, guid: 2ad693012fc04c84fad9c386a4fa00c9, type: 2}
+      Value:
+      - {fileID: 11400000, guid: 5313e693eae2da64ca68c36e0437424f, type: 2}
+      - {fileID: 11400000, guid: 507ec0ae6de4be740837696845bf7f93, type: 2}
+      - {fileID: 11400000, guid: 749d8845cd841a542a5764cbc8aba01a, type: 2}
+    - Key: {fileID: 11400000, guid: f1ff1871334cd7343a867328105e29aa, type: 2}
+      Value:
+      - {fileID: 11400000, guid: e999e3be5f2d05146b15a2f9eaf99854, type: 2}
+    - Key: {fileID: 11400000, guid: 553ee2bc8f0d77c45bd5e6755b9bf632, type: 2}
+      Value:
+      - {fileID: 11400000, guid: 9494f539149db0a49b5fab10ce6c9ac2, type: 2}
+      - {fileID: 11400000, guid: 108615e3e3a0e794fb39e79481e23bdb, type: 2}
+    - Key: {fileID: 11400000, guid: 7f1025f476bed3c478ba678d2e2691ab, type: 2}
+      Value:
+      - {fileID: 11400000, guid: 38b8b52566cbdf14eb82b61202d47068, type: 2}
+  <UngroupedDialogues>k__BackingField: []

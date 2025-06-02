@@ -48,3 +48,4 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 250
   itemRewards: []
+  questType: 2

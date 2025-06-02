@@ -1,10 +1,20 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Interaction
 {
     [CreateAssetMenu(menuName = "Scriptable Objects/NPC/NPC Info")]
+
+    #region NPCInfoSO là gì
+    /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    /* NPCInfoSO là một Scriptable Object chứa thông tin cơ bản về NPC (Non-Player Character) trong game */
+
+    /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    #endregion
+
     public class NPCInfoSO : ScriptableObject
     {
         public string npcId;

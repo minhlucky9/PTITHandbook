@@ -24,6 +24,8 @@ public class Quest
 
     public Action OnQuestFinish;
 
+    public event Action OnStateChanged;
+
     public bool isCurrentStepExists() => (currentQuestStepIndex < info.questSteps.Count);
 
     public Quest(QuestInfoSO questInfo)
@@ -75,6 +77,7 @@ public class Quest
 
     public void ChangeQuestState(QuestState state)
     {
+        OnStateChanged?.Invoke();
         this.state = state;
     }
 

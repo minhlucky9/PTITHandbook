@@ -52,6 +52,7 @@ public class InventoryUIManager : MonoBehaviour
             
             if (!inventoryItems[i].IsEmpty)
             {
+                Debug.Log("Inventory Item: " + inventoryItems[i].item.itemName + " Quantity: " + inventoryItems[i].quantity);
                 inventoryItemUI.InitInventorySlot(inventoryItems[i], i);
             }
         }
@@ -75,6 +76,7 @@ public class InventoryUIManager : MonoBehaviour
 
     public IEnumerator OpenWindow()
     {
+
         PlayerManager.instance.DeactivateController();
         yield return new WaitForSeconds(0.7f);
         uiAnimation.Activate();

@@ -28,10 +28,12 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: dialog2
       executedFunction: 0
+      NextExecutedFunction: 0
     - message: "U\u1EA7y hay \u0111\xF3, cho em chi\u1EBFn lu\xF4n"
       icon: {fileID: 21300000, guid: 0dc3836fd00185541bf57db184abd393, type: 3}
       nextDialogId: dialog3
       executedFunction: 0
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog2
     message: "C\xE1i em sinh vi\xEAn l\xE0y, c\u1EE9 l\xF3i \u0111i\xEAu th\xF4i,
@@ -43,6 +45,7 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog3
     message: "\u0110\u01B0\u1EE3c r\u1ED3i, nh\u1EAFm m\u1EAFt v\xE0o \u0111\u1EC3
@@ -54,4 +57,5 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 4
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}

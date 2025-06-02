@@ -27,8 +27,10 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 10
+      NextExecutedFunction: 0
     - message: "V\xE2ng \u1EA1"
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}

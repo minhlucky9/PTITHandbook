@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4a5bc6903fc6de44093486d4af864230, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_Sun: {fileID: 6717228663462720571, guid: 5d50ca1b72ca9da44af21f66ae2037b9, type: 3}
+  m_IndirectSpecularColor: {r: 0.14264178, g: 0.18637873, b: 0.2514402, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 7e70085fa1f1fc4459f8c0da50623919,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2696,14 +2697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855fed841561b7447b2fdd0103c55388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSave: []
-  messageText: {fileID: 1560220780}
-  emailInput_Register: {fileID: 1134171149}
-  passwordInput_Register: {fileID: 849973819}
-  emailInput_Login: {fileID: 1358929725}
-  passwordInput_Login: {fileID: 330765851}
-  rowObject: {fileID: 0}
-  rowsParent: {fileID: 0}
 --- !u!1 &396148809
 GameObject:
   m_ObjectHideFlags: 0
@@ -7148,7 +7141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7117223369bd97458be6f040b66c0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterDB: {fileID: 11400000, guid: 014fa96ed5c589c45ab48f107df1a479, type: 2}
+  characterDB: {fileID: 0}
   nameText: {fileID: 1482953175}
   artworkSprite: {fileID: 960897778}
   manager: {fileID: 0}
@@ -7696,7 +7689,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1054372466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7adeff71d96fa9643ad0a276d6e4a74b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f45ea7f6b77e4b4dafec21022719e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1056533956
@@ -11057,8 +11050,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b12761aa4a1d24bb20bbd86c27c48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewGameLevel: aaaaa
-  NoSaveGameDialog: {fileID: 30280163}
 --- !u!4 &1389666096
 Transform:
   m_ObjectHideFlags: 0
@@ -11197,9 +11188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9132359e52fe4024c8e81a1920e7d9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1389666098}
-  fadeOutButton: {fileID: 1454590725}
-  fadeDuration: 1
 --- !u!1 &1402746719
 GameObject:
   m_ObjectHideFlags: 0
@@ -11692,18 +11680,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 185611199}
-        m_TargetAssemblyTypeName: Character3D_Manager, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1059619297}
         m_TargetAssemblyTypeName: PlayerDataLoader, Assembly-CSharp
         m_MethodName: LoadPlayerData
@@ -11725,7 +11701,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: SampleScene
+          m_StringArgument: MainScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1454590726

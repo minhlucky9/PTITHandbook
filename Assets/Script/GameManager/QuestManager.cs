@@ -1,8 +1,13 @@
 ﻿using Interaction;
+using Interaction.Minigame;
 using PlayerStatsController;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using System.Linq;
+using static GlobalResponseData_Login;
+using static Interaction.QuestInfoSO;
 
 namespace GameManager
 {
@@ -10,25 +15,102 @@ namespace GameManager
     {
         public static QuestManager instance;
         Dictionary<string, NPCController> npcMap;
+        public int FirstTimeQuest = 0;
         [HideInInspector] public Dictionary<string, Quest> questMap;
         PlayerStats playerStats;
+        public TextMeshProUGUI CharacterName;
 
         [Header("Config")]
         [SerializeField] private bool loadQuestState = true;
 
         private void Awake()
         {
+            // Nếu đây là lần đầu cập nhật quest từ server (FirstTimeQuest == 1) 
+            // và GlobalResponseData đã có dữ liệu quests (tức là được load từ server)
+            if (GlobalResponseData.FirstTimeQuest == 1 &&
+                GlobalResponseData.quests != null && GlobalResponseData.quests.Count > 0)
+            {
+                questMap = GlobalResponseData.quests;
+                Debug.Log("Sử dụng dữ liệu quest từ server (GlobalResponseData.quests)");
+            }
+            else
+            {
+                // Nếu không (ví dụ FirstTimeQuest == 0) thì khởi tạo quest mới
+                questMap = CreateQuestMap();
+                Debug.Log("Tạo dữ liệu quest mới với CreateQuestMap()");
+            }
             instance = this;
+          
+           
         }
-
-        // Start is called before the first frame update
+        #region Old Start()
+        /*
         void Start()
         {
-            questMap = CreateQuestMap();
+            
             npcMap = CreateNPCMap();
             playerStats = FindObjectOfType<PlayerStats>();
             UpdateRequirementsMetQuest();
+            CharacterName.text = GlobalResponseData.fullname;
+
+            foreach (var quest in questMap.Values)
+            {
+                if (quest.state == QuestState.CAN_START || quest.state == QuestState.IN_PROGRESS)
+                {
+                    // Gọi InitQuestStep để NPCController.questStep không còn null
+                    InitQuestStep(quest.info.questSteps[quest.currentQuestStepIndex], quest.info.id);
+                }
+            }
+
         }
+        */
+        #endregion
+
+
+        void Start()
+        {
+            npcMap = CreateNPCMap();
+            playerStats = FindObjectOfType<PlayerStats>();
+            CharacterName.text = GlobalResponseData.fullname;
+
+            // 1. Reset hoàn toàn mọi quest đang IN_PROGRESS
+            var inProgressIds = questMap
+                .Where(kvp => kvp.Value.state == QuestState.IN_PROGRESS)
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            foreach (string questId in inProgressIds)
+            {
+                var info = questMap[questId].info;
+
+                // Tạo lại một Quest mới (QuizQuest hoặc Quest thường)
+                Quest freshQuest;
+                bool isQuiz = (info.questType == QuestType.Quiz);
+                if (isQuiz)
+                    freshQuest = new QuizQuest(info);
+                else
+                    freshQuest = new Quest(info);
+
+                // Thay thế instance cũ bằng instance mới
+                questMap[questId] = freshQuest;
+            }
+
+            // 2. Kiểm tra lại điều kiện để chuyển sang CAN_START (nếu cần)
+            UpdateRequirementsMetQuest();
+
+            // 3. Khởi tạo bước đầu cho tất cả quest đang ở CAN_START
+            foreach (var quest in questMap.Values)
+            {
+                if (quest.state == QuestState.CAN_START)
+                {
+                    InitQuestStep(
+                        quest.info.questSteps[quest.currentQuestStepIndex],
+                        quest.info.id
+                    );
+                }
+            }
+        }
+
 
         #region Handle Quest Step Update
 
@@ -151,25 +233,44 @@ namespace GameManager
             Quest quest = null;
             try
             {
-                // load quest from saved data
+                // Xác định loại quest (ở đây giả sử bạn sử dụng trường questType)
+                bool isQuizQuest = (questInfo.questType == QuestType.Quiz);
+
+                // Kiểm tra dữ liệu đã lưu nếu có
                 if (PlayerPrefs.HasKey(questInfo.id) && loadQuestState)
                 {
                     string serializedData = PlayerPrefs.GetString(questInfo.id);
-                    QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
-                    quest = new Quest(questInfo, questData.state, questData.questStepIndex, questData.questStepStates);
+                    if (isQuizQuest)
+                    {
+                        // Khởi tạo đối tượng QuizQuest từ dữ liệu đã lưu
+                        quest = QuizQuest.Deserialize(questInfo, serializedData);
+                    }
+                    else
+                    {
+                        QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
+                        quest = new Quest(questInfo, questData.state, questData.questStepIndex, questData.questStepStates);
+                    }
                 }
-                // otherwise, initialize a new quest
                 else
                 {
-                    quest = new Quest(questInfo);
+                    // Nếu không có dữ liệu lưu, khởi tạo quest mới theo đúng loại
+                    if (isQuizQuest)
+                    {
+                        quest = new QuizQuest(questInfo);
+                    }
+                    else
+                    {
+                        quest = new Quest(questInfo);
+                    }
                 }
             }
             catch (System.Exception e)
             {
-                Debug.LogError("Failed to load quest with id " + quest.info.id + ": " + e);
+                Debug.LogError("Failed to load quest with id " + questInfo.id + ": " + e);
             }
             return quest;
         }
+
 
         private Dictionary<string, NPCController> CreateNPCMap()
         {
