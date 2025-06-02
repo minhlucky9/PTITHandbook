@@ -5,6 +5,18 @@ using UnityEngine;
 namespace Interaction
 {
     [CreateAssetMenu(menuName = "Scriptable Objects/NPC/Conservation Data")]
+
+
+    #region NPCConservationSO là gì
+    /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    /* NPCConservationSO là một Scriptable Object quản lý dữ liệu hội thoại của NPC */
+
+    /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    #endregion
+
+
     public class NPCConservationSO : ScriptableObject
     {
         public string conservationId;
@@ -14,6 +26,16 @@ namespace Interaction
 
         public bool startFromFirstDialog;
         public List<DialogConservation> dialogs;
+
+
+        #region Phương thức GetDialog 
+        /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /* Trả về dialog có ID được chỉ định */
+
+        /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #endregion
 
         public DialogConservation GetDialog(string id)
         {
@@ -26,6 +48,16 @@ namespace Interaction
                 return null;
             }
         }
+
+
+        #region Phương thức GetDialogIndex 
+        /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        /* Trả về vị trí index của dialog trong list */
+
+        /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        #endregion
 
         public int GetDialogIndex(string id)
         {
@@ -79,13 +111,15 @@ namespace Interaction
         public Sprite icon;
         public string nextDialogId;
         public DialogExecuteFunction executedFunction;
-
+        public DialogExecuteFunction NextExecutedFunction;
         public DialogResponse()
         {
             message = "";
             icon = null;
             nextDialogId = "";
             executedFunction = DialogExecuteFunction.None;
+
+            NextExecutedFunction = DialogExecuteFunction.None;
         }
     }
 
@@ -101,6 +135,13 @@ namespace Interaction
         FinishQuestStepThenStartMinigame,
         OnQuestMinigameFail,
         OnQuestMinigameSuccess,
+        ListenMusic,
+        DonateFloodRelief,
+        DonateBlood,
+        CheckBloodCondition,
+        DeliverPhotoPhaoThi,
+        AcquirePhotoPhaoThi,
+
 
         //Quiz handle - Quiz Manager
         NextQuiz,
@@ -108,6 +149,8 @@ namespace Interaction
         AnswerWrong,
 
         //Functional Window - NPC Controller
-        OpenShopFunctionalWindow
+        OpenShopFunctionalWindow,
+        ResetConversation
+
     }
 }

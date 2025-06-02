@@ -27,10 +27,12 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: dialog2
       executedFunction: 0
+      NextExecutedFunction: 0
     - message: "Xin l\u1ED7i em \u0111i l\u1EA1c \u1EA1"
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: dialog4
       executedFunction: 0
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog2
     message: "Em mu\u1ED1n v\u1EEBa kh\xE1m ph\xE1 h\u1ECDc vi\u1EC7n v\u1EEBa c\xF3
@@ -42,10 +44,12 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: 0dc3836fd00185541bf57db184abd393, type: 3}
       nextDialogId: dialog3
       executedFunction: 0
+      NextExecutedFunction: 0
     - message: "Th\xF4i \u1EA1, em l\u01B0\u1EDDi l\u1EAFm"
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: dialog5
       executedFunction: 0
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog3
     message: "\u0110\u01B0\u1EE3c, anh \u0111\xE3 r\u1EA3i r\xE1c c\xE1c ng\xF4i
@@ -58,6 +62,7 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 4
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog4
     message: "Oke em, anh t\u01B0\u1EDFng em \u0111\u1EC3 \xFD \u0111\u1EBFn anh.."
@@ -68,6 +73,7 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog5
     message: "Haizz, th\xF4i kh\xF4ng sao, anh ch\u1EDD em quay l\u1EA1i."
@@ -78,4 +84,5 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
+      NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}

@@ -1,4 +1,5 @@
-﻿using Interaction.Minigame;
+﻿using GameManager;
+using Interaction.Minigame;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Interaction
     public class QuizManager : MonoBehaviour
     {
         public static QuizManager instance;
+        public string currentQuizQuestId;
 
         GameObject targetNPC;
         QuizConservationSO quizData;
@@ -28,9 +30,13 @@ namespace Interaction
         {
             ResetQuizMission();
             quizData = quiz;
+            currentQuizQuestId = quiz.questId;
             this.targetNPC = targetNPC;
+
+
+
             temporaryQnas = new List<QuestionAndAnswer>(quizData.qnas);
-            conservationManager.ChangeTargetNPC(gameObject);
+            conservationManager.ChangeTargetNPC(targetNPC);
 
             //intro dialog
             DialogConservation intro = quizData.quizIntro;
@@ -86,12 +92,14 @@ namespace Interaction
             {
                 correctDialog.message = "Thật tuyệt vời, em đã trả lời đúng <color=#06FFE6>" + correctAnswers + "/" + 8 + " câu hỏi</color> rồi. Tôi tin là sau cuộc trò chuyện này em đã có thêm nhiều hiểu biết về trường mình.";
                 response.executedFunction = DialogExecuteFunction.OnQuestMinigameSuccess;
+                Debug.Log(targetNPC);
             }
             
             response.message = "Vâng ạ";
             correctDialog.possibleResponses.Add(response);
             //
             StartCoroutine(conservationManager.UpdateConservation(correctDialog));
+           
         }
 
         public void AnswerCorrect()
@@ -111,6 +119,7 @@ namespace Interaction
             correctDialog.possibleResponses.Add(response);
             //
             StartCoroutine(conservationManager.UpdateConservation(correctDialog));
+            UpdateQuizQuestProgress();
         }
 
         public void AnswerWrong()
@@ -136,7 +145,7 @@ namespace Interaction
             wrongDialog.possibleResponses.Add(response);
             //
             StartCoroutine(conservationManager.UpdateConservation(wrongDialog));
-            
+            UpdateQuizQuestProgress();
         }
 
         QuestionAndAnswer GetRandomQuestion()
@@ -145,6 +154,22 @@ namespace Interaction
             QuestionAndAnswer qna = temporaryQnas[random];
             temporaryQnas.RemoveAt(random);
             return qna;
+        }
+
+        private void UpdateQuizQuestProgress()
+        {
+            // Lấy quest hiện tại từ QuestManager – giả sử bạn lưu được ID của quest quiz
+            Quest currentQuest = QuestManager.instance.questMap[currentQuizQuestId];
+            if (currentQuest is QuizQuest quizQuest)
+            {
+                quizQuest.currentQuestion = currentQuestion;
+                quizQuest.correctAnswers = correctAnswers;
+                quizQuest.wrongAnswers = wrongAnswers;
+                // Sau đó thực hiện lưu lại dữ liệu nếu cần
+                string data = quizQuest.SerializeData();
+                PlayerPrefs.SetString(quizQuest.info.id, data);
+                PlayerPrefs.Save();
+            }
         }
     }
 }

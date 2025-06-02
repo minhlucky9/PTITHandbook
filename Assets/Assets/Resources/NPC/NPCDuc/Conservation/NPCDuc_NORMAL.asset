@@ -43,13 +43,14 @@ MonoBehaviour:
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1
+      NextExecutedFunction: 0
     nodePosition: {x: 873.2001, y: 41.19999}
   - dialogId: dialog2
     message: xxx
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 105.80002, y: 278.8}
+    nodePosition: {x: 78.600006, y: 257.2}
   - dialogId: dialog3
     message: 
     nodeSize: {x: 200, y: 100}
@@ -61,19 +62,19 @@ MonoBehaviour:
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 33.799973, y: 433}
+    nodePosition: {x: 88.19998, y: 473.80005}
   - dialogId: dialog6
     message: 
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 287.39996, y: 353.19998}
+    nodePosition: {x: 346.59998, y: 363.59998}
   - dialogId: dialog4
     message: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses: []
-    nodePosition: {x: 578, y: 231.19995}
+    nodePosition: {x: 535.60004, y: 251.19995}
   - dialogId: dialog7
     message: 
     nodeSize: {x: 200, y: 100}

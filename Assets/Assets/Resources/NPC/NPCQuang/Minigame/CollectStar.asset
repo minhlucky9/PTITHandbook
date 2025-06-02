@@ -15,8 +15,8 @@ MonoBehaviour:
   minigameId: QuestCollectStar_step2
   questId: QuestCollectStar
   stepId: step2
+  targetNPC: {fileID: 0}
   lootObjects:
   - prefabs: {fileID: 7535746368800408008, guid: 80e520cf0b2785c4fad64db061442f41,
       type: 3}
-    position: {x: 0, y: 0, z: 0}
-  numberOfLoot: 15
+  numberOfLoot: 14

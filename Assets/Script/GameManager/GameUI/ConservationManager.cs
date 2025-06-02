@@ -1,3 +1,4 @@
+﻿using DS.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,59 +10,108 @@ namespace Interaction
     public class ConservationManager : MonoBehaviour
     {
         public static ConservationManager instance;
+
         [Header("NPC Message")]
+
         public UIAnimationController messageContainer;
+
         public TMP_Text npcMessage;
+
         public TMP_Text npcName;
+
         public TMP_Text npcRole;
 
         [Header("Player Response")]
+
         public UIAnimationController responseController;
+
         public GameObject responsePrefab;
+
         public Sprite defautIcon;
 
         GameObject targetNPC;
+
         NPCConservationSO conservationData;
 
         private void Awake()
         {
+
             instance = this;
+
+        }
+
+        public void InitConservation(GameObject npc, DialogConservation dialog)
+        {        
+            targetNPC = npc;
+
+            var npcController = npc.GetComponent<IDialogueHandler>();
+
+            if (npcController != null)
+            {
+                npcName.text = npcController.NpcInfo.npcName;
+
+                npcRole.text = npcController.NpcInfo.npcRole;
+            }
+
+            SetupDialogInConservation(dialog);
+
+            StartCoroutine(ActivateConservationDialog());
         }
 
         public void InitConservation(GameObject npc, NPCConservationSO conservation)
         {
             targetNPC = npc;
+
             conservationData = conservation;
 
             //update name and role text
             NPCController npcController = npc.GetComponent<NPCController>();
+
             if (npcController)
             {
                 npcName.text = npcController.npcInfo.npcName;
+
                 npcRole.text = npcController.npcInfo.npcRole;
             }
             
 
             //setup first conservation
             DialogConservation firstDialog;
+
             if(conservationData.startFromFirstDialog)
             {
                 firstDialog = conservation.dialogs[0];
-            } else
+            }
+
+            else
             {
                 //can get a random dialog
                 firstDialog = conservation.dialogs[0];
             }
-            SetupDialogInConservation(firstDialog);
+
+            SetupQuizDialogInConservation(firstDialog);
         }
 
         public void ChangeTargetNPC(GameObject npc) { targetNPC = npc; }
 
+        #region SetupDialog
+
         void SetupDialogInConservation(DialogConservation dialog)
         {
-            //Setup npc message
+           
             npcMessage.text = dialog.message;
-   
+
+            var npcCtrl = targetNPC.GetComponent<IDialogueHandler>();
+
+            if (npcCtrl != null)
+            {
+                npcCtrl.PausedDialog = dialog;
+
+                Debug.Log($"[PauseResume] saved pausedDialog = {dialog.dialogId}");
+
+                npcCtrl.IsConversationPaused = false;
+            }
+
             //Setup player response
             //Clear old responses in container
             foreach (Transform child in responseController.transform)
@@ -76,24 +126,165 @@ namespace Interaction
 
                 //find or create response object
                 GameObject responseObject;
+
                 if (i < responseController.transform.childCount)
                 {
                     responseObject = responseController.transform.GetChild(i).gameObject;
-                } else
+                } 
+
+                else
                 {
                     responseObject = Instantiate(responsePrefab, responseController.transform);
                 }
 
                 //setup response data
                 responseObject.GetComponentInChildren<TMP_Text>().text = responseData.message;
+
                 responseObject.transform.GetChild(1).GetComponent<Image>().sprite = responseData.icon != null? responseData.icon : defautIcon;
+
                 responseObject.GetComponent<Button>().onClick.AddListener(delegate () 
                 {
-                    if(responseData.nextDialogId != "") 
+                    if (!string.IsNullOrEmpty(responseData.nextDialogId))
+                    {
+                        Debug.Log($"Looking for next node with ID: {responseData.nextDialogId}");
+
+                        // Lấy adapter từ targetNPC, nếu chưa có thì thử dùng DialogueManager
+                        var npcController = targetNPC.GetComponent<IDialogueHandler>();
+
+                        DSDialogueAdapter dialogueAdapter = targetNPC.GetComponent<DSDialogueAdapter>();                     
+
+                        DSDialogueSO nextNode = dialogueAdapter != null ? dialogueAdapter.GetNodeByName(responseData.nextDialogId) : null;
+
+                        if (nextNode != null)
+                        {
+                            Debug.Log($"Found next node: {nextNode.DialogueName}");
+
+                            DialogConservation nextCons = dialogueAdapter.ConvertDSDialogueToConservation(nextNode);
+
+                            StartCoroutine(UpdateConservation(nextCons));
+
+                            // Gửi lệnh dựa trên ExecutedFunction của node tiếp theo, không của response hiện tại.
+                            if (nextNode.NextExecutedFunction != DialogExecuteFunction.None)
+                            {
+                                targetNPC.SendMessage(nextNode.NextExecutedFunction.ToString());
+
+                                Debug.Log(nextNode.NextExecutedFunction.ToString());
+                            }
+                        }                        
+                       
+                        else
+                        {
+                            Debug.LogError($"Could not find next node with ID: {responseData.nextDialogId}");
+
+                            Debug.Log($"Current nodeLookup count: {(dialogueAdapter != null ? dialogueAdapter.GetNodeLookupCount() : 0)}");
+
+                            if (dialogueAdapter != null)
+                            {
+                                dialogueAdapter.LogNodeNames();
+                            }
+                        }
+                    }
+                    else if (responseData.executedFunction == DialogExecuteFunction.NextQuiz ||
+                            responseData.executedFunction == DialogExecuteFunction.AnswerCorrect ||
+                            responseData.executedFunction == DialogExecuteFunction.AnswerWrong
+                           )
+                    {
+                        // Gọi trực tiếp hàm của QuizManager
+                        QuizManager.instance.Invoke(responseData.executedFunction.ToString(), 0f);
+                    }
+
+                    else if (responseData.executedFunction == DialogExecuteFunction.OnQuestMinigameSuccess ||
+                             responseData.executedFunction == DialogExecuteFunction.OnQuestMinigameFail ||
+                             responseData.executedFunction == DialogExecuteFunction.OpenShopFunctionalWindow)
+                    {
+                        targetNPC.SendMessage(responseData.executedFunction.ToString());
+                    }
+                    else if (string.IsNullOrEmpty(responseData.nextDialogId) && responseData.executedFunction != DialogExecuteFunction.None)
+                    {/*
+                        Debug.Log("No nextDialogId; switching to quiz conversation.");
+                        // Dừng hội thoại cũ
+                        StopAllCoroutines();
+                        responseController.Deactivate();
+                        messageContainer.Deactivate();
+
+                        // Lấy NPCController của targetNPC để lấy tham chiếu quiz conversation
+                        NPCController npcController = targetNPC.GetComponent<NPCController>();
+                        if (npcController != null && npcController.quizConversation != null)
+                        {
+                            // Gọi trực tiếp QuizManager để khởi tạo hội thoại quiz
+                            QuizManager.instance.InitAndStartQuizData(targetNPC, npcController.quizConversation);
+                        }
+                        else
+                        {
+                            Debug.LogError("Quiz conversation asset not assigned in NPCController or NPCController not found.");
+                        }
+                    */
+
+                        targetNPC.SendMessage(responseData.executedFunction.ToString());
+                    }
+                   
+
+                    else
+                    {
+                        // Get the TalkInteraction component from the target NPC
+                        TalkInteraction talkInteraction = targetNPC.GetComponent<TalkInteraction>();
+                        if (talkInteraction != null)
+                        {
+                            talkInteraction.StopInteract();
+                        }
+                        else
+                        {
+                            Debug.LogError($"No TalkInteraction component found on NPC: {targetNPC.name}");
+                        }
+                    }
+                });
+
+
+
+
+                responseObject.SetActive(true);
+            }
+            responseController.UpdateObjectChange();
+        }
+
+        void SetupQuizDialogInConservation(DialogConservation dialog)
+        {
+            //Setup npc message
+            npcMessage.text = dialog.message;
+
+            //Setup player response
+            //Clear old responses in container
+            foreach (Transform child in responseController.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
+            //Add new response
+            for (int i = 0; i < dialog.possibleResponses.Count; i++)
+            {
+                DialogResponse responseData = dialog.possibleResponses[i];
+
+                //find or create response object
+                GameObject responseObject;
+                if (i < responseController.transform.childCount)
+                {
+                    responseObject = responseController.transform.GetChild(i).gameObject;
+                }
+                else
+                {
+                    responseObject = Instantiate(responsePrefab, responseController.transform);
+                }
+
+                //setup response data
+                responseObject.GetComponentInChildren<TMP_Text>().text = responseData.message;
+                responseObject.transform.GetChild(1).GetComponent<Image>().sprite = responseData.icon != null ? responseData.icon : defautIcon;
+                responseObject.GetComponent<Button>().onClick.AddListener(delegate ()
+                {
+                    if (responseData.nextDialogId != "")
                     {
                         DialogConservation nextDialog = conservationData.GetDialog(responseData.nextDialogId);
-                        if(nextDialog != null) { StartCoroutine(UpdateConservation(nextDialog)); }
-                    } 
+                        if (nextDialog != null) { StartCoroutine(UpdateConservation(nextDialog)); }
+                    }
                     if (responseData.executedFunction != DialogExecuteFunction.None) { targetNPC.SendMessage(responseData.executedFunction.ToString()); }
                 });
 
@@ -101,6 +292,8 @@ namespace Interaction
             }
             responseController.UpdateObjectChange();
         }
+
+        #endregion
 
         void ClearAllButtonEvent()
         {
@@ -162,6 +355,22 @@ namespace Interaction
             responseController.Deactivate();
             yield return new WaitForSeconds(0.3f);
             messageContainer.Deactivate();
+        }
+
+        public IEnumerator DeactivateConservationChoice()
+        {
+            ClearAllButtonEvent();
+            responseController.Deactivate();
+            yield return new WaitForSeconds(0.3f);
+           
+        }
+
+        public IEnumerator ActivateConservationChoice()
+        {
+           
+            yield return new WaitForSeconds(0.3f);
+            responseController.Activate();
+            EnableAllButton();
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using static GlobalResponseData_Login;
+
 public class PlayerInventory : MonoBehaviour
 {
     public static PlayerInventory instance;
@@ -12,7 +14,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField]
     public List<InventoryItem> inventoryItems;
 
-    public int gold = 0;
+    public int gold ;
 
     [field: SerializeField]
     public int Size { get; private set; } = 10;
@@ -24,12 +26,42 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        
-        inventoryItems = new List<InventoryItem>();
-        for(int i = 0; i < Size; i ++)
+
+        if (GlobalResponseData.FirstTimeQuest == 1)
         {
-            inventoryItems.Add(InventoryItem.GetEmptyItem());
+          
+            inventoryItems = new List<InventoryItem>();
+            for (int i = 0; i < GlobalResponseData.inventoryItems.Count; i++)
+            {
+                if (GlobalResponseData.inventoryItems[i].item != null)
+                {
+                    inventoryItems.Add(GlobalResponseData.inventoryItems[i]);
+                
+                }
+                
+            }
+            for( int x = GlobalResponseData.inventoryItems.Count ; x < Size; x++)
+            {
+                inventoryItems.Add(InventoryItem.GetEmptyItem());
+            }
+            
         }
+        else
+        {
+            inventoryItems = new List<InventoryItem>();
+            for (int i = 0; i < Size; i++)
+            {
+                inventoryItems.Add(InventoryItem.GetEmptyItem());
+            }
+        }
+
+      
+
+        if(GlobalResponseData.FirstTimeQuest == 1)
+        {
+            gold = GlobalResponseData.gold;
+        }
+
     }
 
     public void AddGold(int amount)
@@ -223,6 +255,37 @@ public class PlayerInventory : MonoBehaviour
     {
         OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
     }
+
+    /// <summary>
+    /// Ki?m tra xem inventory có ít nh?t <paramref name="requiredQuantity"/> c?a <paramref name="itemId"/> hay không
+    /// </summary>
+    public bool HasItem(string itemId, int requiredQuantity = 1)
+    {
+        int total = inventoryItems
+            .Where(i => !i.IsEmpty && i.item.itemId == itemId)
+            .Sum(i => i.quantity);
+        return total >= requiredQuantity;
+    }
+
+    /// <summary>
+    /// Lo?i b? t?i ?a <paramref name="quantity"/> c?a <paramref name="itemId"/>, tr? v? s? l??ng th?c s? ?ã xóa
+    /// </summary>
+    public int RemoveItemById(string itemId, int quantity = 1)
+    {
+        int toRemove = quantity;
+        for (int i = 0; i < inventoryItems.Count && toRemove > 0; i++)
+        {
+            var inv = inventoryItems[i];
+            if (!inv.IsEmpty && inv.item.itemId == itemId)
+            {
+                int removed = Math.Min(inv.quantity, toRemove);
+                RemoveItem(i, removed);
+                toRemove -= removed;
+            }
+        }
+        return quantity - toRemove;
+    }
+
 }
 
 [Serializable]

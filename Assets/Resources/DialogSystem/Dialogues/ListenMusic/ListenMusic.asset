@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62bde469a0977f4488098765bf5c53d6, type: 3}
+  m_Name: ListenMusic
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: ListenMusic
+  <DialogueGroups>k__BackingField:
+    list:
+    - Key: {fileID: 11400000, guid: f5ec330d6099f6c4fb054fcd7553c1ce, type: 2}
+      Value:
+      - {fileID: 11400000, guid: 957f0971c2cbf0b4b8b67d8cee29b5ef, type: 2}
+      - {fileID: 11400000, guid: 8ac73d461d96132449c24ede04a8cbfc, type: 2}
+      - {fileID: 11400000, guid: 58fc695a677c5804eaba2247e815b5e1, type: 2}
+      - {fileID: 11400000, guid: e6a4b515dea48da46ab3677e37b3206e, type: 2}
+      - {fileID: 11400000, guid: 73463394663f63a4ea8485bcb56fbf5d, type: 2}
+      - {fileID: 11400000, guid: 178f381f81d06f747aa2cb528e09bb64, type: 2}
+    - Key: {fileID: 11400000, guid: 4ab7fbc22ade6494b86c14662675b20b, type: 2}
+      Value:
+      - {fileID: 11400000, guid: 2aca9efd3a546754786e1e2ec13c2ffd, type: 2}
+  <UngroupedDialogues>k__BackingField: []
