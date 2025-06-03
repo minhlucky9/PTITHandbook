@@ -20,7 +20,8 @@ MonoBehaviour:
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <Text>k__BackingField: "D\u1EA1 kh\xF4ng c\xF3 g\xEC \u0111\xE2u \u1EA1"
-    <NextDialogue>k__BackingField: {fileID: 0}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 8560a41db59e5594894d71e5a386c68a,
+      type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   <DialogueType>k__BackingField: 1

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class UIAutoAnimation : MonoBehaviour
 {
@@ -227,8 +228,9 @@ public class UIAutoAnimation : MonoBehaviour
 
         //There are always inaccuracies when dealing with float values
         //So to keep it safe, when the final loop is done, set everything to its final state.
-        SetAllPosition_Original();
-        ResetAllLayoutGroup();
+        
+        //SetAllPosition_Original();
+        //ResetAllLayoutGroup();
     }
 
     private IEnumerator ExitPositionEnumeration()
@@ -591,7 +593,7 @@ public class UIAutoAnimation : MonoBehaviour
     {
         //Get the component list, sorted either Depth-first or Breadth-first
         GetComponentInHierarchy_DepthFirst(transform, typeof(TextMeshProUGUI), typeof(Image));
-
+    
         //Now replace the component with either TextMeshProUGUI or Image
         for (int i = 0; i < componentList.Count; i++)
         {
@@ -741,6 +743,8 @@ public class UIAutoAnimation : MonoBehaviour
     /// <param name="value"></param>
     private void SetColorAlpha(Component component, float value)
     {
+        if (component == null) return;
+
         if (component is TextMeshProUGUI)
         {
             float alpha = value;
@@ -792,6 +796,7 @@ public class UIAutoAnimation : MonoBehaviour
     /// <param name="value"></param>
     private void SetPosition(RectTransform rect, Vector2 value)
     {
+        if (rect == null) return;
         rect.anchoredPosition = value;
     }
 
@@ -833,6 +838,7 @@ public class UIAutoAnimation : MonoBehaviour
     /// <param name="value"></param>
     private void SetScale(RectTransform rect, Vector3 value)
     {
+        if (rect == null) return;
         rect.localScale = value;
     }
 
@@ -876,6 +882,8 @@ public class UIAutoAnimation : MonoBehaviour
     /// <param name="rotation"></param>
     private void SetRotation(RectTransform rect, Vector3 rotation)
     {
+        if (rect == null) return;
+
         rect.localRotation = Quaternion.Euler(rotation);
     }
 
@@ -976,13 +984,13 @@ public class UIAutoAnimation : MonoBehaviour
         {
             for (int i = 0; i < layoutGroupList.Length; i++)
             {
-                //layoutGroupList[i].CalculateLayoutInputVertical();
-                //layoutGroupList[i].SetLayoutVertical();
+                if (layoutGroupList[i] == null) continue;
 
-                //layoutGroupList[i].CalculateLayoutInputHorizontal();
-                //layoutGroupList[i].SetLayoutHorizontal();
+                layoutGroupList[i].CalculateLayoutInputVertical();
+                layoutGroupList[i].SetLayoutVertical();
 
-                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)layoutGroupList[i].gameObject.transform);
+                layoutGroupList[i].CalculateLayoutInputHorizontal();
+                layoutGroupList[i].SetLayoutHorizontal();
             }
         }
     }

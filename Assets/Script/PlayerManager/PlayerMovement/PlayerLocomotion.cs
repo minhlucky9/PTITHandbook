@@ -366,7 +366,7 @@ namespace PlayerController
             //start falling
             if (velocity.y < 0.1f)
             {
-                if (Physics.SphereCast(origin, 0.1f, -Vector3.up, out hit, minimumDistanceNeededToBeginFall, ignoreForGroundCheck))
+                if (Physics.SphereCast(origin, 0.12f, -Vector3.up, out hit, minimumDistanceNeededToBeginFall, ignoreForGroundCheck))
                 {
                     normalVector = hit.normal;
                     Vector3 tp = hit.point;
@@ -523,7 +523,7 @@ namespace PlayerController
                     return;
                 }
 
-                if(playerManager.canDoubleJump && playerManager.isInAir)
+                if(playerManager.canDoubleJump)
                 {
                     animatorHandle.PlayTargetAnimation("DoubleJump", true);
                     animatorHandle.StartJumping();
@@ -531,6 +531,8 @@ namespace PlayerController
                     fallingVelocity = 0;
                     return;
                 }
+
+                if (playerManager.isInAir) return;
 
                 if (inputHandle.moveAmount > 0 && rigidbody.velocity.magnitude > 0.1f)
                 {

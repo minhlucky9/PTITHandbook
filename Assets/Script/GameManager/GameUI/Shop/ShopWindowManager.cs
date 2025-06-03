@@ -74,6 +74,7 @@ public class ShopWindowManager : MonoBehaviour
         yield return ConservationManager.instance.DeactivateConservationDialog();
         yield return new WaitForSeconds(0.7f);
         openAnimation.Activate();
+
     }
 
     public void CloseWindow()
