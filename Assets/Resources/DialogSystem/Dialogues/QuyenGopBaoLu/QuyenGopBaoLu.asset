@@ -15,11 +15,12 @@ MonoBehaviour:
   <FileName>k__BackingField: QuyenGopBaoLu
   <DialogueGroups>k__BackingField:
     list:
-    - Key: {fileID: 11400000, guid: 69e5df9285a6fd04780dbeb1c3c4bc61, type: 2}
+    - Key: {fileID: 11400000, guid: 02fc19bfabe72ff48b920a2da0938ba2, type: 2}
       Value:
-      - {fileID: 11400000, guid: 26213566f3aa61a40bca8c79cdd8eb5f, type: 2}
-      - {fileID: 11400000, guid: 374fd9227c99924468903f832851ac9e, type: 2}
-      - {fileID: 11400000, guid: b341c9c69a2f3a942835a001a80bb78b, type: 2}
+      - {fileID: 11400000, guid: b6878cf2c6fb55e45ae4de75c71bfc01, type: 2}
+      - {fileID: 11400000, guid: 2deaccecb1aae9640b4d69aff39e148b, type: 2}
+      - {fileID: 11400000, guid: 61aa903ac55655747a9ea36f998e3908, type: 2}
+      - {fileID: 11400000, guid: e95dac80241578448b208f595fbb1d9c, type: 2}
     - Key: {fileID: 11400000, guid: 340248e05aecf9843b2f662ffa60ada2, type: 2}
       Value:
       - {fileID: 11400000, guid: ac7ee14dd9d8ac241840fbaf1eb4f102, type: 2}

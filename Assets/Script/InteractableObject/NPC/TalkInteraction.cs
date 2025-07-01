@@ -102,6 +102,8 @@ public class TalkInteraction : Interactable
     {
         base.Interact();
         isInteracting = true;
+        PlayerManager.instance.isInteract = true;
+        playerManager.DeactivateController();
         //start conservation
         StartCoroutine(StartConservation());
     }
@@ -110,6 +112,7 @@ public class TalkInteraction : Interactable
     {
         base.StopInteract();
         isInteracting = false;
+        PlayerManager.instance.isInteract = false;
         //Stop conservation
         StartCoroutine(StopConservation());
     }

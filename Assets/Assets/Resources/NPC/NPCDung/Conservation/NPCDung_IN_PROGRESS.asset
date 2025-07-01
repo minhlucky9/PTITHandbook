@@ -19,12 +19,12 @@ MonoBehaviour:
   startFromFirstDialog: 1
   dialogs:
   - dialogId: dialog1
-    message: "\u0110\u01B0\u1EE3c r\u1ED3i, nh\u1EAFm m\u1EAFt v\xE0o \u0111\u1EC3
-      d\u1ECBch chuy\u1EBFn \u0111\u1EBFn t\xF2a th\xE1p nh\xE9"
+    message: "H\xE3y nhanh nh\xE9, bu\u1ED5i thi s\u1EAFp b\u1EAFt \u0111\u1EA7u
+      r\u1ED3i"
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
-    - message: "V\xE2ng \u1EA1"
+    - message: OK
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1

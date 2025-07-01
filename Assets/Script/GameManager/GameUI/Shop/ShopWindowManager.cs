@@ -87,6 +87,7 @@ public class ShopWindowManager : MonoBehaviour
         openAnimation.Deactivate();
         yield return new WaitForSeconds(0.7f);
         PlayerManager.instance.ActivateController();
+        PlayerManager.instance.isInteract = false;
     }
 
     public void NextTab()

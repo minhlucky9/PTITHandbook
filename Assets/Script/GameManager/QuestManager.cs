@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Linq;
 using static GlobalResponseData_Login;
 using static Interaction.QuestInfoSO;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace GameManager
 {
@@ -27,6 +28,8 @@ namespace GameManager
         {
             // Nếu đây là lần đầu cập nhật quest từ server (FirstTimeQuest == 1) 
             // và GlobalResponseData đã có dữ liệu quests (tức là được load từ server)
+
+      
             if (GlobalResponseData.FirstTimeQuest == 1 &&
                 GlobalResponseData.quests != null && GlobalResponseData.quests.Count > 0)
             {
@@ -71,7 +74,7 @@ namespace GameManager
         {
             npcMap = CreateNPCMap();
             playerStats = FindObjectOfType<PlayerStats>();
-            CharacterName.text = GlobalResponseData.fullname;
+            CharacterName.text = GlobalResponseData.CharacterName;
 
             // 1. Reset hoàn toàn mọi quest đang IN_PROGRESS
             var inProgressIds = questMap
@@ -125,6 +128,7 @@ namespace GameManager
                     quest.ChangeQuestState(QuestState.CAN_START);
                     InitQuestStep(quest.info.questSteps[quest.currentQuestStepIndex], quest.info.id);
                 }
+               
             }
         }
 
@@ -300,6 +304,18 @@ namespace GameManager
         }
 
         #endregion
+
+        public void UpdateQuestStep(QuestState questState, string questId)
+        {
+            foreach (Quest quest in questMap.Values)
+            {
+                if (quest.info.id == questId)
+                {
+                    quest.state = questState;
+                    quest.currentQuestStepIndex = 0; // Reset current step index
+                }
+            }
+        }
     }
 }
 

@@ -15,11 +15,11 @@ MonoBehaviour:
   <FileName>k__BackingField: HienMau
   <DialogueGroups>k__BackingField:
     list:
-    - Key: {fileID: 11400000, guid: 2ad693012fc04c84fad9c386a4fa00c9, type: 2}
+    - Key: {fileID: 11400000, guid: 2b44719c216564741991e4804c41549f, type: 2}
       Value:
-      - {fileID: 11400000, guid: 5313e693eae2da64ca68c36e0437424f, type: 2}
-      - {fileID: 11400000, guid: 507ec0ae6de4be740837696845bf7f93, type: 2}
-      - {fileID: 11400000, guid: 749d8845cd841a542a5764cbc8aba01a, type: 2}
+      - {fileID: 11400000, guid: a0d7429ff76a0434d81c379e3caa1ee0, type: 2}
+      - {fileID: 11400000, guid: 95370dde23af12247b75ccb5b5a75176, type: 2}
+      - {fileID: 11400000, guid: 143fc571163258041a5750af4888383b, type: 2}
     - Key: {fileID: 11400000, guid: f1ff1871334cd7343a867328105e29aa, type: 2}
       Value:
       - {fileID: 11400000, guid: e999e3be5f2d05146b15a2f9eaf99854, type: 2}

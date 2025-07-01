@@ -15,6 +15,7 @@ public class PlayerInventory : MonoBehaviour
     public List<InventoryItem> inventoryItems;
 
     public int gold ;
+    public int Medal;
 
     [field: SerializeField]
     public int Size { get; private set; } = 10;
@@ -29,7 +30,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (GlobalResponseData.FirstTimeQuest == 1)
         {
-          
+          Medal = GlobalResponseData.Medal;
             inventoryItems = new List<InventoryItem>();
             for (int i = 0; i < GlobalResponseData.inventoryItems.Count; i++)
             {

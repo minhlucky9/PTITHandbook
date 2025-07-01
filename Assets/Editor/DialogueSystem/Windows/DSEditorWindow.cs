@@ -100,6 +100,8 @@ namespace DS.windows
 
             Button loadButton = DSElementsUltilities.CreateButton("Load", () => Load());
 
+            Button reloadButton = DSElementsUltilities.CreateButton("Reload", () => Reload());
+
             Button clearButton = DSElementsUltilities.CreateButton("Clear", () => Clear());
 
             Button resetButton = DSElementsUltilities.CreateButton("Reset", () => ResetGraph());
@@ -113,6 +115,8 @@ namespace DS.windows
             toolbar.Add(clearButton);
 
             toolbar.Add(loadButton);
+
+            toolbar.Add(reloadButton);
 
             toolbar.Add(resetButton);
 
@@ -199,6 +203,26 @@ namespace DS.windows
 
             miniMapButton.ToggleInClassList("ds-toolbar__button__selected");
         }
+
+      
+        private void Reload()
+        {
+           string filename = filenameTextField.value?.Trim() + "Graph";
+
+            if (string.IsNullOrEmpty(filename))
+            {
+                
+                return;
+            }
+
+         
+            Clear();
+
+            DSIOUtility.Initialize(graphView, filename);
+
+            DSIOUtility.Load();
+        }
+
 
     }
 }

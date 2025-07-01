@@ -21,6 +21,8 @@ namespace Interaction
 
         public TMP_Text npcRole;
 
+       
+
         [Header("Player Response")]
 
         public UIAnimationController responseController;
@@ -32,6 +34,73 @@ namespace Interaction
         GameObject targetNPC;
 
         NPCConservationSO conservationData;
+
+        [Header("Image")]
+
+        public UIAnimationController ImageContainer;
+
+        public Image questionIllustration = null;
+
+        [Header("Timed Image Quiz UI")]
+
+        public UIAnimationController imageQuizContainer; 
+
+        public Image quizImage;                          
+
+        public Slider quizTimerSlider;
+
+
+        #region ImageTimedQuiz
+
+        [HideInInspector]
+        public bool isTimedImageMode;
+        [HideInInspector]
+        public float timedImageDuration;
+
+
+        public void EnableTimedImageMode(float duration)
+        {
+            isTimedImageMode = true;
+            timedImageDuration = duration;
+        }
+
+
+        private void DisableTimedImageMode()
+        {
+            isTimedImageMode = false;
+        }
+        private Coroutine quizImageTimerRoutine;
+
+      
+        public void ShowQuizImage(Sprite sprite, float duration = 15f)
+        {
+            quizImage.sprite = sprite;
+            quizTimerSlider.maxValue = duration;
+            quizTimerSlider.value = duration;
+            imageQuizContainer.Activate();
+            quizImageTimerRoutine = StartCoroutine(QuizImageCountdown(duration));
+        }
+
+        
+        public void HideQuizImage()
+        {
+            if (quizImageTimerRoutine != null)
+                StopCoroutine(quizImageTimerRoutine);
+            imageQuizContainer.Deactivate();
+        }
+
+        private IEnumerator QuizImageCountdown(float duration)
+        {
+            float t = duration;
+            while (t > 0f)
+            {
+                t -= Time.deltaTime;
+                quizTimerSlider.value = Mathf.Max(t, 0f);
+                yield return null;
+            }
+        }
+
+        #endregion
 
         private void Awake()
         {
@@ -323,22 +392,89 @@ namespace Interaction
                 b.interactable = false;
             }
         }
-        public IEnumerator UpdateConservation(DialogConservation nextDialog)
+        public IEnumerator UpdateConservation(DialogConservation nextDialog, Sprite questionImage = null)
         {
             ClearAllButtonEvent();
             responseController.Deactivate();
-            
+            ImageContainer.Deactivate();
+
             yield return new WaitForSeconds(0.4f);
             messageContainer.Deactivate();
-            
-            yield return new WaitForSeconds(0.6f);
-            SetupDialogInConservation(nextDialog);
-            messageContainer.Activate();
 
+            if (quizTimerSlider != null)
+                quizTimerSlider.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(0.6f);
+
+            bool useTimedImage = isTimedImageMode && questionImage != null;
+
+            if (useTimedImage)
+            {
+                // ——————————————
+                // 1) Show timed-image container
+                // ——————————————
+                // đảm bảo ImageContainer vẫn tắt:
+                ImageContainer.Deactivate();
+
+                // bật đúng container cho timed image
+                imageQuizContainer.Activate();
+
+                // gán sprite và reset slider
+                quizImage.sprite = questionImage;
+                quizImage.enabled = true;
+
+                quizTimerSlider.maxValue = timedImageDuration;
+                quizTimerSlider.value = timedImageDuration;
+                quizTimerSlider.gameObject.SetActive(true);
+
+                // đếm ngược
+                float t = timedImageDuration;
+                while (t > 0f)
+                {
+                    t -= Time.deltaTime;
+                    quizTimerSlider.value = Mathf.Max(t, 0f);
+                    yield return null;
+                }
+
+                // ẩn timed-image container
+                quizTimerSlider.gameObject.SetActive(false);
+                imageQuizContainer.Deactivate();
+                quizImage.enabled = false;
+
+                DisableTimedImageMode();
+            }
+
+            // ——————————————
+            // 2) Tiếp tục phần câu hỏi như bình thường
+            // ——————————————
+            SetupDialogInConservation(nextDialog);
+
+            // chỉ show questionIllustration nếu không phải timed-image
+            bool showWithQuestion = questionImage != null && !useTimedImage;
+            questionIllustration.enabled = showWithQuestion;
+            if (showWithQuestion)
+            {
+                questionIllustration.sprite = questionImage;
+                questionIllustration.color = Color.white;
+            }
+
+            messageContainer.Activate();
             yield return new WaitForSeconds(0.2f);
             responseController.Activate();
+            ImageContainer.Activate();
             EnableAllButton();
+
             yield return null;
+        }
+
+        public IEnumerator ClearConservation()
+        {
+            ClearAllButtonEvent();
+            responseController.Deactivate();
+            ImageContainer.Deactivate();
+
+            yield return new WaitForSeconds(0.4f);
+            messageContainer.Deactivate();
         }
 
         public IEnumerator ActivateConservationDialog()
@@ -346,6 +482,7 @@ namespace Interaction
             messageContainer.Activate();
             yield return new WaitForSeconds(0.3f);
             responseController.Activate();
+            ImageContainer.Activate();
             EnableAllButton();
         }
 
@@ -353,6 +490,7 @@ namespace Interaction
         {
             ClearAllButtonEvent();
             responseController.Deactivate();
+            ImageContainer.Deactivate();
             yield return new WaitForSeconds(0.3f);
             messageContainer.Deactivate();
         }

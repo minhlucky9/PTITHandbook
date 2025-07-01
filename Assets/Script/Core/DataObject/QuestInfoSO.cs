@@ -15,6 +15,7 @@ namespace Interaction
         [Header("Requirements")]
         public int levelRequirement;
         public QuestInfoSO[] questPrerequisites;
+       
 
         [Header("Steps")]
         public List<QuestStep> questSteps;

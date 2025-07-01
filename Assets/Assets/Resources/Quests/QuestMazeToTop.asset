@@ -23,7 +23,7 @@ MonoBehaviour:
     stepDescription: "H\xE3y t\xECm \u0110\u1EE9c \u0111ang \u0111\u1EE9ng \u1EDF
       tr\u01B0\u1EDBc c\u1EEDa nh\xE0 A3, \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u nhi\u1EC7m
       v\u1EE5"
-    npcId: NPCDuc
+    npcId: NPCMazeToTop
     npcStatus: 1
     conservation: {fileID: 11400000, guid: 9f6a3b5ad3335c248885db5dbebe3ada, type: 2}
     nextStep: step2
@@ -32,7 +32,7 @@ MonoBehaviour:
     stepName: "Leo l\xEAn \u0111\u1EC9nh th\xE1p"
     stepDescription: "Leo l\xEAn \u0111\u1EC9nh th\xE1p \u0111\u1EC3 nh\u1EADn ph\u1EA7n
       qu\xE0 t\u1EEB \u0110\u1EE9c"
-    npcId: NPCDuc
+    npcId: NPCMazeToTop
     npcStatus: 2
     conservation: {fileID: 11400000, guid: f3de25850ccbc4949b57c9ff82331d59, type: 2}
     nextStep: step3
@@ -42,10 +42,11 @@ MonoBehaviour:
     stepDescription: "\u0110\u1EBFn g\u1EB7p \u0110\u1EE9c, \u0111\u1EC3 nh\u1EADn
       ph\u1EA7n th\u01B0\u1EDFng x\u1EE9ng \u0111\xE1ng cho s\u1EF1 c\u1ED1 g\u1EAFng
       c\u1EE7a b\u1EA1n."
-    npcId: NPCDuc
+    npcId: NPCMazeToTop
     npcStatus: 3
     conservation: {fileID: 11400000, guid: 2d29f5c7f6b0fae49b2c3344ff085078, type: 2}
     nextStep: 
   goldReward: 50
   experienceReward: 250
   itemRewards: []
+  questType: 0

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8675033c89e01e045840dacd37af3fa5, type: 3}
   m_Name: QuizQuestKTXB5_step2
   m_EditorClassIdentifier: 
-  conservationId: QuizQuestKTXB5_step2
+  minigameId: QuizQuestKTXB5_step2
   questId: QuizQuestKTXB5
   stepId: step2
+  targetNPC: {fileID: 0}
   numberOfQuestion: 8
-  numberOfMaxWrong: 3
+  numberOfMaxWrong: 2
   qnas:
   - Question: "\u1EDE PTIT, PRO PTIT l\xE0?"
     Answers:
@@ -139,9 +140,12 @@ MonoBehaviour:
       c\xE2u l\u1EA1c b\u1ED9 sinh vi\xEAn</color> t\u1EA1i H\u1ECDc vi\u1EC7n m\xECnh.
       H\xE3y l\u01B0u \xFD em ch\u1EC9 \u0111\u01B0\u1EE3c ph\xE9p tr\u1EA3 l\u1EDDi
       sai t\u1ED1i \u0111a 3 c\xE2u."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"
       icon: {fileID: 0}
       nextDialogId: 
       executedFunction: 4
+      NextExecutedFunction: 0
+    nodePosition: {x: 10, y: 10}

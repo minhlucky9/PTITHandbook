@@ -1,4 +1,4 @@
-using Core;
+﻿using Core;
 using GameManager;
 using PlayerStatsController;
 using System.Collections;
@@ -27,6 +27,7 @@ namespace PlayerController
         public GameObject itemPopup;
 
         public bool isInteracting;
+        public bool isInteract;
         public bool usingAnimationMove;
 
         [Header("Player Flags")]
@@ -40,9 +41,20 @@ namespace PlayerController
         LayerMask lootableMask;
         LayerMask talkableMask;
 
+        [Header("Assign ở Inspector")]
+        [SerializeField] private GameObject maleModel;
+        [SerializeField] private GameObject femaleModel;
+
         private void Awake()
         {
             instance = this;
+
+            // Đọc lựa chọn (mặc định là 1 nếu chưa có)
+            int sel = PlayerPrefs.GetInt("SelectedCharacter", 1);
+
+            // Nếu sel == 1 → female, sel == 2 → male
+            femaleModel.SetActive(sel == 1);
+            maleModel.SetActive(sel == 2);
 
             inputHandle = GetComponent<InputHandle>();
             anim = GetComponentInChildren<Animator>();
@@ -62,6 +74,18 @@ namespace PlayerController
             talkableMask = 1 << LayerMask.NameToLayer("TalkableObject");
         }
 
+        private bool returnRequested = false;
+        private Vector3 returnPosition;
+        private Vector3 returnCameraOffset;
+
+       
+
+        public void RequestReturnToSafeZone(Vector3 playerPos, Vector3 camOffset)
+        {
+            returnRequested = true;
+            returnPosition = playerPos;
+            returnCameraOffset = camOffset;
+        }
         private void Update()
         {
             float delta = Time.deltaTime;
@@ -94,6 +118,13 @@ namespace PlayerController
 
         private void FixedUpdate()
         {
+            if (!inputHandle.enabled)
+            {
+             //   playerLocomotion.rigidbody.velocity = Vector3.zero;
+                anim.enabled = false; 
+                return;
+            }
+            anim.enabled = true;
             float delta = Time.deltaTime;
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
@@ -102,21 +133,54 @@ namespace PlayerController
             playerLocomotion.HandleRotation(delta);
         }
 
+
+
         private void LateUpdate()
         {
+            float delta = Time.deltaTime;
+
+            // Xử lý teleport
+            if (returnRequested && cameraHandle != null)
+            {
+                // Teleport player
+                transform.position = returnPosition;
+
+                // Tính toán vị trí camera mới
+                Vector3 newCameraPosition = returnPosition + returnCameraOffset;
+
+                // FORCE reset camera position và velocity
+                cameraHandle.ForceResetCamera(newCameraPosition);
+
+                // Reset camera components
+                cameraHandle.cameraPivotTransform.localPosition = new Vector3(0f, cameraHandle.unlockPivotPosition, 0f);
+                cameraHandle.cameraPivotTransform.localRotation = Quaternion.identity;
+                cameraHandle.cameraTransform.localPosition = new Vector3(0f, 0f, cameraHandle.defaultPosition);
+
+                returnRequested = false;
+
+                // SKIP camera update trong frame này
+                goto SkipCameraUpdate;
+            }
+
+            // Camera logic bình thường
+            if (cameraHandle != null)
+            {
+                cameraHandle.FollowTarget(delta);
+
+                if (!isInteracting && !isInteract)
+                {
+                    cameraHandle.HandleCameraRotation(delta, inputHandle.mouseX, inputHandle.mouseY);
+                }
+            }
+
+        SkipCameraUpdate:
+
+            // Reset input flags
             inputHandle.rollFlag = false;
             inputHandle.pick_up = false;
             inputHandle.talk_input = false;
             inputHandle.jump_input = false;
             inputHandle.inventory_input = false;
-
-            float delta = Time.deltaTime;
-
-            if (cameraHandle != null)
-            {
-                cameraHandle.FollowTarget(delta);
-                cameraHandle.HandleCameraRotation(delta, inputHandle.mouseX, inputHandle.mouseY);
-            }
 
             if (isInAir)
             {
@@ -127,6 +191,8 @@ namespace PlayerController
         public void ActivateController()
         {
             inputHandle.enabled = true;
+            playerLocomotion.enabled = true;
+            cameraHandle.enabled = true;
             uiManager.hudWindow.Activate();
             mouseManager.HideCursor();
         }
@@ -134,6 +200,9 @@ namespace PlayerController
         public void DeactivateController()
         {
             inputHandle.enabled = false;
+            playerLocomotion.enabled = false;  // KHÔNG gọi HandleMovement nữa
+            cameraHandle.enabled = false;
+            playerLocomotion.rigidbody.velocity = Vector3.zero;
             uiManager.hudWindow.Deactivate();
             mouseManager.ShowCursor();
         }

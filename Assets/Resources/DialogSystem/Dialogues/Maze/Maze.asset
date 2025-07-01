@@ -15,11 +15,11 @@ MonoBehaviour:
   <FileName>k__BackingField: Maze
   <DialogueGroups>k__BackingField:
     list:
-    - Key: {fileID: 11400000, guid: afbd0f141563af6498102c491b577081, type: 2}
+    - Key: {fileID: 11400000, guid: 02921bda0fddf0e4b888b3a5601ee172, type: 2}
       Value:
-      - {fileID: 11400000, guid: 2de6287531a479946a76c5e00705bd67, type: 2}
-      - {fileID: 11400000, guid: fc8eb609f64f9ee41b27febc881a2544, type: 2}
-      - {fileID: 11400000, guid: efa616f9ea9fc8040aaf3aabe8adb447, type: 2}
+      - {fileID: 11400000, guid: 84cfb30d5a27ab943835d0a50771c3dd, type: 2}
+      - {fileID: 11400000, guid: 78192f57bcf646c4d8f3ff35bf931c72, type: 2}
+      - {fileID: 11400000, guid: 6fdfbe6bdbb97c54c99feeb17cb0dfd9, type: 2}
     - Key: {fileID: 11400000, guid: 4d2b49a76cf798745982b45f00c73895, type: 2}
       Value:
       - {fileID: 11400000, guid: a4aab6a8fa1af6c45ad29319f965e06c, type: 2}

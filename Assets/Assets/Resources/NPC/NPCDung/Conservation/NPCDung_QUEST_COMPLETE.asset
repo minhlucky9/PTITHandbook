@@ -19,7 +19,8 @@ MonoBehaviour:
   startFromFirstDialog: 1
   dialogs:
   - dialogId: dialog1
-    message: "\u0110\xE2y l\xE0 ph\u1EA7n th\u01B0\u1EDFng c\u1EE7a em."
+    message: "\u0110\xE2y l\xE0 ph\u1EA7n th\u01B0\u1EDFng c\u1EE7a b\u1EA1n v\xEC
+      \u0111\xE3 gi\xFAp t\xF4i."
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:

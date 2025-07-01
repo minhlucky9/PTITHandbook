@@ -15,11 +15,11 @@ MonoBehaviour:
   <FileName>k__BackingField: Maze
   <Groups>k__BackingField:
   - <ID>k__BackingField: f131efbd-7378-4e02-9b81-e9ce01d72529
-    <Name>k__BackingField: Maze
-    <Position>k__BackingField: {x: 153.6, y: 37.600002}
+    <Name>k__BackingField: NORMAL
+    <Position>k__BackingField: {x: 153.59999, y: 37.600006}
   - <ID>k__BackingField: 62e570e3-51f0-41ae-a81c-27a4c13a524e
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 460.8, y: 700.8}
+    <Position>k__BackingField: {x: 460.80002, y: 700.8}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: f8ecf752-2801-4d87-af8d-459180857548
     <Name>k__BackingField: 1
@@ -30,10 +30,13 @@ MonoBehaviour:
       <NodeID>k__BackingField: 494bff92-2b10-47b0-89e4-81374b1dee28
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     - <Text>k__BackingField: "Em \u0111ang v\u1ED9i l\u1EAFm anh \u1EA1 !"
       <NodeID>k__BackingField: d244c619-c0b4-40d6-8058-2e1053cdb12a
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: f131efbd-7378-4e02-9b81-e9ce01d72529
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 179.2, y: 220}
@@ -48,6 +51,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: f131efbd-7378-4e02-9b81-e9ce01d72529
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 736.8, y: 97.600006}
@@ -62,6 +67,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: f131efbd-7378-4e02-9b81-e9ce01d72529
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 780.8, y: 368.8}
@@ -76,18 +83,20 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 62e570e3-51f0-41ae-a81c-27a4c13a524e
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 486.40002, y: 760.8}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
-  - Maze
+  - NORMAL
   - AfterFinish
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
-    - Key: Maze
+    - Key: NORMAL
       Value:
       - 1
       - 2

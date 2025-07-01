@@ -90,6 +90,7 @@ public class DSDialogueAdapter : MonoBehaviour
             {
                 var resp = new DialogResponse();
                 resp.message = choice.Text;
+                resp.icon = choice.Icon;
                 resp.executedFunction = dsDialogue.ExecutedFunction;
                 resp.NextExecutedFunction = dsDialogue.NextExecutedFunction;
                 

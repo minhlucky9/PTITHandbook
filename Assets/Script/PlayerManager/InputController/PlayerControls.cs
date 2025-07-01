@@ -174,7 +174,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Roll"",
                     ""type"": ""Button"",
                     ""id"": ""f8018299-d8de-4742-9618-f33c3f744a62"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -424,7 +424,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""SlotHandLeft"",
                     ""type"": ""Button"",
                     ""id"": ""1f06e8cf-3316-4c76-a3a3-5fd2427997d6"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false

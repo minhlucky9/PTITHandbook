@@ -15,6 +15,9 @@ public class PostMethod_Login : MonoBehaviour
     [SerializeField] private GameObject FailureUI;
     [SerializeField] private GameObject NoInternetUI; // UI thông báo không có k?t n?i internet
 
+    public PlayerDataLoader playerDataLoader; 
+
+
     void Start()
     {
         outputArea = GameObject.Find("OutputArea").GetComponent<TMP_InputField>();
@@ -72,7 +75,11 @@ public class PostMethod_Login : MonoBehaviour
                                       $"Full Name: {responseData.fullname}\n" +
                                       $"Session ID: {responseData.session_id}\n" +
                                       $"Role: {responseData.role}";
-                    SuccessUI.SetActive(true);
+                   
+
+                  
+
+                    StartCoroutine(CheckSaveData());
                 }
                 else if (responseData.code == 400)
                 {
@@ -82,6 +89,29 @@ public class PostMethod_Login : MonoBehaviour
 
             }
         }
+    }
+
+    public IEnumerator CheckSaveData()
+    {
+        yield return new WaitForSeconds(1f);
+
+        playerDataLoader.LoadPlayerData();
+
+        yield return new WaitForSeconds(3f);
+
+
+        Debug.Log(GlobalResponseData.FirstTimeQuest);
+
+        if (GlobalResponseData.FirstTimeQuest == 0)
+        {
+            AsyncLoader.Instance.ApplyToggle(true);
+        }
+        else
+        {
+            AsyncLoader.Instance.ApplyToggle(false);
+        }
+
+        SuccessUI.SetActive(true);
     }
 
     [System.Serializable]

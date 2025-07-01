@@ -10,6 +10,7 @@ namespace Interaction
     {
         public static QuizManager instance;
         public string currentQuizQuestId;
+        private bool isTimedImageQuiz;
 
         GameObject targetNPC;
         QuizConservationSO quizData;
@@ -33,7 +34,7 @@ namespace Interaction
             currentQuizQuestId = quiz.questId;
             this.targetNPC = targetNPC;
 
-
+            isTimedImageQuiz = quiz is TimedImageQuizConservationSO;
 
             temporaryQnas = new List<QuestionAndAnswer>(quizData.qnas);
             conservationManager.ChangeTargetNPC(targetNPC);
@@ -71,7 +72,7 @@ namespace Interaction
                 response.executedFunction = (curQNA.CorrectAnswer - 1 == i) ? DialogExecuteFunction.AnswerCorrect : DialogExecuteFunction.AnswerWrong;
                 quiz.possibleResponses.Add(response);
             }
-            StartCoroutine(conservationManager.UpdateConservation(quiz));
+            StartCoroutine(conservationManager.UpdateConservation(quiz, curQNA.QuestionImage));
             currentQuestion++;
         }
 
@@ -92,6 +93,7 @@ namespace Interaction
             {
                 correctDialog.message = "Thật tuyệt vời, em đã trả lời đúng <color=#06FFE6>" + correctAnswers + "/" + 8 + " câu hỏi</color> rồi. Tôi tin là sau cuộc trò chuyện này em đã có thêm nhiều hiểu biết về trường mình.";
                 response.executedFunction = DialogExecuteFunction.OnQuestMinigameSuccess;
+                QuestManager.instance.UpdateRequirementsMetQuest();
                 Debug.Log(targetNPC);
             }
             

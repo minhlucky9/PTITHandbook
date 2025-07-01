@@ -17,7 +17,7 @@ public class PlayerDataManager : MonoBehaviour
     public TMP_InputField outputArea;
     public GameObject player;
 
-    public int FirstTimeQuest = 0;
+    public int FirstTimeQuest;
     public Slider HealthSlider;
 
 
@@ -36,7 +36,7 @@ public class PlayerDataManager : MonoBehaviour
     public void fomo()
     {
         Vector3 pos = player.transform.position;
-        PostPlayerData(pos.x, pos.y, pos.z, FirstTimeQuest, HealthSlider.value, GlobalResponseData.student_id, GlobalResponseData.fullname, PlayerInventory.instance.gold);
+        PostPlayerData(pos.x, pos.y, pos.z, FirstTimeQuest, HealthSlider.value, GlobalResponseData.student_id, GlobalResponseData.fullname, PlayerInventory.instance.gold, PlayerInventory.instance.Medal, GlobalResponseData.CharacterName);
     }
 
     public void PostPlayerData(
@@ -45,11 +45,13 @@ public class PlayerDataManager : MonoBehaviour
         float healthSlider,
         string student_id,
         string fullname,
-        int gold
+        int gold,
+        int Medal,
+        string CharacterName 
         )
     {
         StartCoroutine(PostPlayerData_Coroutine(
-            x, y, z, firstTimeQuest, healthSlider, student_id, fullname, gold
+            x, y, z, firstTimeQuest, healthSlider, student_id, fullname, gold, Medal, CharacterName
             ));
 
         
@@ -61,7 +63,9 @@ public class PlayerDataManager : MonoBehaviour
         float healthSlider,
         string student_id,
         string fullname,
-        int gold
+        int gold,
+        int Medal,
+        string CharacterName
         )
     {
         if (outputArea) outputArea.text = "Updating player data...";
@@ -83,7 +87,9 @@ public class PlayerDataManager : MonoBehaviour
                 healthSlider,
                 student_id,
                 fullname,
-                gold
+                gold,
+                Medal,
+                CharacterName
             )
             {
               //  dialoguesJson = dialoguesJson,
@@ -397,6 +403,7 @@ public class PlayerDataManager : MonoBehaviour
         public string student_id;
         public string fullname;
         public int gold;
+        public string CharacterName; 
 
         // Thêm để lưu JSON DialogSystem
         public string dialoguesJson;
@@ -413,7 +420,9 @@ public class PlayerDataManager : MonoBehaviour
             float healthSlider,
             string student_id,
             string fullname,
-            int gold)
+            int gold, 
+            int Medal, 
+            string CharacterName)
         {
             this.x = x;
             this.y = y;
@@ -423,6 +432,8 @@ public class PlayerDataManager : MonoBehaviour
             this.student_id = student_id;
             this.fullname = fullname;
             this.gold = gold;
+            this.Medal = Medal;
+            this.CharacterName = CharacterName;
 
         }
     }

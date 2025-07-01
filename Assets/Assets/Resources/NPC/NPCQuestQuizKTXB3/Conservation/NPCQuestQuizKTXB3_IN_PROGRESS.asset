@@ -31,7 +31,7 @@ MonoBehaviour:
     - message: "D\u1EA1, em ch\u01B0a"
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: dialog2
-      executedFunction: 1
+      executedFunction: 0
       NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}
   - dialogId: dialog2

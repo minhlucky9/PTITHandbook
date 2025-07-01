@@ -15,12 +15,12 @@ MonoBehaviour:
   <FileName>k__BackingField: PhotoPhaoThi
   <DialogueGroups>k__BackingField:
     list:
-    - Key: {fileID: 11400000, guid: 64230f7ddf16ef340a2e7c17fd253345, type: 2}
+    - Key: {fileID: 11400000, guid: 60076d8530be34d4e8a73d80edb8c521, type: 2}
       Value:
-      - {fileID: 11400000, guid: 2e3a1895b588972479ae16caca159cac, type: 2}
-      - {fileID: 11400000, guid: c947fb339989e524995c3b76d3cfb623, type: 2}
-      - {fileID: 11400000, guid: 7bea0a77d17abb9458a7a5c75ccefad7, type: 2}
-      - {fileID: 11400000, guid: 7f054cb7befa8024dad5aa36f0ec371d, type: 2}
+      - {fileID: 11400000, guid: 0b932755e553894489e532b7781d039c, type: 2}
+      - {fileID: 11400000, guid: f31e3f0fabc321c4b81887b08a733b0d, type: 2}
+      - {fileID: 11400000, guid: cbeb25859c0c10243a8bd6183279f87d, type: 2}
+      - {fileID: 11400000, guid: b11f45f3c2729da43b654efa335dbd1e, type: 2}
     - Key: {fileID: 11400000, guid: a552c77655cc247418968d9e0642cce9, type: 2}
       Value:
       - {fileID: 11400000, guid: ec903c119a284ce40b0f15ab6899a42b, type: 2}
