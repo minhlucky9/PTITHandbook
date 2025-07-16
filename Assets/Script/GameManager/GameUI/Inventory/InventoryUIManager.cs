@@ -70,6 +70,7 @@ public class InventoryUIManager : MonoBehaviour
     public IEnumerator CloseWindow()
     {
         uiAnimation.Deactivate();
+        PlayerManager.instance.isInteract = false;
         yield return new WaitForSeconds(0.7f);
         PlayerManager.instance.ActivateController();
     }
@@ -78,6 +79,7 @@ public class InventoryUIManager : MonoBehaviour
     {
 
         PlayerManager.instance.DeactivateController();
+        PlayerManager.instance.isInteract = true;
         yield return new WaitForSeconds(0.7f);
         uiAnimation.Activate();
     }

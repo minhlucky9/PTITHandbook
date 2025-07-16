@@ -3,6 +3,7 @@ using Interaction.Minigame;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Interaction
 {
@@ -21,6 +22,11 @@ namespace Interaction
         int correctAnswers = 0;
         int wrongAnswers = 0;
 
+       
+        private Coroutine quizTimerRoutine;
+        private float timeRemaining;
+        private const float QUIZ_DURATION = 300f; // 5 phút = 300s
+
         private void Awake()
         {
             instance = this;
@@ -33,6 +39,7 @@ namespace Interaction
             quizData = quiz;
             currentQuizQuestId = quiz.questId;
             this.targetNPC = targetNPC;
+            timeRemaining = QUIZ_DURATION;
 
             isTimedImageQuiz = quiz is TimedImageQuizConservationSO;
 
@@ -43,6 +50,64 @@ namespace Interaction
             DialogConservation intro = quizData.quizIntro;
             intro.possibleResponses[0].executedFunction = DialogExecuteFunction.NextQuiz;
             StartCoroutine(conservationManager.UpdateConservation(intro));
+            
+        }
+
+        private void StartQuizTimer()
+        {
+            // Tránh gọi nhiều lần
+            if (quizTimerRoutine != null) 
+            {
+                StopCoroutine(quizTimerRoutine);
+            }
+           
+            quizTimerRoutine = StartCoroutine(QuizCountdown(timeRemaining));
+        }
+
+        private IEnumerator QuizCountdown(float duration)
+        {
+            float t = duration;
+            ConservationManager.instance.timerContainer.Activate();
+         
+
+            while (t > 0f)
+            {
+                // tính phút và giây
+                int minutes = (int)(t / 60);
+                int seconds = (int)(t % 60);
+                // format “MM:SS”
+                ConservationManager.instance.timerText.text = $"{minutes:00}:{seconds:00}";
+
+                t -= Time.deltaTime;
+                yield return null;
+            }
+
+            // khi hết giờ
+            ConservationManager.instance.timerText.text = "00:00";
+            OnQuizTimerExpired();
+        }
+
+        private void OnQuizTimerExpired()
+        {
+            // dừng coroutine nếu còn chạy
+            if (quizTimerRoutine != null)
+            {
+                StopCoroutine(quizTimerRoutine);
+                    quizTimerRoutine = null;  
+            }
+                
+            // ẩn UI timer
+            ConservationManager.instance.timerContainer.Deactivate();
+
+            // reset quest về CAN_START
+            GameManager.QuestManager.instance.UpdateQuestStep(
+             QuestState.CAN_START,
+              currentQuizQuestId
+          );
+
+            targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+
+            targetNPC.SendMessage("OnQuizTimerFail");
         }
 
         public void ResetQuizMission()
@@ -54,6 +119,15 @@ namespace Interaction
 
         public void NextQuiz()
         {
+            if(quizTimerRoutine != null)
+            {
+
+            }
+            else
+            {
+                Invoke(nameof(StartQuizTimer), 0.5f);
+            }
+
             if(currentQuestion >= quizData.numberOfQuestion || wrongAnswers > quizData.numberOfMaxWrong)
             {
                 FinishQuiz();

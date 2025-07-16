@@ -68,7 +68,7 @@ public class PostMethod_SignUp : MonoBehaviour
                     SuccessOrFailedUI.SetActive(true);
                     outputArea.text = $"Error {responseData.code}: {responseData.desc}";
                     Respone.text = $"Mã sinh viên bị trùng, hãy thử lại";
-                    FailedRespone.SetActive(false);
+                  //  FailedRespone.SetActive(false);
                 }
                 else
                 {

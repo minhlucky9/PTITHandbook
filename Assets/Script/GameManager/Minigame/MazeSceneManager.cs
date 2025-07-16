@@ -13,12 +13,30 @@ public class MazeSceneManager : SubSceneGameManager
     private float timeRemaining;
     private Coroutine uiTimerCoroutine;
     public UIAnimationController Fail;
-
+    public UIAnimationController Exit;
+    public GameObject LoadingScreen;
 
     public CoinLootInteraction[] targets;
-    private const float QuestTimeoutSeconds = 5f;
+    private const float QuestTimeoutSeconds = 300f;
+
+    private GameObject __targetNPC;
+    private MinigameDataSO __minigamedata;
+
+
+    void Update()
+    {
+    
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OnPauseButtonPressed();
+        }
+    }
+
     public override void InitGame(GameObject targetNPC, MinigameDataSO minigameData, string sceneName)
     {
+
+        __targetNPC = targetNPC;
+        __minigamedata = minigameData;
         base.InitGame(targetNPC, minigameData, sceneName);
 
         timeRemaining = QuestTimeoutSeconds;
@@ -39,7 +57,7 @@ public class MazeSceneManager : SubSceneGameManager
             StartCoroutine(ExitScene(3f));
         };
         CollectQuestManager.instance.collectQuests.Add(minigameData.minigameId, collectQuest);
-        StartCoroutine(QuestTimeoutCoroutine(minigameData.questId, minigameData.minigameId, targetNPC));
+      //  StartCoroutine(QuestTimeoutCoroutine(minigameData.questId, minigameData.minigameId, targetNPC));
     }
 
     private IEnumerator QuestTimeoutCoroutine(string questId, string minigameId, GameObject targetNPC)
@@ -72,6 +90,21 @@ public class MazeSceneManager : SubSceneGameManager
         StartCoroutine(ExitScene(3f));
     }
 
+    public void ExitGame()
+    {
+        GameManager.QuestManager.instance.UpdateQuestStep(
+              QuestState.CAN_START,
+           __minigamedata.questId
+           );
+        __targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+
+        CollectQuestManager.instance.collectQuests.Remove(__minigamedata.minigameId);
+
+        StopCoroutine(uiTimerCoroutine);
+        PauseMenuUI.Instance.Resume();
+        StartCoroutine(ExitScene(3f));
+    }
+
     private IEnumerator UpdateTimerUI()
     {
         // mỗi frame cập nhật
@@ -83,17 +116,40 @@ public class MazeSceneManager : SubSceneGameManager
             timerText.text = $"{m:00}:{s:00}";
 
             // giảm
-            timeRemaining -= Time.deltaTime;
+            if (!PauseMenuUI.GameIsPaused)
+            {
+                timeRemaining -= Time.deltaTime;
+            }
             yield return null;
+            StartCoroutine(QuestTimeoutCoroutine(__minigamedata.questId, __minigamedata.minigameId, __targetNPC));
         }
+        
         // khi về 0
         timerText.text = "00:00";
+
     }
 
     IEnumerator ExitScene(float delay)
     {
         yield return new WaitForSeconds(delay);
         SceneManager.UnloadSceneAsync(sceneName);
+        LoadingScreen.SetActive(false);
         PlayerManager.instance.ActivateController();
+    }
+
+    public void OnPauseButtonPressed()
+    {
+      
+        PauseMenuUI.Instance.Pause();
+        PlayerManager.instance.DeactivateController();                                  
+        Exit?.Activate();
+    }
+
+    public void OnResumeButtonPressed()
+    {
+      
+        Exit?.Deactivate();
+        PlayerManager.instance.ActivateController();
+        PauseMenuUI.Instance.Resume();     
     }
 }

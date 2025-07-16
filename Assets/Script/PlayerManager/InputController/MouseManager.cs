@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PlayerController;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,17 +20,21 @@ public class MouseManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        /*
+        if (Input.GetKeyDown(KeyCode.M) )
         {
             menuUI.SetActive(true);
+            
             ShowCursor();
         }
-      
-        if (Input.GetKeyDown(KeyCode.Escape))
+        */
+        
+        if (Input.GetKeyDown(KeyCode.Escape) && !PlayerManager.instance.isInteract)
         {
             pauseUI.SetActive(true);
             ShowCursor();
         }
+        
     }
     public void ShowCursor()
     {

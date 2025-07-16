@@ -16,17 +16,20 @@ MonoBehaviour:
   <Text>k__BackingField: "Xin ch\xE0o, em l\xE0 t\xE2n sinh vi\xEAn m\u1EDBi v\xE0o
     tr\u01B0\u1EDDng \u0111\xFAng kh\xF4ng"
   <Choices>k__BackingField:
-  - <Text>k__BackingField: "D, \u0111\xFAng r\u1ED3i th\u1EA7y \u1EA1"
+  - <Text>k__BackingField: "D\u1EA1, \u0111\xFAng r\u1ED3i th\u1EA7y \u1EA1"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 06fe0d8b26a2c32458bf1c38fbb53617,
       type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 0}
   - <Text>k__BackingField: "D\u1EA1, em h\u1ECDc tr\u01B0\u1EDDng kh\xE1c \u1EA1"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 10c5e4ca7b6e0fc4daaf879f9190cd0a,
       type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
+  <Icon>k__BackingField: {fileID: 0}
   <ExecutedFunction>k__BackingField: 0
   <NextExecutedFunction>k__BackingField: 0

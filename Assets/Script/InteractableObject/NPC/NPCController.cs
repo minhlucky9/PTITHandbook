@@ -674,6 +674,13 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
     }
 
+    public void OnQuizTimerFail()
+    {
+       
+        SwitchDialogueGroup("Fail");
+
+     
+    }
 
     #region Money and Blood
 
