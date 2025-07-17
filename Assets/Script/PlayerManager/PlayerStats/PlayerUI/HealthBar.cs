@@ -19,7 +19,7 @@ namespace PlayerStatsController
 
         [Header("Auto Drain Settings")]
         [Tooltip("Interval (in seconds) between each health tick")]
-        [SerializeField] private float tickInterval = 10f;
+        [SerializeField] private float tickInterval = 12f;
         [Tooltip("How much health to subtract each tick")]
         [SerializeField] private float damagePerTick = 1f;
 
@@ -60,6 +60,12 @@ namespace PlayerStatsController
 
         public void SetCurrentHealth(float newHealth)
         {
+            currentHealth = newHealth;
+            if (PlayerManager.instance != null && PlayerManager.instance.isTalkingWithNPC)
+            {
+                // Không hiện cảnh báo máu yếu hoặc chết khi đang nói chuyện
+                return;
+            }
             currentHealth = Mathf.Clamp(newHealth, 0f, slider.maxValue);
             slider.value = currentHealth;
             fill.color = gradient.Evaluate(slider.normalizedValue);
@@ -109,6 +115,12 @@ namespace PlayerStatsController
         {
             while (currentHealth > 0f)
             {
+                // Nếu đang nói chuyện với NPC thì không trừ máu
+                if (PlayerManager.instance != null && PlayerManager.instance.isTalkingWithNPC)
+                {
+                    yield return null; // Đợi frame tiếp theo, không trừ máu
+                    continue;
+                }
                 yield return new WaitForSeconds(tickInterval);
                 SetCurrentHealth(currentHealth - damagePerTick);
             }

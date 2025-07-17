@@ -32,6 +32,7 @@ public class MouseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && !PlayerManager.instance.isInteract)
         {
             pauseUI.SetActive(true);
+            PlayerManager.instance.DeactivateController();
             ShowCursor();
         }
         

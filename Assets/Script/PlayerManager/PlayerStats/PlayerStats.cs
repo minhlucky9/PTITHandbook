@@ -14,7 +14,7 @@ namespace PlayerStatsController
         StaminaBar staminaBar;
         PlayerAnimatorHandle animatorHandle;
 
-        public float staminaRegenerationAmount = 30;
+        public float staminaRegenerationAmount = 66.67f;
         public float regenerationStaminaTimer = 0;
 
         public int soulCount;

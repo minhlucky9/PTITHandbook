@@ -321,6 +321,7 @@ namespace PlayerController
             origin.y += groundDetectionRayStartPoint;
 
             //check wall to climb
+            /*
             if(playerManager.isJumping && playerManager.isInAir && playerManager.isClimbable)
             {
                 if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.3f, cameraHandle.environmentLayer))
@@ -342,7 +343,7 @@ namespace PlayerController
                     }
                 }
             }
-
+            */
             //change velocity of rigidbody
             if(moveDirection.magnitude < 0.05f) 
             { 

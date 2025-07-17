@@ -29,6 +29,7 @@ namespace PlayerController
         public bool isInteracting;
         public bool isInteract;
         public bool usingAnimationMove;
+        public bool isTalkingWithNPC = false;
 
         [Header("Player Flags")]
         public bool isSprinting;
@@ -129,7 +130,7 @@ namespace PlayerController
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
             playerLocomotion.HandleStepping(delta);
-            playerLocomotion.HandleOnWall(delta);
+         //   playerLocomotion.HandleOnWall(delta);
             playerLocomotion.HandleRotation(delta);
         }
 
@@ -195,6 +196,7 @@ namespace PlayerController
             cameraHandle.enabled = true;
             uiManager.hudWindow.Activate();
             mouseManager.HideCursor();
+            isTalkingWithNPC = false;
         }
 
         public void DeactivateController()
@@ -205,6 +207,7 @@ namespace PlayerController
             playerLocomotion.rigidbody.velocity = Vector3.zero;
             uiManager.hudWindow.Deactivate();
             mouseManager.ShowCursor();
+            isTalkingWithNPC = true;
         }
 
 
