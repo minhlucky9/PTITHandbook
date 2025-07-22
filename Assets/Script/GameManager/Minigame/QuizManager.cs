@@ -161,9 +161,29 @@ namespace Interaction
             
             if (wrongAnswers > quizData.numberOfMaxWrong)
             {
-                correctDialog.message = "Tiếc quá, em đã trả lời <color=#FF6100>sai quá "+ quizData.numberOfMaxWrong +" câu</color> rồi. Tôi nghĩ là em cần thêm thời gian để tìm hiểu về trường. Hãy quay lại đây <color=#FF6100>sau 5 phút</color> nữa nhé.";
+                correctDialog.message = "Tiếc quá, em đã trả lời <color=#FF6100>sai quá "+ quizData.numberOfMaxWrong +" câu</color> rồi. Tôi nghĩ là em cần thêm thời gian để tìm hiểu về trường. Hãy quay lại đây sau khi đã tìm hiểu kĩ nhé.";
                 response.executedFunction = DialogExecuteFunction.OnQuestMinigameFail;
-            } else
+                // dừng coroutine nếu còn chạy
+                
+                if (quizTimerRoutine != null)
+                {
+                    StopCoroutine(quizTimerRoutine);
+                    quizTimerRoutine = null;
+                }
+
+                // ẩn UI timer
+                ConservationManager.instance.timerContainer.Deactivate();
+
+                // reset quest về CAN_START
+                GameManager.QuestManager.instance.UpdateQuestStep(
+                 QuestState.CAN_START,
+                  currentQuizQuestId
+              );
+
+                targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+                
+            } 
+            else
             {
                 correctDialog.message = "Thật tuyệt vời, em đã trả lời đúng <color=#06FFE6>" + correctAnswers + "/" + 8 + " câu hỏi</color> rồi. Tôi tin là sau cuộc trò chuyện này em đã có thêm nhiều hiểu biết về trường mình.";
                 response.executedFunction = DialogExecuteFunction.OnQuestMinigameSuccess;

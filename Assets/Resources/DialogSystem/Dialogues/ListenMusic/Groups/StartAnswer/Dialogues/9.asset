@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59d7b3738a990024995e32e354368843, type: 3}
-  m_Name: 7
+  m_Name: 9
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 7
-  <Text>k__BackingField: "C\u1EA3m \u01A1n b\u1EA1n \u0111\xE3 hi\u1EBFn m\xE1u,
-    v\xEC b\u1EA1n m\xE0 th\u1EBF gi\u1EDBi c\xE0ng ng\xE0y c\xE0ng t\u1ED1t \u0111\u1EB9p
-    h\u01A1n"
+  <DialogueName>k__BackingField: 9
+  <Text>k__BackingField: "B\xE2y gi\u1EDD h\xE3y tr\u1EA3 l\u1EDDi cho th\u1EA7y
+    c\xE1c c\xE2u h\u1ECFi li\xEAn quan \u0111\u1EBFn b\xE0i h\xE1t nh\xE9"
   <Choices>k__BackingField:
-  - <Text>k__BackingField: OK
+  - <Text>k__BackingField: "V\xE2ng \u1EA1"
     <NextDialogue>k__BackingField: {fileID: 0}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
@@ -25,5 +24,5 @@ MonoBehaviour:
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
   <Icon>k__BackingField: {fileID: 0}
-  <ExecutedFunction>k__BackingField: 0
+  <ExecutedFunction>k__BackingField: 2
   <NextExecutedFunction>k__BackingField: 0

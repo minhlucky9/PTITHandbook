@@ -139,7 +139,10 @@ namespace PlayerController
         private void LateUpdate()
         {
             float delta = Time.deltaTime;
-
+            if (PauseMenuUI.GameIsPaused)
+            {
+                goto SkipCameraUpdate;
+            }
             // Xử lý teleport
             if (returnRequested && cameraHandle != null)
             {
@@ -205,6 +208,10 @@ namespace PlayerController
             playerLocomotion.enabled = false;  // KHÔNG gọi HandleMovement nữa
             cameraHandle.enabled = false;
             playerLocomotion.rigidbody.velocity = Vector3.zero;
+            if (cameraHandle != null)
+            {
+                cameraHandle.ResetCameraVelocity();
+            }
             uiManager.hudWindow.Deactivate();
             mouseManager.ShowCursor();
             isTalkingWithNPC = true;

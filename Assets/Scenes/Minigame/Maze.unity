@@ -1047,6 +1047,7 @@ MonoBehaviour:
   timerText: {fileID: 1414656065}
   Fail: {fileID: 64761401}
   Exit: {fileID: 1364648885}
+  Success: {fileID: 0}
   LoadingScreen: {fileID: 1606177791}
   targets:
   - {fileID: 945489134}

@@ -16,6 +16,9 @@ public class PostMethod_LeaderBoard : MonoBehaviour
     public TextMeshProUGUI[] student_idTexts;
     public TextMeshProUGUI[] MedalTexts;
 
+    public GameObject leaderboardEntryPrefab;    // Prefab có gắn LeaderboardEntryUI
+    public Transform leaderboardContentParent;   // GameObject cha (VerticalLayoutGroup)
+
     private string apiUrl = "http://1.55.212.49:8098/DemoBackend3D_API/player/getLeaderboard";
 
     void Start()
@@ -72,17 +75,24 @@ public class PostMethod_LeaderBoard : MonoBehaviour
                 List<LeaderboardPlayer> topPlayers = responseData.leaderboard_player
      .OrderByDescending(player => player.details_state.Medal) // Sort by Medal first
      .ThenByDescending(player => player.score) // Sort by score if Medal is the same
-     .Take(5)
+     .Take(30)
      .ToList();
-           
-                // Update UI Text elements for the top 5 players
+
+                foreach (Transform child in leaderboardContentParent)
+                    Destroy(child.gameObject);
+
                 for (int i = 0; i < topPlayers.Count; i++)
                 {
-          
-                    fullNameTexts[i].text = topPlayers[i].fullname + "-" + topPlayers[i].student_id;
-        
-                    scoreTexts[i].text = topPlayers[i].score.ToString();
-                    MedalTexts[i].text = topPlayers[i].details_state.Medal.ToString();
+                    var player = topPlayers[i];
+                    GameObject go = Instantiate(leaderboardEntryPrefab, leaderboardContentParent);
+                    LeaderboardEntryUI entryUI = go.GetComponent<LeaderboardEntryUI>();
+                    entryUI.SetData(
+                        order: i + 1,                                 // Thứ tự 1→30
+                        progress: player.details_state.Medal.ToString(), // Tiến trình
+                        playerName: player.fullname,                      // Tên
+                        studentID: player.student_id,                    // Mã SV
+                        coin: player.score.ToString()               // Coin
+                    );
                 }
             }
             else

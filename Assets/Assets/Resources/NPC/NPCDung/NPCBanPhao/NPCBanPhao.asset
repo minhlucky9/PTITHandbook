@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcId: NPCBanPhao
   npcName: "D\u0169ng"
-  npcRole: "Sinh vi\xEAn"
+  npcRole: "Ch\u1EE7 qu\xE1n Photo"
   normalConservation: {fileID: 11400000, guid: 87902b137697a9843b483805b641169b, type: 2}

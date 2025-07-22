@@ -27,6 +27,6 @@ MonoBehaviour:
     - message: "Em c\u1EA3m \u01A1n a \u1EA1."
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
-      executedFunction: 11
+      executedFunction: 12
       NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}

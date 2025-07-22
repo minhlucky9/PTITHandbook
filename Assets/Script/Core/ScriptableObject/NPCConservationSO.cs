@@ -136,6 +136,7 @@ namespace Interaction
         OnQuestMinigameFail,
         OnQuestMinigameSuccess,
         ListenMusic,
+        StopMusic,
         DonateFloodRelief,
         DonateBlood,
         CheckBloodCondition,

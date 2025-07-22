@@ -33,9 +33,7 @@ public class PressKeyToClickButton : MonoBehaviour
         Vector3 camOffset = -player.transform.forward * 3f + Vector3.up * 2f;
 
         // 2) Tắt scripts ngay lập tức
-        player.enabled = false;
-        camHandle.enabled = false;
-        locomotion.enabled = false;
+        PlayerManager.instance.DeactivateController();
 
         // 3) Start coroutine: đợi 3s → teleport → bật lại
         StartCoroutine(TeleportAndReenable(player, camHandle, locomotion, camOffset));
@@ -52,12 +50,10 @@ public class PressKeyToClickButton : MonoBehaviour
 
         // 4) Teleport player và rig‐root camera
         player.transform.position = Safezone.position;
-        camHandle.transform.position = Safezone.position + camOffset;
-        camHandle.ClearLockOnTarget();
+        camHandle.transform.position = player.transform.position + camOffset;
+      //  camHandle.ClearLockOnTarget();
 
         // 5) Bật lại scripts để resume behaviour
-        player.enabled = true;
-        locomotion.enabled = true;
-        camHandle.enabled = true;
+        PlayerManager.instance.ActivateController();
     }
 }

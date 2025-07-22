@@ -500,6 +500,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
     public void OnQuestMinigameFail()
     {
         StopInteract();
+        QuizManager.instance.currentQuizQuestId = string.Empty;
     }
     #endregion
 
@@ -626,6 +627,12 @@ public class NPCController : TalkInteraction, IDialogueHandler
         if (iconQuestInProgress) iconQuestInProgress.SetActive(false);
     }
 
+    #region Listen Music
+
+    private AudioSource audioSource;
+    private Coroutine playRoutine;
+    private bool forceStop;
+
     public void ListenMusic()
     {
        
@@ -643,9 +650,9 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
     private IEnumerator PlayMusicCoroutine()
     {
-        
+        forceStop = false;
         // Tải AudioClip từ Resources/Audio/<QuestId>
-        string audioPath = "Audio/" + questConversation.id;
+        string audioPath = "Audio/" + "10Second";
         AudioClip clip = Resources.Load<AudioClip>(audioPath);
         if (clip == null)
         {
@@ -654,25 +661,41 @@ public class NPCController : TalkInteraction, IDialogueHandler
         }
 
         // Lấy hoặc thêm AudioSource
-        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
 
         audioSource.clip = clip;
 
-        ConservationManager.instance.StopAllCoroutines();
+     //   ConservationManager.instance.StopAllCoroutines();
 
-        ConservationManager.instance.StartCoroutine(ConservationManager.instance.DeactivateConservationChoice());
+      //  ConservationManager.instance.StartCoroutine(ConservationManager.instance.DeactivateConservationChoice());
 
         // Phát nhạc
         audioSource.Play();
 
         // Đợi cho đến khi nhạc kết thúc
-        yield return new WaitForSeconds(clip.length);
+        yield return new WaitUntil(() => forceStop || !audioSource.isPlaying);
 
-        ConservationManager.instance.StartCoroutine(ConservationManager.instance.ActivateConservationChoice());
+        // ConservationManager.instance.StartCoroutine(ConservationManager.instance.ActivateConservationChoice());
 
+        if (!forceStop)
+        {
+            SwitchDialogueGroup("StartAnswer");
+        }
+        
+       
     }
+
+    public void StopMusic()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+            audioSource.Stop();   
+
+            forceStop = true;         
+    }
+
+    #endregion
 
     public void OnQuizTimerFail()
     {
@@ -715,10 +738,9 @@ public class NPCController : TalkInteraction, IDialogueHandler
         {
             // a) Trừ 50%
             healthBar.SetCurrentHealth(current * 0.5f);
-
+            healthBar.slider.value = current * 0.5f;
             // b) Hoàn thành quest
-            FinishQuestStep();
-            QuestManager.instance.UpdateRequirementsMetQuest();
+            OnQuestMinigameSuccess();
         }            
     }
 
@@ -735,9 +757,21 @@ public class NPCController : TalkInteraction, IDialogueHandler
         float max = healthBar.slider.maxValue;   
 
         if (current / max > 0.9f)
+        {
             SwitchDialogueGroup("DuDieuKien");
+        }
+           
         else
+        {
             SwitchDialogueGroup("KhongDuDieuKien");
+            QuestManager.instance.UpdateQuestStep(
+                 QuestState.CAN_START,
+                  questId
+              );
+
+            ChangeNPCState(NPCState.HAVE_QUEST);
+        }
+            
     }
 
     
@@ -764,7 +798,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
             var conv = dialogueAdapter.ConvertDSDialogueToConservation(startDia);
             StartCoroutine(ConservationManager.instance.UpdateConservation(conv));
 
-            StartCoroutine(DelayedInitConservation(gameObject, conv));
+         //   StartCoroutine(DelayedInitConservation(gameObject, conv));
 
 
         }

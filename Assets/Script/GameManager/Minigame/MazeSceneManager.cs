@@ -14,6 +14,7 @@ public class MazeSceneManager : SubSceneGameManager
     private Coroutine uiTimerCoroutine;
     public UIAnimationController Fail;
     public UIAnimationController Exit;
+    public UIAnimationController Success;
     public GameObject LoadingScreen;
 
     public CoinLootInteraction[] targets;
@@ -25,7 +26,7 @@ public class MazeSceneManager : SubSceneGameManager
 
     void Update()
     {
-    
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             OnPauseButtonPressed();
@@ -57,7 +58,7 @@ public class MazeSceneManager : SubSceneGameManager
             StartCoroutine(ExitScene(3f));
         };
         CollectQuestManager.instance.collectQuests.Add(minigameData.minigameId, collectQuest);
-      //  StartCoroutine(QuestTimeoutCoroutine(minigameData.questId, minigameData.minigameId, targetNPC));
+        //  StartCoroutine(QuestTimeoutCoroutine(minigameData.questId, minigameData.minigameId, targetNPC));
     }
 
     private IEnumerator QuestTimeoutCoroutine(string questId, string minigameId, GameObject targetNPC)
@@ -66,7 +67,7 @@ public class MazeSceneManager : SubSceneGameManager
 
         if (CollectQuestManager.instance.collectQuests.ContainsKey(minigameId))
         {
-       
+
 
             // reset quest về HAVE_QUEST
             GameManager.QuestManager.instance.UpdateQuestStep(
@@ -78,16 +79,32 @@ public class MazeSceneManager : SubSceneGameManager
 
             CollectQuestManager.instance.collectQuests.Remove(minigameId);
             // rời scene ngay
-           
+
             PlayerManager.instance.DeactivateController();
+            CameraHandle cameraHandle = FindObjectOfType<CameraHandle>();
+            if (cameraHandle != null)
+            {
+                cameraHandle.ResetCameraVelocity();
+            }
             Fail?.Activate();
-            
+
         }
     }
 
-    public void GameFail()
+    public void GameExit()
     {
         StartCoroutine(ExitScene(3f));
+    }
+
+    public void GameSuccess()
+    {
+        PlayerManager.instance.DeactivateController();
+        CameraHandle cameraHandle = FindObjectOfType<CameraHandle>();
+        if (cameraHandle != null)
+        {
+            cameraHandle.ResetCameraVelocity();
+        }
+        Success?.Activate();
     }
 
     public void ExitGame()
@@ -121,12 +138,28 @@ public class MazeSceneManager : SubSceneGameManager
                 timeRemaining -= Time.deltaTime;
             }
             yield return null;
-            StartCoroutine(QuestTimeoutCoroutine(__minigamedata.questId, __minigamedata.minigameId, __targetNPC));
         }
-        
+
         // khi về 0
         timerText.text = "00:00";
 
+        // Timeout xảy ra - gọi GameFail
+        if (CollectQuestManager.instance.collectQuests.ContainsKey(__minigamedata.minigameId))
+        {
+            // reset quest về HAVE_QUEST
+            GameManager.QuestManager.instance.UpdateQuestStep(
+               QuestState.CAN_START,
+                __minigamedata.questId
+            );
+
+            __targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+
+            CollectQuestManager.instance.collectQuests.Remove(__minigamedata.minigameId);
+
+            PlayerManager.instance.DeactivateController();
+            Fail?.Activate();
+            StartCoroutine(ExitScene(3f));
+        }
     }
 
     IEnumerator ExitScene(float delay)
@@ -139,17 +172,24 @@ public class MazeSceneManager : SubSceneGameManager
 
     public void OnPauseButtonPressed()
     {
-      
         PauseMenuUI.Instance.Pause();
-        PlayerManager.instance.DeactivateController();                                  
+        PlayerManager.instance.DeactivateController();
+
+        // Reset camera velocity để ngăn camera tiếp tục xoay do quán tính
+        CameraHandle cameraHandle = FindObjectOfType<CameraHandle>();
+        if (cameraHandle != null)
+        {
+            cameraHandle.ResetCameraVelocity();
+        }
+
         Exit?.Activate();
     }
 
     public void OnResumeButtonPressed()
     {
-      
+
         Exit?.Deactivate();
         PlayerManager.instance.ActivateController();
-        PauseMenuUI.Instance.Resume();     
+        PauseMenuUI.Instance.Resume();
     }
 }

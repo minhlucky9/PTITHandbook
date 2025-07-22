@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NPCQuestQuizA2
   m_EditorClassIdentifier: 
   npcId: NPCQuestQuizA2
-  npcName: "Ki\u1EC1u Nguy\u1EC7t Nga"
+  npcName: "L\xEA Th\u1ECB Nga"
   npcRole: "Nh\xE2n vi\xEAn ph\xF2ng T\xE0i ch\xEDnh K\u1EBF to\xE1n"
   normalConservation: {fileID: 11400000, guid: d1b19617ece54574fa90173a9c2f802d, type: 2}

@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: 6
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: 6
-  <Text>k__BackingField: "B\u1EA1n \u0111\xE3 hi\u1EBFn m\xE1u xong. Ch\xFAc b\u1EA1n
-    m\u1ED9t ng\xE0y t\u1ED1t l\xE0nh"
+  <Text>k__BackingField: "B\u1EA1n \u0111\xE3 hi\u1EBFn m\xE1u xong."
   <Choices>k__BackingField:
   - <Text>k__BackingField: "M\xECnh c\u1EA3m \u01A1n"
-    <NextDialogue>k__BackingField: {fileID: 0}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: a96eb0ff5d233e546a1e23888a35bb35,
+      type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 0}
-  <ExecutedFunction>k__BackingField: 9
-  <NextExecutedFunction>k__BackingField: 0
+  <ExecutedFunction>k__BackingField: 0
+  <NextExecutedFunction>k__BackingField: 10

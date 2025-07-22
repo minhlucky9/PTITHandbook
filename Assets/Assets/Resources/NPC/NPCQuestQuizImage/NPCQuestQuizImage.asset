@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NPCQuestQuizImage
   m_EditorClassIdentifier: 
   npcId: NPCQuestQuizImage
-  npcName: "Kim Tr\u1ECDng"
-  npcRole: "Gi\xE1o vi\xEAn th\u1EC3 d\u1EE5c"
+  npcName: "Nguy\u1EC5n Minh Th\xE0nh"
+  npcRole: "Gi\xE1o vi\xEAn "
   normalConservation: {fileID: 11400000, guid: f2328a0fbc877834b8a29caba67d4b94, type: 2}

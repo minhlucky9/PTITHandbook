@@ -33,6 +33,7 @@ public class MouseManager : MonoBehaviour
         {
             pauseUI.SetActive(true);
             PlayerManager.instance.DeactivateController();
+            PlayerManager.instance.isInteract = true;
             ShowCursor();
         }
         
@@ -45,12 +46,23 @@ public class MouseManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    // Hàm ?? ?n l?i con tr? chu?t
+
     public void HideCursor()
     {
         // Ẩn con trỏ chuột
         Cursor.visible = false;
         // Khóa con trỏ chuột
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void OpenInteract()
+    {
+        PlayerManager.instance.isInteract = false;
+  
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
