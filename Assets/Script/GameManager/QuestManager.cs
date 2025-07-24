@@ -1,4 +1,5 @@
 ﻿using Interaction;
+using System;
 using Interaction.Minigame;
 using PlayerStatsController;
 using System.Collections;
@@ -20,6 +21,7 @@ namespace GameManager
         [HideInInspector] public Dictionary<string, Quest> questMap;
         PlayerStats playerStats;
         public TextMeshProUGUI CharacterName;
+        public event Action OnQuestsInitialized;
 
         [Header("Config")]
         [SerializeField] private bool loadQuestState = true;
@@ -112,6 +114,7 @@ namespace GameManager
                     );
                 }
             }
+      //      OnQuestsInitialized?.Invoke();
         }
 
 

@@ -652,7 +652,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
     {
         forceStop = false;
         // Tải AudioClip từ Resources/Audio/<QuestId>
-        string audioPath = "Audio/" + "10Second";
+        string audioPath = "Audio/" + questConversation.id;
         AudioClip clip = Resources.Load<AudioClip>(audioPath);
         if (clip == null)
         {

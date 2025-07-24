@@ -187,6 +187,14 @@ namespace Interaction
             {
                 correctDialog.message = "Thật tuyệt vời, em đã trả lời đúng <color=#06FFE6>" + correctAnswers + "/" + 8 + " câu hỏi</color> rồi. Tôi tin là sau cuộc trò chuyện này em đã có thêm nhiều hiểu biết về trường mình.";
                 response.executedFunction = DialogExecuteFunction.OnQuestMinigameSuccess;
+                if (quizTimerRoutine != null)
+                {
+                    StopCoroutine(quizTimerRoutine);
+                    quizTimerRoutine = null;
+                }
+
+                // ẩn UI timer
+                ConservationManager.instance.timerContainer.Deactivate();
                 QuestManager.instance.UpdateRequirementsMetQuest();
                 Debug.Log(targetNPC);
             }

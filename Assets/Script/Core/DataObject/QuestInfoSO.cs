@@ -24,6 +24,10 @@ namespace Interaction
         public int goldReward;
         public int experienceReward;
         public List<ItemReward> itemRewards;
+
+        [Header("UI")]
+        public Sprite questIcon;              // Ảnh minh họa quest
+        public bool isAdvancedQuest = false;
         public enum QuestType
         {
             Game,
