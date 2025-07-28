@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 using static GlobalResponseData_Login;
@@ -15,6 +16,7 @@ public class PlayerInventory : MonoBehaviour
     public List<InventoryItem> inventoryItems;
 
     public int gold ;
+    public TextMeshProUGUI goldText;
     public int Medal;
 
     [field: SerializeField]
@@ -63,6 +65,18 @@ public class PlayerInventory : MonoBehaviour
             gold = GlobalResponseData.gold;
         }
 
+    }
+
+    private void Start()
+    {
+      
+        OnGoldChanged += UpdateGoldText;
+      
+    }
+
+    public void UpdateGoldText(int changeAmount, int goldAmount)
+    {
+        goldText.text = goldAmount.ToString();
     }
 
     public void AddGold(int amount)

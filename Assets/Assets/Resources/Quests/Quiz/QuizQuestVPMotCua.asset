@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuizQuestVPMotCua
   displayName: Answer quiz outside vpmotcua
   levelRequirement: 1
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: 5551ca690286c504e9f9b4476fb01c8c, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
@@ -42,4 +43,6 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 50
   itemRewards: []
+  questIcon: {fileID: 21300000, guid: e8c45335b822e044198ed148324e64a4, type: 3}
+  isAdvancedQuest: 0
   questType: 1

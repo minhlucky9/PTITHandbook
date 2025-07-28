@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
@@ -8,6 +9,12 @@ public class ButtonManager : MonoBehaviour
 
     [Header("Assign 8 Button ở đây (theo thứ tự)")]
     public Button[] buttons;     // mảng 8 button
+
+    public string[] panelNames; // mảng tên panel tương ứng với từng button
+
+    [Header("TextMeshProUGUI để hiển thị tên Panel")]
+    public TextMeshProUGUI panelNameText;
+    public TextMeshProUGUI goldText;
 
     private void Awake()
     {
@@ -29,6 +36,16 @@ public class ButtonManager : MonoBehaviour
         ShowOnlyPanel(0);
     }
 
+    private void Start()
+    {
+        PlayerInventory.instance.OnGoldChanged += UpdateGoldText;
+    }
+
+    public void UpdateGoldText(int changeAmount, int goldAmount)
+    {
+        goldText.text = goldAmount.ToString();
+    }
+
     /// <summary>
     /// Hiển thị đúng panel tại vị trí index, ẩn tất cả panel còn lại.
     /// </summary>
@@ -37,6 +54,12 @@ public class ButtonManager : MonoBehaviour
         for (int i = 0; i < panels.Length; i++)
         {
             panels[i].SetActive(i == index);
+        }
+
+        if (panelNameText != null)
+        {
+           
+            panelNameText.text = panelNames[index];
         }
     }
 }

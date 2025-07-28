@@ -27,7 +27,7 @@ namespace PlayerController
         public bool lockOnFlag;
         public bool sprintFlag;
         public float sprintInputTimer;
-        
+
 
         PlayerControls inputActions;
         CameraHandle cameraHandle;
@@ -46,7 +46,7 @@ namespace PlayerController
         private void Awake()
         {
             instance = this;
-            
+
         }
 
         private void Start()
@@ -60,7 +60,7 @@ namespace PlayerController
 
         public void OnEnable()
         {
-            if(inputActions == null)
+            if (inputActions == null)
             {
                 inputActions = new PlayerControls();
                 //bind input values to parameters
@@ -77,7 +77,7 @@ namespace PlayerController
 
                 inputActions.PlayerAction.Sprint.performed += i => sprint_input = true;
                 inputActions.PlayerAction.Sprint.canceled += i => sprint_input = false;
-                
+
 
                 inputActions.PlayerAction.LockOn.performed += i => lock_on_input = true;
 
@@ -99,10 +99,10 @@ namespace PlayerController
 
         public bool isMoveInputsPressed()
         {
-            if(movementInput != Vector2.zero || jump_input || roll_input)
+            if (movementInput != Vector2.zero || jump_input || roll_input)
                 return true;
-          
-            return false;  
+
+            return false;
         }
 
         private void HandleMoveInput(float delta)
@@ -131,7 +131,8 @@ namespace PlayerController
                 {
                     sprintFlag = true;
                 }
-            } else
+            }
+            else
             {
                 sprintFlag = false;
             }
@@ -139,18 +140,19 @@ namespace PlayerController
 
         private void HandleLockOnInput()
         {
-            if(lock_on_input && lockOnFlag == false)
+            if (lock_on_input && lockOnFlag == false)
             {
                 lock_on_input = false;
                 cameraHandle.HandleLockOn();
 
-                if(cameraHandle.nearestLockOnTarget != null)
+                if (cameraHandle.nearestLockOnTarget != null)
                 {
                     cameraHandle.currentLockOnTarget = cameraHandle.nearestLockOnTarget;
                     lockOnFlag = true;
                 }
 
-            } else if(lock_on_input && lockOnFlag)
+            }
+            else if (lock_on_input && lockOnFlag)
             {
                 lock_on_input = false;
                 lockOnFlag = false;
@@ -159,6 +161,34 @@ namespace PlayerController
             }
 
             cameraHandle.SetCameraHeight();
+        }
+
+        public void ResetAllInputValues()
+        {
+            // Reset movement input vectors
+            movementInput = Vector2.zero;
+            cameraInput = Vector2.zero;
+
+            // Reset processed input values
+            horizontal = 0f;
+            vertical = 0f;
+            moveAmount = 0f;
+            mouseX = 0f;
+            mouseY = 0f;
+
+            // Reset input flags
+            sprint_input = false;
+            roll_input = false;
+            jump_input = false;
+            inventory_input = false;
+            pick_up = false;
+            talk_input = false;
+            lock_on_input = false;
+
+            rollFlag = false;
+            lockOnFlag = false;
+            sprintFlag = false;
+            sprintInputTimer = 0f;
         }
 
     }

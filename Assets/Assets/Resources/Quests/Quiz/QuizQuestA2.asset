@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuizQuestA2
   displayName: Answer quiz outside A2
   levelRequirement: 1
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: d33027308f78fb24ab42512519c0a998, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
@@ -40,4 +41,6 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 50
   itemRewards: []
+  questIcon: {fileID: 21300000, guid: 2040cabdcb972714188c77f624c95577, type: 3}
+  isAdvancedQuest: 0
   questType: 1

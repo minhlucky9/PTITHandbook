@@ -22,7 +22,7 @@ public class CoinLootInteraction : LootInteraction
             CollectQuestManager.instance.OnCollectQuestChange(questId);
         }
         AudioManager.instance.PlayCorrectSound();
-        coinPrefab.SetActive(true);
+     //   coinPrefab.SetActive(true);
         gameObject.SetActive(false);
     }
 }

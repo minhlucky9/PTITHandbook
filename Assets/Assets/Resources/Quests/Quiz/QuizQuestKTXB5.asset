@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuizQuestKTXB5
   displayName: Answer quiz outside ktxb5
   levelRequirement: 1
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: eab08d473bfd7fd4b8db09f870553a1b, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
@@ -42,4 +43,6 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 50
   itemRewards: []
+  questIcon: {fileID: 21300000, guid: 45f661ef2bb313d4d95bc30f0aa95b87, type: 3}
+  isAdvancedQuest: 0
   questType: 1

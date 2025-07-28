@@ -22,10 +22,13 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 3475, y: -59}
   - <ID>k__BackingField: 9d30e448-0956-48e1-8d5c-a97f49d7f62a
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 1444, y: 398}
+    <Position>k__BackingField: {x: 1444, y: 398.00003}
   - <ID>k__BackingField: 3705b230-cb61-489b-a4f8-188f8b294483
     <Name>k__BackingField: Fail
-    <Position>k__BackingField: {x: 2642, y: 426}
+    <Position>k__BackingField: {x: 2642, y: 426.00003}
+  - <ID>k__BackingField: 10a04945-66e0-4a6f-891b-f8a423f1601f
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Position>k__BackingField: {x: 3108, y: 428.00003}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 4cb0ce11-6868-47e6-956c-c38f278ce99e
     <Name>k__BackingField: node2
@@ -260,11 +263,29 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 1458, y: -99}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: 09ef26f6-7459-4a4a-9fb6-d4c5cbe766ff
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: "B\u1EA1n c\u1EA7n ho\xE0n th\xE0nh c\xE1c nhi\u1EC7m
+      v\u1EE5 ph\xEDa tr\u01B0\u1EDBc \u0111\u1EC3 m\u1EDF kh\xF3a nhi\u1EC7m v\u1EE5
+      n\xE0y"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "Tho\xE1t kh\u1ECFi h\u1ED9i tho\u1EA1i"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 10a04945-66e0-4a6f-891b-f8a423f1601f
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 3133, y: 487}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - INPROGRESS
   - AfterFinish
   - Fail
+  - REQUIREMENTSNOTMET
   <OldUngroupedNodeNames>k__BackingField:
   - node2
   - node3
@@ -289,3 +310,6 @@ MonoBehaviour:
     - Key: Fail
       Value:
       - q
+    - Key: REQUIREMENTSNOTMET
+      Value:
+      - DialogueName

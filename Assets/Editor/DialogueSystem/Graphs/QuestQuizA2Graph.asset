@@ -16,16 +16,19 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 7d1fd976-0c77-4b77-9aba-fb67e55db30e
     <Name>k__BackingField: NORMAL
-    <Position>k__BackingField: {x: 1433, y: -271}
+    <Position>k__BackingField: {x: 1433, y: -270.99997}
   - <ID>k__BackingField: dd00736e-f500-41ee-a7b9-94b3902035b6
     <Name>k__BackingField: INPROGRESS
-    <Position>k__BackingField: {x: 3475, y: -59}
+    <Position>k__BackingField: {x: 3475.0002, y: -59.000015}
   - <ID>k__BackingField: 9d30e448-0956-48e1-8d5c-a97f49d7f62a
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 1444, y: 398}
+    <Position>k__BackingField: {x: 1444, y: 398.00003}
   - <ID>k__BackingField: b0017388-d8db-45cd-91d0-b708a94db0d5
     <Name>k__BackingField: Fail
-    <Position>k__BackingField: {x: 2659, y: 387}
+    <Position>k__BackingField: {x: 2659, y: 387.00003}
+  - <ID>k__BackingField: 93bb3d0d-d755-414e-b537-51723b60bcb4
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Position>k__BackingField: {x: 3126.0002, y: 421.00003}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 4cb0ce11-6868-47e6-956c-c38f278ce99e
     <Name>k__BackingField: node2
@@ -255,11 +258,29 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 2684, y: 446}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: 069d128f-9457-47e6-9123-c83e9136db04
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: "B\u1EA1n c\u1EA7n ho\xE0n th\xE0nh c\xE1c nhi\u1EC7m
+      v\u1EE5 ph\xEDa tr\u01B0\u1EDBc \u0111\u1EC3 m\u1EDF kh\xF3a nhi\u1EC7m v\u1EE5
+      n\xE0y"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "Tho\xE1t kh\u1ECFi h\u1ED9i tho\u1EA1i"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 93bb3d0d-d755-414e-b537-51723b60bcb4
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 3151, y: 480}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - INPROGRESS
   - AfterFinish
   - Fail
+  - REQUIREMENTSNOTMET
   <OldUngroupedNodeNames>k__BackingField:
   - node2
   - node3
@@ -282,5 +303,8 @@ MonoBehaviour:
       - 5
       - 6
     - Key: Fail
+      Value:
+      - DialogueName
+    - Key: REQUIREMENTSNOTMET
       Value:
       - DialogueName

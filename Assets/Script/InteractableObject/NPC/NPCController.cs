@@ -882,6 +882,42 @@ public class NPCController : TalkInteraction, IDialogueHandler
     #endregion
 
     #endregion
+
+    #region Teleport
+
+    public IEnumerator HoiTruongA2()
+    {
+        yield return ConservationManager.instance.DeactivateConservationDialog();
+        yield return new WaitForSeconds(1f);
+        TelePort.instance.ReturnToHoiTruongA2();
+        isInteracting = false;
+    }
+
+    public IEnumerator BackToHoiTruongA2()
+    {
+        yield return ConservationManager.instance.DeactivateConservationDialog();
+        yield return new WaitForSeconds(1f);
+        TelePort.instance.BackToReturnToHoiTruongA2();
+        isInteracting = false;
+    }
+
+    public IEnumerator BackToPhongHocA2()
+    {
+        yield return ConservationManager.instance.DeactivateConservationDialog();
+        yield return new WaitForSeconds(1f);
+        TelePort.instance.BackToReturnToPhongHocA2();
+        isInteracting = false;
+    }
+
+    public IEnumerator PhongHocA2()
+    {
+        yield return ConservationManager.instance.DeactivateConservationDialog();
+        yield return new WaitForSeconds(1f);
+        TelePort.instance.ReturnToPhongHocA2();
+        isInteracting = false;
+    }
+
+    #endregion
 }
 
 

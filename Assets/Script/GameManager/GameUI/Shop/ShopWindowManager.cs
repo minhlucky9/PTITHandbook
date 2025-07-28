@@ -27,6 +27,8 @@ public class ShopWindowManager : MonoBehaviour
     public TextMeshProUGUI categoryNameText;
     public TextMeshProUGUI categoryDescriptionText;
 
+    [Header("Gold")]
+    public TextMeshProUGUI goldText;
 
     UIAnimationController openAnimation;
     ShopWindowDataSO data;
@@ -41,6 +43,7 @@ public class ShopWindowManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerInventory.instance.OnGoldChanged += UpdateGoldText;
         prevBtn.onClick.AddListener(delegate { PreviousTab(); });
         nextBtn.onClick.AddListener(delegate { NextTab(); });
         closeBtn.onClick.AddListener(delegate { CloseWindow(); });
@@ -48,6 +51,13 @@ public class ShopWindowManager : MonoBehaviour
         categoryButton1.onClick.AddListener(() => GoToCategory(0));
         categoryButton2.onClick.AddListener(() => GoToCategory(1));
         categoryButton3.onClick.AddListener(() => GoToCategory(2));
+    }
+
+   
+
+    public void UpdateGoldText(int changeAmount, int goldAmount)
+    {
+        goldText.text = goldAmount.ToString();
     }
 
     public void OpenWindow(ShopWindowDataSO data)

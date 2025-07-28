@@ -36,4 +36,6 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 250
   itemRewards: []
+  questIcon: {fileID: 0}
+  isAdvancedQuest: 1
   questType: 4

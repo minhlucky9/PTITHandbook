@@ -16,13 +16,16 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <Name>k__BackingField: NORMAL
-    <Position>k__BackingField: {x: 111, y: 194}
+    <Position>k__BackingField: {x: 111.000275, y: 194.00002}
   - <ID>k__BackingField: 86811b08-3dc7-4caa-aab6-2df64b9679c0
     <Name>k__BackingField: Dialog Group
-    <Position>k__BackingField: {x: 972, y: 971}
+    <Position>k__BackingField: {x: 972, y: 971.00006}
   - <ID>k__BackingField: 68476cf5-beb0-450e-b1e3-7c3919f89f17
     <Name>k__BackingField: StartAnswer
-    <Position>k__BackingField: {x: 1633, y: 966}
+    <Position>k__BackingField: {x: 1633, y: 965.99994}
+  - <ID>k__BackingField: 4a753ef5-0d35-4534-b606-a8a6acc54588
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Position>k__BackingField: {x: 2092, y: 977}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 0a4c164d-2869-4f5f-a2c4-5b94c436b678
     <Name>k__BackingField: 7
@@ -156,10 +159,28 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 1069, y: 679}
     <ExecutedFunction>k__BackingField: 2
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: ce0be475-30dc-408e-b8fe-9af5542843c8
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: "B\u1EA1n c\u1EA7n ho\xE0n th\xE0nh c\xE1c nhi\u1EC7m
+      v\u1EE5 ph\xEDa tr\u01B0\u1EDBc \u0111\u1EC3 m\u1EDF kh\xF3a nhi\u1EC7m v\u1EE5
+      n\xE0y"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "Tho\xE1t kh\u1ECFi h\u1ED9i tho\u1EA1i"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 4a753ef5-0d35-4534-b606-a8a6acc54588
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 2117, y: 1036}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - Dialog Group
   - StartAnswer
+  - REQUIREMENTSNOTMET
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -177,3 +198,6 @@ MonoBehaviour:
     - Key: StartAnswer
       Value:
       - 9
+    - Key: REQUIREMENTSNOTMET
+      Value:
+      - DialogueName
