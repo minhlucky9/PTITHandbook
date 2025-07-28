@@ -36,7 +36,7 @@ public class QuestLogManager : MonoBehaviour
         basicButton.onClick.AddListener(() => ShowQuests(basicQuestSOList));
         advancedButton.onClick.AddListener(() => ShowQuests(advancedQuestSOList));
         ShowQuests(basicQuestSOList);
-        UpdateCompletionCount();
+        UpdateBasicQuest();
     }
 /*
     private void OnEnable()
@@ -99,9 +99,19 @@ public class QuestLogManager : MonoBehaviour
         completionText.text = $"Hoàn thành {done}/{total}";
     }
 
-    public void UpdateCompletionCount()
+    public void UpdateBasicQuest()
     {
         UpdateCompletionCount(basicQuestSOList);
+  
+    }
+
+    public void UpdateAdvancedQuest()
+    {
         UpdateCompletionCount(advancedQuestSOList);
+    }
+
+    public void OpenQuestLog()
+    {
+        ShowQuests(basicQuestSOList);
     }
 }

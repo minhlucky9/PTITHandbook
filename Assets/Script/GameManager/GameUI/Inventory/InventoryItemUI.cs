@@ -15,10 +15,9 @@ public class InventoryItemUI : MonoBehaviour
         itemImage.sprite = item.item.itemImage;
         itemImage.enabled = true;
         quantityText.text = item.quantity.ToString();
-        useBtn.onClick.AddListener(delegate
-        {
-            PlayerInventory.instance.TryUseItem(slotIndex);
-        });
+        useBtn.onClick.AddListener(() =>
+            InventoryUIManager.instance.ShowItemDetail(item, slotIndex)
+        );
     }
 
     public void ResetInventorySlot()

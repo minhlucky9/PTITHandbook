@@ -37,7 +37,7 @@ public class QuestLogItemUI : MonoBehaviour
             descText.text = quest.info.questSteps[quest.currentQuestStepIndex].stepDescription;
             requirementNotMetUI.SetActive(quest.state == QuestState.REQUIREMENTS_NOT_MET);
             UpdateStateIcons(quest.state);
-            QuestLogManager.instance.UpdateCompletionCount();
+       
         };
     }
 

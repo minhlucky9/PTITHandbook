@@ -1,7 +1,8 @@
-using Interaction;
+﻿using Interaction;
 using PlayerController;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +13,20 @@ public class ShopWindowManager : MonoBehaviour
     public GameObject categoryPrefab;
     public GameObject productPrefab;
     public Transform itemContainer;
+    public Button closeBtn;
     public Scrollbar containerScroll;
     public Button prevBtn;
     public Button nextBtn;
-    public Button closeBtn;
+
+    [Header("Category Selection Buttons")]
+    public Button categoryButton1;
+    public Button categoryButton2;
+    public Button categoryButton3;
+
+    [Header("Category Name Display")]
+    public TextMeshProUGUI categoryNameText;
+    public TextMeshProUGUI categoryDescriptionText;
+
 
     UIAnimationController openAnimation;
     ShopWindowDataSO data;
@@ -33,6 +44,10 @@ public class ShopWindowManager : MonoBehaviour
         prevBtn.onClick.AddListener(delegate { PreviousTab(); });
         nextBtn.onClick.AddListener(delegate { NextTab(); });
         closeBtn.onClick.AddListener(delegate { CloseWindow(); });
+
+        categoryButton1.onClick.AddListener(() => GoToCategory(0));
+        categoryButton2.onClick.AddListener(() => GoToCategory(1));
+        categoryButton3.onClick.AddListener(() => GoToCategory(2));
     }
 
     public void OpenWindow(ShopWindowDataSO data)
@@ -105,6 +120,32 @@ public class ShopWindowManager : MonoBehaviour
             currentStep = stemNums - 1;
         }
         containerScroll.value = currentStep * (1f / (stemNums - 1));
+    }
+
+
+    public void GoToCategory(int index)
+    {
+        if (data == null || index < 0 || index >= stemNums)
+            return;
+        currentStep = index;
+        containerScroll.value = currentStep * (1f / (stemNums - 1));
+        UpdateCategoryName();
+    }
+
+    /// <summary>
+    /// Cập nhật tên category hiển thị
+    /// </summary>
+    private void UpdateCategoryName()
+    {
+        if (categoryNameText == null || data == null)
+            return;
+
+        if (currentStep < data.shopCategories.Count)
+        {
+            categoryNameText.text = data.shopCategories[currentStep].categoryName;
+            categoryDescriptionText.text = data.shopCategories[currentStep].categoryDescription;
+        }
+            
     }
 }
 

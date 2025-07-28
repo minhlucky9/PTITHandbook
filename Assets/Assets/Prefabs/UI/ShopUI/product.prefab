@@ -426,7 +426,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productImage: {fileID: 2219235953765462215}
   priceText: {fileID: 867042899938021931}
-  valueText: {fileID: 6255127774550609773}
+  NameText: {fileID: 0}
+  descriptionText: {fileID: 0}
   valueIcon: {fileID: 8629981662505084175}
   buyBtn: {fileID: 9123659787354511738}
 --- !u!1 &7640424827253723300

@@ -9,6 +9,8 @@ public class MouseManager : MonoBehaviour
     public static MouseManager instance;
     public GameObject menuUI;
     public GameObject pauseUI;
+    public UIAnimationController QuestUI;
+
     void Awake()
     {
         instance = this;
@@ -36,7 +38,14 @@ public class MouseManager : MonoBehaviour
             PlayerManager.instance.isInteract = true;
             ShowCursor();
         }
-        
+        if (Input.GetKeyDown(KeyCode.Q) && !PlayerManager.instance.isInteract)
+        {
+            QuestUI.Activate();
+            QuestLogManager.instance.OpenQuestLog();
+            PlayerManager.instance.DeactivateController();
+            PlayerManager.instance.isInteract = true;
+            ShowCursor();
+        }
     }
     public void ShowCursor()
     {
@@ -64,5 +73,13 @@ public class MouseManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void CloseQuestUI()
+    {
+        QuestUI.Deactivate();
+        PlayerManager.instance.isInteract = false;
+        PlayerManager.instance.ActivateController();
+        HideCursor();
     }
 }
