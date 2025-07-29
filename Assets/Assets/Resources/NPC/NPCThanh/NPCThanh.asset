@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NPCThanh
   m_EditorClassIdentifier: 
   npcId: NPCThanh
-  npcName: "Th\xE0nh"
+  npcName: "Nguy\u1EC5n V\u0103n Th\xE0nh"
   npcRole: "Gi\xE1o vi\xEAn "
   normalConservation: {fileID: 11400000, guid: a674ed9eabbddd84a9fcf2004f6027d8, type: 2}

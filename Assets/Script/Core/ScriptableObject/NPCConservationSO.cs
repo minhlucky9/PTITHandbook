@@ -136,6 +136,7 @@ namespace Interaction
         OnQuestMinigameFail,
         OnQuestMinigameSuccess,
         ListenMusic,
+        StopMusic,
         DonateFloodRelief,
         DonateBlood,
         CheckBloodCondition,
@@ -150,7 +151,12 @@ namespace Interaction
 
         //Functional Window - NPC Controller
         OpenShopFunctionalWindow,
-        ResetConversation
+        ResetConversation,
+
+        HoiTruongA2,
+        PhongHocA2,
+        BackToHoiTruongA2,
+        BackToPhongHocA2
 
     }
 }

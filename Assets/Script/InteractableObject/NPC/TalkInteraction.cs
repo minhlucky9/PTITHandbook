@@ -20,7 +20,7 @@ public class TalkInteraction : Interactable
     public static TalkInteraction instance;
     float rotationSpeed = 5f;
     PlayerManager playerManager;
-    [HideInInspector]public ConservationManager conservationManager;
+    [HideInInspector] public ConservationManager conservationManager;
     Quaternion originalRotation;
 
     public virtual void Awake()
@@ -101,11 +101,30 @@ public class TalkInteraction : Interactable
     public override void Interact()
     {
         base.Interact();
+        // KHÔNG set isInteracting = true ngay lập tức
         isInteracting = true;
         PlayerManager.instance.isInteract = true;
-        playerManager.DeactivateController();
-        //start conservation
-        StartCoroutine(StartConservation());
+
+        // Bắt đầu quá trình transition mượt mà
+        StartCoroutine(SmoothTransitionToConversation());
+    }
+
+    private IEnumerator SmoothTransitionToConversation()
+    {
+        // Bước 1: Ngừng input nhưng vẫn để animation chạy về idle
+        playerManager.StartTransitionToIdle();
+
+        // Bước 2: Đợi animation transition về idle (khoảng 0.3-0.5 giây)
+        yield return new WaitForSeconds(0.4f);
+
+        // Bước 3: Bây giờ mới set isInteracting = true để NPC xoay về phía player
+        isInteracting = true;
+
+        // Bước 4: Hoàn tất deactivate controller và bắt đầu conversation
+        playerManager.CompleteDeactivateController();
+
+        // Bước 5: Bắt đầu conversation
+        yield return StartConservation();
     }
 
     public override void StopInteract()
@@ -115,6 +134,11 @@ public class TalkInteraction : Interactable
         PlayerManager.instance.isInteract = false;
         //Stop conservation
         StartCoroutine(StopConservation());
+    }
+
+    public void StopToTeleport()
+    {
+        StartCoroutine(ConservationManager.instance.DeactivateConservationDialog());
     }
 
 
@@ -159,13 +183,14 @@ public class TalkInteraction : Interactable
 
     void HandleRotation(Quaternion quaternion)
     {
-        if(Quaternion.Angle(quaternion, transform.rotation) > 0.01f)
+        if (Quaternion.Angle(quaternion, transform.rotation) > 0.01f)
         {
             float rs = rotationSpeed;
             Quaternion tr = quaternion;
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rs * Time.deltaTime);
             transform.rotation = targetRotation;
-        } else
+        }
+        else
         {
             transform.rotation = quaternion;
         }
@@ -203,9 +228,10 @@ public class TalkInteraction : Interactable
 
     IEnumerator StartConservation()
     {
-        playerManager.DeactivateController();
-        yield return new WaitForSeconds(0.5f);
+        // Không cần gọi DeactivateController() nữa vì đã xử lý trong SmoothTransitionToConversation()
+        yield return new WaitForSeconds(0.2f); // Thời gian ngắn để UI hiện mượt mà
         yield return conservationManager.ActivateConservationDialog();
+      //  isInteracting = false;
     }
 
     IEnumerator StopConservation()

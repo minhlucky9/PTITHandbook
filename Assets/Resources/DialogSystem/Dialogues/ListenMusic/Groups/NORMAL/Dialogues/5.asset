@@ -15,7 +15,7 @@ MonoBehaviour:
   <DialogueName>k__BackingField: 5
   <Text>k__BackingField: "B\xE0i h\xE1t \u0111ang \u0111\u01B0\u1EE3c ph\xE1t"
   <Choices>k__BackingField:
-  - <Text>k__BackingField: New Choice
+  - <Text>k__BackingField: "D\u1EEBng nghe b\xE0i h\xE1t"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 065e6701bc42bcd478567865603a9c3c,
       type: 2}
     <ExecutedFunction>k__BackingField: 0

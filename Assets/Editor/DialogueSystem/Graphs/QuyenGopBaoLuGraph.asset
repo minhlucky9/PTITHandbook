@@ -16,10 +16,10 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: ed51d9ef-dc54-4bb0-a6f9-847478399502
     <Name>k__BackingField: NORMAL
-    <Position>k__BackingField: {x: 897.6001, y: -303.2}
+    <Position>k__BackingField: {x: 898, y: -302}
   - <ID>k__BackingField: af7002bc-8077-4e8b-bfac-cc2e0d3a66e7
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 1428.7999, y: 480}
+    <Position>k__BackingField: {x: 1429, y: 481}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 1c05e5d5-6ccc-4e3e-a70c-4de8807297da
     <Name>k__BackingField: 1
@@ -42,7 +42,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: ed51d9ef-dc54-4bb0-a6f9-847478399502
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 923.2, y: -243.2}
+    <Position>k__BackingField: {x: 923, y: -243}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: d16c95f7-7857-4b49-8eb2-95d220376ec3
@@ -58,9 +58,9 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: ed51d9ef-dc54-4bb0-a6f9-847478399502
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1997.6, y: -128.8}
+    <Position>k__BackingField: {x: 1998, y: -129}
     <ExecutedFunction>k__BackingField: 0
-    <NextExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 9
   - <ID>k__BackingField: 96a353bc-e017-416b-809c-6525a440b0ae
     <Name>k__BackingField: 3
     <Text>k__BackingField: "\u1EA6u okay, mong l\xE0 b\u1EA1n s\u1EBD \u0111\u1ED5i
@@ -74,7 +74,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: ed51d9ef-dc54-4bb0-a6f9-847478399502
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1946.3999, y: 190.40001}
+    <Position>k__BackingField: {x: 1946, y: 190}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: 54b6dd4e-9fbe-421d-b6e6-1f4e0cf27a1f
@@ -90,7 +90,7 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: af7002bc-8077-4e8b-bfac-cc2e0d3a66e7
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1454.3999, y: 540}
+    <Position>k__BackingField: {x: 1454, y: 540}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: 9d11a78f-8731-4ccc-8efe-59d26c62d8ee
@@ -107,9 +107,9 @@ MonoBehaviour:
     <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: ed51d9ef-dc54-4bb0-a6f9-847478399502
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 2486.4, y: 70.399994}
+    <Position>k__BackingField: {x: 2486, y: 70}
     <ExecutedFunction>k__BackingField: 2
-    <NextExecutedFunction>k__BackingField: 8
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - AfterFinish

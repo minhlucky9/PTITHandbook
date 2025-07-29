@@ -1,5 +1,6 @@
 ﻿
 using GameManager;
+using Interaction;
 using Interaction.Minigame;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,13 @@ public class CollectQuestManager : MonoBehaviour
         collectQuest.numberToCollect = lootEvent.numberOfLoot;
         collectQuest.OnFinishQuest = () => {
             targetNPC.SendMessage("OnQuestMinigameSuccess");
-     
+            ConservationManager.instance.StarContainer.Deactivate();
             QuestManager.instance.questMap[lootEvent.questId].OnQuestFinish += OnMainQuestComplete;
         };
         collectQuests.Add(lootEvent.minigameId, collectQuest);
-
+        ConservationManager.instance.StarContainer.Activate();
+        ConservationManager.instance.StarText.text =
+            $"0/{collectQuest.numberToCollect}";
         //setup quest complete callback
 
     }
@@ -63,6 +66,7 @@ public class CollectQuest
     public void OnCollectedChange()
     {
         currentCollected++;
+        ConservationManager.instance.StarText.text = $"{currentCollected}/{numberToCollect}";
         Debug.Log(currentCollected + "/" + numberToCollect);
         if(currentCollected == numberToCollect)
         {

@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 23b19324-7f01-41ce-8b17-733e44c779a5
     <Name>k__BackingField: Shop
-    <Position>k__BackingField: {x: 126.000015, y: 183}
+    <Position>k__BackingField: {x: 126, y: 182.99998}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 66a3dc57-21d7-44a8-acfa-3c70ed9bc80d
     <Name>k__BackingField: 1
@@ -26,14 +26,17 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     - <Text>k__BackingField: "D\u1EA1 kh\xF4ng c\xF3 g\xEC \u0111\xE2u \u1EA1"
       <NodeID>k__BackingField: f89456d5-25c4-4949-9e14-61486b1db900
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 23b19324-7f01-41ce-8b17-733e44c779a5
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 151, y: 242}
-    <ExecutedFunction>k__BackingField: 16
+    <ExecutedFunction>k__BackingField: 17
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: f89456d5-25c4-4949-9e14-61486b1db900
     <Name>k__BackingField: 2
@@ -43,9 +46,11 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 23b19324-7f01-41ce-8b17-733e44c779a5
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 552, y: 306}
+    <Position>k__BackingField: {x: 710, y: 268}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:

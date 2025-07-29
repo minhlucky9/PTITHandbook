@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuizQuestThuVien
   displayName: Answer quiz outside library
   levelRequirement: 1
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: c66de7c92bd31ce4dbd0057b8dacdf6e, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
@@ -42,4 +43,6 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 50
   itemRewards: []
+  questIcon: {fileID: 21300000, guid: 2a058ccb1acd2c142b51d35165e437ec, type: 3}
+  isAdvancedQuest: 0
   questType: 1

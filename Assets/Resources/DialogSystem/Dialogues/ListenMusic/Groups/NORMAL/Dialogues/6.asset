@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: 6
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: 6
-  <Text>k__BackingField: "B\xE2y gi\u1EDD h\xE3y tr\u1EA3 l\u1EDDi cho th\u1EA7y
-    c\xE1c c\xE2u h\u1ECFi li\xEAn quan \u0111\u1EBFn b\xE0i h\xE1t nh\xE9"
+  <Text>k__BackingField: "H\xE3y quay tr\u1EDF l\u1EA1i khi em s\u1EB5n s\xE0ng nh\xE9"
   <Choices>k__BackingField:
   - <Text>k__BackingField: "D\u1EA1 v\xE2ng \u1EA1"
     <NextDialogue>k__BackingField: {fileID: 0}
@@ -24,5 +23,5 @@ MonoBehaviour:
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 0}
-  <ExecutedFunction>k__BackingField: 2
-  <NextExecutedFunction>k__BackingField: 0
+  <ExecutedFunction>k__BackingField: 0
+  <NextExecutedFunction>k__BackingField: 8

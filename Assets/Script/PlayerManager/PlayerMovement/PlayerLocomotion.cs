@@ -1,4 +1,4 @@
-using PlayerStatsController;
+﻿using PlayerStatsController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,7 +69,7 @@ namespace PlayerController
             inputHandle = GetComponent<InputHandle>();
             animatorHandle = GetComponentInChildren<PlayerAnimatorHandle>();
             playerStats = GetComponent<PlayerStats>();
-            
+
         }
 
 
@@ -148,11 +148,11 @@ namespace PlayerController
                     Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rs * delta);
                     myTransform.rotation = targetRotation;
                 }
-            } 
+            }
 
-            if(playerManager.isInAir)
+            if (playerManager.isInAir)
             {
-                if(moveDirection.magnitude > 0.1f)
+                if (moveDirection.magnitude > 0.1f)
                 {
                     float rs = rotationSpeed;
                     Quaternion tr = Quaternion.LookRotation(moveDirection.normalized);
@@ -161,7 +161,7 @@ namespace PlayerController
                 }
             }
 
-            if(playerManager.isGrounded)
+            if (playerManager.isGrounded)
             {
                 float rs = rotationSpeed;
                 Quaternion tr = Quaternion.Euler(0, myTransform.rotation.eulerAngles.y, 0);
@@ -178,7 +178,8 @@ namespace PlayerController
             if (inputHandle.rollFlag)
                 return;
 
-            if (playerManager.isInteracting)
+            // Cho phép HandleMovement chạy khi đang transition để animator mượt mà
+            if (playerManager.isInteracting && !playerManager.isTransitioningToIdle)
                 return;
 
             moveDirection = cameraObject.forward * inputHandle.vertical;
@@ -246,8 +247,8 @@ namespace PlayerController
             float maxDistance = 0.6f;
 
             Vector3 foward = moveDirection.normalized;
-            Collider[] hitLowers = Physics.OverlapBox(startTestStepPosition, new Vector3(maxDistance, 0, maxDistance), Quaternion.identity, cameraHandle.environmentLayer); 
-            
+            Collider[] hitLowers = Physics.OverlapBox(startTestStepPosition, new Vector3(maxDistance, 0, maxDistance), Quaternion.identity, cameraHandle.environmentLayer);
+
             if (hitLowers.Length > 0)
             {
                 Collider[] hitUppers = Physics.OverlapBox(startTestStepPosition + new Vector3(0, stepHeight, 0), new Vector3(maxDistance, 0, maxDistance), Quaternion.identity, cameraHandle.environmentLayer);
@@ -257,13 +258,13 @@ namespace PlayerController
                     bool a = hitLowers[0].Raycast(new Ray(startTestStepPosition, foward), out hitLower45, 0.5f);
                     Debug.Log("stepping " + a + " " + Vector3.Dot(hitLower45.normal, transform.up));
                     bool canClimbSlope = Vector3.Dot(hitLower45.normal, transform.up) < 0.1f;
-             
+
                     if (a && canClimbSlope)
                     {
                         Vector3 move = moveDirection.normalized + Vector3.up;
                         SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
                     }
-                    
+
                     return;
                 }
             }
@@ -280,7 +281,7 @@ namespace PlayerController
             if (playerStats.currentStamina <= 0)
                 return;
 
-            
+
 
             if (inputHandle.rollFlag)
             {
@@ -321,6 +322,7 @@ namespace PlayerController
             origin.y += groundDetectionRayStartPoint;
 
             //check wall to climb
+            /*
             if(playerManager.isJumping && playerManager.isInAir && playerManager.isClimbable)
             {
                 if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.3f, cameraHandle.environmentLayer))
@@ -342,11 +344,11 @@ namespace PlayerController
                     }
                 }
             }
-
+            */
             //change velocity of rigidbody
-            if(moveDirection.magnitude < 0.05f) 
-            { 
-                moveDirection = Vector3.zero; 
+            if (moveDirection.magnitude < 0.05f)
+            {
+                moveDirection = Vector3.zero;
             }
             Vector3 velocity = moveDirection.normalized * CalculateRunningSpeed(currentRunningSpeed) - fallingVelocity * Vector3.up;
 
@@ -395,7 +397,7 @@ namespace PlayerController
                 }
                 else
                 {
-                    
+
                     if (playerManager.isGrounded)
                     {
                         playerManager.isGrounded = false;
@@ -426,7 +428,7 @@ namespace PlayerController
                     myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
                 }
 
-                if(!playerManager.isJumping) 
+                if (!playerManager.isJumping)
                     fallingVelocity = 0;
             }
             else
@@ -438,19 +440,20 @@ namespace PlayerController
 
         public void HandleOnWall(float delta)
         {
-            if(playerManager.isOnWall)
+            if (playerManager.isOnWall)
             {
                 //remove gravity
                 SetRigidbodyVelocity(Vector3.zero);
-                
+
                 //move close to wall
-                if(playerManager.isClimbable == false)
+                if (playerManager.isClimbable == false)
                 {
                     if (Vector3.Distance(myTransform.position, targetPosition) < 0.02f)
                     {
                         myTransform.position = targetPosition;
                         playerManager.isClimbable = true;
-                    } else
+                    }
+                    else
                     {
                         myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime * 5f);
                     }
@@ -466,7 +469,7 @@ namespace PlayerController
                     wallNormal = wallNormal + hit.normal;
                     wallNormal.Normalize();
                     transform.forward = -wallNormal;
-                    
+
                     //
                     //wallNormal = hit.normal;
                 }
@@ -489,7 +492,8 @@ namespace PlayerController
                     SetRigidbodyVelocity(projectedVelocity);
                     animatorHandle.anim.SetBool("isClimbing", true);
                     inAirTimer = 0f;
-                } else
+                }
+                else
                 {
                     animatorHandle.anim.SetBool("isClimbing", false);
                 }
@@ -514,16 +518,16 @@ namespace PlayerController
 
             if (inputHandle.jump_input)
             {
-                if(playerManager.isOnWall)
+                if (playerManager.isOnWall)
                 {
                     animatorHandle.PlayTargetAnimation("JumpFromWall", true);
                     animatorHandle.anim.SetBool("usingAnimationMove", true);
-                 
+
                     fallingVelocity = 0;
                     return;
                 }
 
-                if(playerManager.canDoubleJump)
+                if (playerManager.canDoubleJump)
                 {
                     animatorHandle.PlayTargetAnimation("DoubleJump", true);
                     animatorHandle.StartJumping();
@@ -541,7 +545,7 @@ namespace PlayerController
                     //moveDirection.y = 0;
                     //moveDirection.Normalize();
                     animatorHandle.PlayTargetAnimation("Jump", true);
-                    
+
                     Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
                     myTransform.rotation = jumpRotation;
                     animatorHandle.StartJumping();

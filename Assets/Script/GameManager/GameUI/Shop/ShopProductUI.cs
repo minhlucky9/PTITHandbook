@@ -8,7 +8,8 @@ public class ShopProductUI : MonoBehaviour
 {
     public Image productImage;
     public TMP_Text priceText;
-    public TMP_Text valueText;
+    public TMP_Text NameText;
+    public TMP_Text descriptionText;
     public Image valueIcon;
     public Button buyBtn;
 
@@ -19,19 +20,15 @@ public class ShopProductUI : MonoBehaviour
         shopItem = item;
         productImage.sprite = item.itemInfo.itemImage;
         priceText.text = item.price.ToString();
-        valueText.text = item.value;
+        NameText.text = item.itemInfo.itemName;
+        descriptionText.text = item.itemInfo.itemDescription;
         valueIcon.sprite = item.valueIcon;
         //
         buyBtn.onClick.AddListener(delegate
         {
-            bool isBuySuccess = shopItem.TryBuyItem();
-            if(isBuySuccess)
-            {
-                Debug.Log("Success");
-            } else
-            {
-                Debug.Log("Fail");
-            }
+           // bool isBuySuccess = shopItem.TryBuyItem();
+            CartManager.instance.AddToCart(shopItem);
+           
         });
     }
 }

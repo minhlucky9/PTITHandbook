@@ -17,7 +17,7 @@ MonoBehaviour:
   stepId: step2
   targetNPC: {fileID: 0}
   numberOfQuestion: 8
-  numberOfMaxWrong: 3
+  numberOfMaxWrong: 2
   qnas:
   - Question: "T\xEAn \u0111\u1EA7y \u0111\u1EE7 c\u1EE7a H\u1ECDc vi\u1EC7n?"
     Answers:
@@ -29,6 +29,7 @@ MonoBehaviour:
     Explaination: "T\xEAn \u0111\u1EA7y \u0111\u1EE7 c\u1EE7a h\u1ECDc vi\u1EC7n
       l\xE0 <color=#06FFE6>H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh
       Vi\u1EC5n th\xF4ng</color>."
+    QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp v\xE0o n\u0103m?"
     Answers:
     - 1993
@@ -38,6 +39,7 @@ MonoBehaviour:
     CorrectAnswer: 3
     Explaination: "H\u1ECDc vi\u1EC7n \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp v\xE0o
       n\u0103m <color=#06FFE6>1997</color>."
+    QuestionImage: {fileID: 0}
   - Question: "N\u0103m nay - 2024 k\u1EF7 ni\u1EC7m bao nhi\xEAu n\u0103m th\xE0nh
       l\u1EADp H\u1ECDc vi\u1EC7n?"
     Answers:
@@ -48,6 +50,7 @@ MonoBehaviour:
     CorrectAnswer: 2
     Explaination: "N\u0103m 2024 l\xE0 k\u1EF7 ni\u1EC7m <color=#06FFE6>27 n\u0103m</color>
       th\xE0nh l\u1EADp h\u1ECDc vi\u1EC7n."
+    QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n th\xF4ng
       c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i H\xE0 N\u1ED9i \u1EDF ph\u01B0\u1EDDng?"
     Answers:
@@ -59,6 +62,7 @@ MonoBehaviour:
     Explaination: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n
       th\xF4ng c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i th\xE0nh ph\u1ED1 H\xE0
       N\u1ED9i n\u1EB1m t\u1EA1i ph\u01B0\u1EDDng <color=#06FFE6>M\u1ED9 Lao</color>."
+    QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n th\xF4ng
       c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i TP. HCM \u1EDF qu\u1EADn?"
     Answers:
@@ -70,6 +74,7 @@ MonoBehaviour:
     Explaination: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n
       th\xF4ng c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i th\xE0nh ph\u1ED1 H\u1ED3
       Ch\xED Minh n\u1EB1m t\u1EA1i <color=#06FFE6>qu\u1EADn 9</color>."
+    QuestionImage: {fileID: 0}
   - Question: "PTIT l\xE0 vi\u1EBFt t\u1EAFt c\u1EE7a t\u1EEB g\xEC?"
     Answers:
     - 'Posts and Technology Institute of Time '
@@ -79,6 +84,7 @@ MonoBehaviour:
     CorrectAnswer: 4
     Explaination: "PTIT l\xE0 vi\u1EBFt t\u1EAFt c\u1EE7a t\u1EEB <color=#06FFE6>Posts
       and Telecommunications Institute of Technology</color>."
+    QuestionImage: {fileID: 0}
   - Question: "Tr\u1EE5 s\u1EDF ch\xEDnh c\u1EE7a h\u1ECDc vi\u1EC7n n\u1EB1m tr\xEAn
       con \u0111\u01B0\u1EDDng n\xE0o ?"
     Answers:
@@ -89,6 +95,7 @@ MonoBehaviour:
     CorrectAnswer: 4
     Explaination: "Tr\u1EE5 s\u1EDF ch\xEDnh c\u1EE7a h\u1ECDc vi\u1EC7n n\u1EB1m
       tr\xEAn <color=#06FFE6>\u0111\u01B0\u1EDDng Ho\xE0ng Qu\u1ED1c Vi\u1EC7t</color>."
+    QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n chuy\u1EC3n t\u1EEB T\u1EADp \u0111o\xE0n B\u01B0u
       ch\xEDnh vi\u1EC5n th\xF4ng v\u1EC1 B\u1ED9 th\xF4ng tin truy\u1EC1n th\xF4ng
       v\xE0o ng\xE0y th\xE1ng n\u0103m n\xE0o?"
@@ -101,6 +108,7 @@ MonoBehaviour:
     Explaination: "H\u1ECDc vi\u1EC7n chuy\u1EC3n t\u1EEB T\u1EADp \u0111o\xE0n B\u01B0u
       ch\xEDnh vi\u1EC5n th\xF4ng v\u1EC1 B\u1ED9 Th\xF4ng tin truy\u1EC1n th\xF4ng
       v\xE0o <color=#06FFE6>ng\xE0y 01/07/2014</color>."
+    QuestionImage: {fileID: 0}
   - Question: "Website ch\xEDnh th\u1EE9c c\u1EE7a H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7
       B\u01B0u ch\xEDnh Vi\u1EC5n th\xF4ng l\xE0 ?"
     Answers:
@@ -111,6 +119,7 @@ MonoBehaviour:
     CorrectAnswer: 1
     Explaination: "Website ch\xEDnh th\u1EE9c c\u1EE7a H\u1ECDc vi\u1EC7n C\xF4ng
       ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n th\xF4ng l\xE0 <color=#06FFE6>www.ptit.edu.vn</color>."
+    QuestionImage: {fileID: 0}
   - Question: "Sau ng\xE0y nh\u1EADp h\u1ECDc, c\xE1c t\xE2n sinh vi\xEAn s\u1EBD
       ph\u1EA3i tr\u1EA3i qua?"
     Answers:
@@ -121,6 +130,7 @@ MonoBehaviour:
     CorrectAnswer: 4
     Explaination: "Sau ng\xE0y nh\u1EADp h\u1ECDc, c\xE1c t\xE2n sinh vi\xEAn s\u1EBD
       ph\u1EA3i tr\u1EA3i qua <color=#06FFE6>Tu\u1EA7n l\u1EC5 c\xF4ng d\xE2n</color>."
+    QuestionImage: {fileID: 0}
   - Question: "\u0110\xE2u l\xE0 n\u1EC1n m\xF3ng \u0111\u1EA7u ti\xEAn c\u1EE7a
       vi\u1EC7c th\xE0nh l\u1EADp H\u1ECDc vi\u1EC7n CNBCVT? "
     Answers:
@@ -134,6 +144,7 @@ MonoBehaviour:
       th\xF4ng \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp v\xE0o n\u0103m 1953 v\u1EDBi
       t\xEAn g\u1ECDi l\xE0 <color=#06FFE6>Tr\u01B0\u1EDDng \u0110\u1EA1i h\u1ECDc
       B\u01B0u \u0111i\u1EC7n \u2013 V\xF4 tuy\u1EBFn \u0111i\u1EC7n</color>."
+    QuestionImage: {fileID: 0}
   - Question: "M\u1ECDi n\u0103m kho\u1EA3ng th\u1EDDi gian n\xE0o s\u1EBD di\u1EC5n
       ra Ch\xE0o t\xE2n sinh vi\xEAn?"
     Answers:
@@ -144,6 +155,7 @@ MonoBehaviour:
     CorrectAnswer: 1
     Explaination: "H\u1EB1ng n\u0103m, bu\u1ED5i Ch\xE0o t\xE2n sinh vi\xEAn \u0111\u01B0\u1EE3c
       di\u1EC5n ra v\xE0o <color=#06FFE6>\u0111\u1EA7u th\xE1ng 10</color>."
+    QuestionImage: {fileID: 0}
   - Question: "Khi m\u1EDBi nh\u1EADp h\u1ECDc, t\xE2n sinh vi\xEAn s\u1EBD nh\u1EADn
       \u0111\u01B0\u1EE3c?"
     Answers:
@@ -156,6 +168,7 @@ MonoBehaviour:
       s\u1EBD \u0111\u01B0\u1EE3c nh\u1EADn m\u1ED9t <color=#06FFE6>S\u1ED5 tay sinh
       vi\xEAn</color> b\xEAn trong ch\u1EE9a c\xE1c th\xF4ng tin r\u1EA5t c\u1EA7n
       thi\u1EBFt trong qu\xE1 tr\xECnh h\u1ECDc t\u1EADp t\u1EA1i tr\u01B0\u1EDDng."
+    QuestionImage: {fileID: 0}
   quizIntro:
     dialogId: intro
     message: "Ok v\u1EADy m\xECnh b\u1EAFt \u0111\u1EA7u nh\xE9. Th\u1EA7y s\u1EBD

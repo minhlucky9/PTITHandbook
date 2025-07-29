@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuestListenMusic
   displayName: "Nghe nh\u1EA1c "
   levelRequirement: 1
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: ae0a4abd76a1cfe47a100da7008daf78, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
@@ -36,4 +37,6 @@ MonoBehaviour:
   goldReward: 50
   experienceReward: 250
   itemRewards: []
+  questIcon: {fileID: 21300000, guid: aaba4a5ae5ebe524199dddd5d7dc3d5d, type: 3}
+  isAdvancedQuest: 0
   questType: 1

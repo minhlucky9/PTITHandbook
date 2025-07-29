@@ -20,6 +20,7 @@ public class ShopWindowDataSO : FunctionalWindowDataSO
 public class ShopCategory
 {
     public string categoryName;
+    public string categoryDescription;
     public Sprite iconInShop;
     public List<ShopItem> shopItems;
 }
@@ -29,7 +30,7 @@ public struct ShopItem
 {
     public ItemSO itemInfo;
     public int price;
-    public string value;
+   // public string value;
     public Sprite valueIcon;
 
     public bool TryBuyItem()

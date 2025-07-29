@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NPCQuestQuizKTXB5
   m_EditorClassIdentifier: 
   npcId: NPCQuestQuizKTXB5
-  npcName: "V\xF5 Th\u1EC3 Loan"
+  npcName: "V\u0169 Th\u1ECB Loan"
   npcRole: "Nh\xE2n vi\xEAn V\u0103n ph\xF2ng \u0110o\xE0n"
   normalConservation: {fileID: 11400000, guid: 88d4763b8c053d24e8e3ae3f5e392c32, type: 2}

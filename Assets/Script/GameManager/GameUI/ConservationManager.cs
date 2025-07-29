@@ -50,6 +50,19 @@ namespace Interaction
         public Slider quizTimerSlider;
 
 
+        [Header("Time Countdown Quiz")]
+
+        public UIAnimationController timerContainer;
+
+        public TMP_Text timerText;
+
+        [Header("Star")]
+
+        public UIAnimationController StarContainer;
+
+        public TMP_Text StarText;
+
+
         #region ImageTimedQuiz
 
         [HideInInspector]
