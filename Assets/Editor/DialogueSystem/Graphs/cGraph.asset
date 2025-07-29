@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 71e42a96-563a-4bd7-95bf-b9b1443b0a98
     <Name>k__BackingField: zzz
-    <Position>k__BackingField: {x: 33.59999, y: 98.4}
+    <Position>k__BackingField: {x: 33.600006, y: 98.399994}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 43f4c5a3-b042-44ea-985b-d67d70ea6f72
     <Name>k__BackingField: a
@@ -26,6 +26,7 @@ MonoBehaviour:
       <NodeID>k__BackingField: 07c40e3d-76b0-4650-bc2a-c26a95b3c7f9
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 71e42a96-563a-4bd7-95bf-b9b1443b0a98
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 59.2, y: 158.40001}
@@ -39,6 +40,7 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 71e42a96-563a-4bd7-95bf-b9b1443b0a98
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 679.2, y: 166.40001}
@@ -52,9 +54,10 @@ MonoBehaviour:
       <NodeID>k__BackingField: 01e42fc7-4c07-47dc-8317-c02880cc4ab0
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 71e42a96-563a-4bd7-95bf-b9b1443b0a98
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 389.6, y: 284}
+    <Position>k__BackingField: {x: 328, y: 359.19998}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8675033c89e01e045840dacd37af3fa5, type: 3}
   m_Name: QuizQuestKiTuc_step2
   m_EditorClassIdentifier: 
-  conservationId: QuizQuestKiTuc_step2
+  minigameId: QuizQuestKiTuc_step2
   questId: QuizQuestKiTuc
   stepId: step2
+  targetNPC: {fileID: 0}
   numberOfQuestion: 8
-  numberOfMaxWrong: 3
+  numberOfMaxWrong: 2
   qnas:
   - Question: "Khu k\xFD t\xFAc x\xE1 cho c\xE1c b\u1EA1n sinh vi\xEAn L\xE0o n\u1EB1m
       \u1EDF \u0111\xE2u? "
@@ -146,9 +147,12 @@ MonoBehaviour:
       \u0111\u01A1n v\u1ECB n\u1EB1m trong khu\xF4n vi\xEAn</color> H\u1ECDc vi\u1EC7n
       m\xECnh. H\xE3y l\u01B0u \xFD em ch\u1EC9 \u0111\u01B0\u1EE3c ph\xE9p tr\u1EA3
       l\u1EDDi sai t\u1ED1i \u0111a 3 c\xE2u."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"
       icon: {fileID: 0}
       nextDialogId: 
       executedFunction: 4
+      NextExecutedFunction: 0
+    nodePosition: {x: 10, y: 10}

@@ -31,7 +31,7 @@ namespace PlayerController
 
         PlayerControls inputActions;
         CameraHandle cameraHandle;
-        UIManager uiManager;
+        UIWeatherManager uiManager;
         PlayerManager playerManager;
         PlayerStats playerStats;
         PlayerAnimatorHandle animatorHandle;
@@ -41,9 +41,17 @@ namespace PlayerController
 
         public Transform criticalAttackRayCastStartPoint;
 
+        public static InputHandle instance;
+
+        private void Awake()
+        {
+            instance = this;
+            
+        }
+
         private void Start()
         {
-            uiManager = FindObjectOfType<UIManager>();
+            uiManager = FindObjectOfType<UIWeatherManager>();
             playerManager = GetComponent<PlayerManager>();
             cameraHandle = FindObjectOfType<CameraHandle>();
             animatorHandle = GetComponentInChildren<PlayerAnimatorHandle>();

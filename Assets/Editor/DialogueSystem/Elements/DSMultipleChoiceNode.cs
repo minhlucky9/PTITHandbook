@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 namespace DS.Elements
 {
     using Data.Save;
     using Enumerations;
     using UnityEditor.Experimental.GraphView;
     using UnityEngine.UIElements;
+    using UnityEditor.UIElements;
+
     using Ultilities;
     using windows;
     using System.Net;
@@ -23,7 +27,8 @@ namespace DS.Elements
 
             DSChoiceSaveData choiceData = new DSChoiceSaveData()
             {
-                Text = "New Choice"
+                Text = "New Choice",
+                Icon = null,
             };
 
             Choices.Add(choiceData);
@@ -38,7 +43,8 @@ namespace DS.Elements
 
                 DSChoiceSaveData choiceData = new DSChoiceSaveData()
                 {
-                    Text = "New Choice"
+                    Text = "New Choice",
+                    Icon = null,
                 };
                           
                 Choices.Add(choiceData);
@@ -104,6 +110,18 @@ namespace DS.Elements
                 );
         
             ChoicePort.Add(choicetextField);
+
+          
+            ObjectField iconField = new ObjectField();
+            iconField.objectType = typeof(Sprite);
+            iconField.value = ChoiceData.Icon;
+            iconField.RegisterValueChangedCallback(evt =>
+            {
+                ChoiceData.Icon = (Sprite)evt.newValue;
+            });
+            iconField.style.minWidth = 32;
+            iconField.style.maxWidth = 132;
+            ChoicePort.Add(iconField);
 
             ChoicePort.Add(DeleteChoiceButton);
 

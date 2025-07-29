@@ -15,20 +15,20 @@ MonoBehaviour:
   <FileName>k__BackingField: PhotoPhaoThi
   <Groups>k__BackingField:
   - <ID>k__BackingField: 9d804ef8-7929-4c51-93b6-c5e9b8d26525
-    <Name>k__BackingField: HocSinh
-    <Position>k__BackingField: {x: 214.4, y: 179.19998}
+    <Name>k__BackingField: NORMAL
+    <Position>k__BackingField: {x: 213.59999, y: 180.00002}
   - <ID>k__BackingField: cfc7d42a-b0fa-4f44-815f-fc8085b857fd
     <Name>k__BackingField: BanPhaoNotQuest
     <Position>k__BackingField: {x: 1645.6, y: 162.4}
   - <ID>k__BackingField: f5a5fcf3-1896-42ef-a619-3f5e286378cc
     <Name>k__BackingField: BanPhaoINPROGRESS
-    <Position>k__BackingField: {x: 1595.9999, y: 539.99994}
+    <Position>k__BackingField: {x: 1596, y: 540}
   - <ID>k__BackingField: b085fd79-0537-4a56-97c3-5b8eb912887b
     <Name>k__BackingField: KhongDuTien
-    <Position>k__BackingField: {x: 2011.1998, y: 164}
+    <Position>k__BackingField: {x: 2171.9995, y: 165.60002}
   - <ID>k__BackingField: 18faeeae-e049-4eef-9acb-27a58a6f85c6
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 1233.5999, y: 902.39984}
+    <Position>k__BackingField: {x: 1000, y: 940.80005}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: e26a738e-c2ee-48e7-aeec-cc276c069a24
     <Name>k__BackingField: 1
@@ -39,27 +39,16 @@ MonoBehaviour:
       <NodeID>k__BackingField: aacd5624-085d-4657-b458-e3450c194293
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     - <Text>k__BackingField: "Kh\xF4ng \u0111\u01B0\u1EE3c b\u1EA1n \u01A1i"
       <NodeID>k__BackingField: d5852f72-a81e-4a77-84cd-110dbb001231
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 9d804ef8-7929-4c51-93b6-c5e9b8d26525
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 240, y: 239.2}
-    <ExecutedFunction>k__BackingField: 0
-    <NextExecutedFunction>k__BackingField: 0
-  - <ID>k__BackingField: aacd5624-085d-4657-b458-e3450c194293
-    <Name>k__BackingField: 2
-    <Text>k__BackingField: "B\u1EA1n c\xF3 th\u1EC3 ra photo Huy\u1EC1n trang v\xE0
-      mua phao gi\xFAp m\xECnh \u0111\u01B0\u1EE3c kh\xF4ng"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: "\u0110\u01B0\u1EE3c b\u1EA1n \u01A1i"
-      <NodeID>k__BackingField: ea81021e-2e56-4dc0-b68c-00eb218b5a36
-      <ExecutedFunction>k__BackingField: 0
-      <NextExecutedFunction>k__BackingField: 0
-    <GroupID>k__BackingField: 9d804ef8-7929-4c51-93b6-c5e9b8d26525
-    <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 676, y: 262.4}
+    <Position>k__BackingField: {x: 239.2, y: 240.00002}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: d5852f72-a81e-4a77-84cd-110dbb001231
@@ -71,9 +60,11 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 9d804ef8-7929-4c51-93b6-c5e9b8d26525
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 783.2, y: 636.8}
+    <Position>k__BackingField: {x: 782.4, y: 637.6}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: ea81021e-2e56-4dc0-b68c-00eb218b5a36
@@ -85,9 +76,11 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 9d804ef8-7929-4c51-93b6-c5e9b8d26525
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1175.2, y: 516}
+    <Position>k__BackingField: {x: 1174.3999, y: 516.8}
     <ExecutedFunction>k__BackingField: 4
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: 02297cfc-fc7e-424c-b9ed-4883721dc85f
@@ -99,6 +92,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: cfc7d42a-b0fa-4f44-815f-fc8085b857fd
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1671.2, y: 222.40001}
@@ -113,10 +108,13 @@ MonoBehaviour:
       <NodeID>k__BackingField: 0a9efa43-77af-4677-b8f1-e9894925fc4e
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     - <Text>k__BackingField: "Kh\xF4ng t\xF4i kh\xF4ng c\xF3 ti\u1EC1n"
       <NodeID>k__BackingField: 848ce502-61e5-4ec3-9862-431ed12f8c89
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: f5a5fcf3-1896-42ef-a619-3f5e286378cc
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1621.6, y: 600}
@@ -131,6 +129,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: f5a5fcf3-1896-42ef-a619-3f5e286378cc
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 2200.8, y: 654.39996}
@@ -145,9 +145,11 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: b085fd79-0537-4a56-97c3-5b8eb912887b
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 2036.7999, y: 224}
+    <Position>k__BackingField: {x: 2197.5999, y: 225.6}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: 848ce502-61e5-4ec3-9862-431ed12f8c89
@@ -159,6 +161,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: f5a5fcf3-1896-42ef-a619-3f5e286378cc
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 2217.5999, y: 907.2}
@@ -173,13 +177,31 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 18faeeae-e049-4eef-9acb-27a58a6f85c6
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1259.2, y: 962.39996}
+    <Position>k__BackingField: {x: 1025.6, y: 1000.8}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: aacd5624-085d-4657-b458-e3450c194293
+    <Name>k__BackingField: 2
+    <Text>k__BackingField: "B\u1EA1n c\xF3 th\u1EC3 ra photo Huy\u1EC1n trang v\xE0
+      mua phao gi\xFAp m\xECnh \u0111\u01B0\u1EE3c kh\xF4ng"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0110\u01B0\u1EE3c b\u1EA1n \u01A1i"
+      <NodeID>k__BackingField: ea81021e-2e56-4dc0-b68c-00eb218b5a36
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 9d804ef8-7929-4c51-93b6-c5e9b8d26525
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 746.4, y: 258.4}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
-  - HocSinh
+  - NORMAL
   - BanPhaoNotQuest
   - BanPhaoINPROGRESS
   - KhongDuTien
@@ -187,12 +209,12 @@ MonoBehaviour:
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
-    - Key: HocSinh
+    - Key: NORMAL
       Value:
       - 1
-      - 2
       - 3
       - 4
+      - 2
     - Key: BanPhaoNotQuest
       Value:
       - 5

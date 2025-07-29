@@ -15,12 +15,12 @@ MonoBehaviour:
   <FileName>k__BackingField: HelpFriend
   <DialogueGroups>k__BackingField:
     list:
-    - Key: {fileID: 11400000, guid: 29a5e65dd0346e641b3aefa1cc946104, type: 2}
+    - Key: {fileID: 11400000, guid: 9dec59ed596056d4b8fcc19cf191f1d8, type: 2}
       Value:
-      - {fileID: 11400000, guid: 999d3ee628a64ad458ae23dec9cada27, type: 2}
-      - {fileID: 11400000, guid: 93e998e353561474cb98a689ad2e056d, type: 2}
-      - {fileID: 11400000, guid: ae0172766abbd1a4cb5590043d48057a, type: 2}
-      - {fileID: 11400000, guid: 0be76e037e14f3d4794fcb01946fb44a, type: 2}
+      - {fileID: 11400000, guid: 6215be2eda987d041b2905f508ad81c6, type: 2}
+      - {fileID: 11400000, guid: 8147aced8eff45b4aa170f511b837caa, type: 2}
+      - {fileID: 11400000, guid: 48506c7dc9e46a24b86fcd3151b41024, type: 2}
+      - {fileID: 11400000, guid: 2b14c24806b30024a90ed7469e96d48d, type: 2}
     - Key: {fileID: 11400000, guid: 27d981a36e9f37844a6bc2582e22ce22, type: 2}
       Value:
       - {fileID: 11400000, guid: f3bd4ce7f0a7856489f0adbdac376086, type: 2}

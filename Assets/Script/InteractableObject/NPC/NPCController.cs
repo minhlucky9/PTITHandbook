@@ -45,6 +45,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
     [Header("Quest Mission")]
     string questId;
     QuestStep questStep;
+    public GameObject[] Block;
 
 
     [HideInInspector] public string lastDialogueId;
@@ -119,6 +120,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
     {
         base.Interact();
 
+      
 
 
         if (QuestManager.instance.questMap[questConversation.id].state == QuestState.FINISHED)
@@ -129,6 +131,76 @@ public class NPCController : TalkInteraction, IDialogueHandler
             foreach (var groupEntry in container.DialogueGroups)
             {
                 if (groupEntry.Key.GroupName == "AfterFinish")
+                {
+                    afterFinishGroup = groupEntry.Key;
+                    // Tìm dialogue khởi đầu trong group này
+                    foreach (var dialogue in groupEntry.Value)
+                    {
+                        if (dialogue.IsStartingDialogue)
+                        {
+                            startingDialogue = dialogue;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            if (afterFinishGroup != null && startingDialogue != null)
+            {
+                // Thay đổi dsDialogue
+                dsDialogue.dialogueGroup = afterFinishGroup;
+                dsDialogue.dialogue = startingDialogue;
+
+                // QUAN TRỌNG: Khởi tạo lại dialogueAdapter
+                if (dialogueAdapter != null)
+                {
+                    dialogueAdapter.Initialize(container);
+
+                    // Debug log để kiểm tra
+                    Debug.Log($"Changed to dialogue: {startingDialogue.DialogueName} in group: {afterFinishGroup.GroupName}");
+                    Debug.Log($"Reinitialized dialogueAdapter with container");
+                }
+            }
+
+            // Tìm dialogue khởi đầu trong group hiện tại
+            DSDialogueSO startDialogue = null;
+            if (dsDialogue.dialogueGroup != null)
+            {
+                foreach (var entry in container.DialogueGroups)
+                {
+                    if (entry.Key == dsDialogue.dialogueGroup)
+                    {
+                        foreach (var dialogue in entry.Value)
+                        {
+                            if (dialogue.IsStartingDialogue)
+                            {
+                                startDialogue = dialogue;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            var dialogueSo = startDialogue != null ? startDialogue : dsDialogue.dialogue;
+
+
+            DialogConservation conv = dialogueAdapter.ConvertDSDialogueToConservation(dialogueSo);
+            conservationManager.InitConservation(gameObject, conv);
+
+            Debug.Log($"After InitConservation - Using dialogue: {dialogueSo.DialogueName} from group: {dsDialogue.dialogueGroup?.GroupName}");
+
+        }
+        else if (QuestManager.instance.questMap[questConversation.id].state == QuestState.REQUIREMENTS_NOT_MET)
+        {
+            // Tìm group "AfterFinish" trong container
+            DSDialogueGroupSO afterFinishGroup = null;
+            DSDialogueSO startingDialogue = null;
+            foreach (var groupEntry in container.DialogueGroups)
+            {
+                if (groupEntry.Key.GroupName == "REQUIREMENTSNOTMET")
                 {
                     afterFinishGroup = groupEntry.Key;
                     // Tìm dialogue khởi đầu trong group này
@@ -211,9 +283,46 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
         else
         {
+           
             Debug.Log($"Before Interact - Group: {dsDialogue.dialogueGroup?.GroupName}, Dialogue: {dsDialogue.dialogue?.DialogueName}");
 
+            // Tìm group "AfterFinish" trong container
+            DSDialogueGroupSO afterFinishGroup = null;
+            DSDialogueSO startingDialogue = null;
+            foreach (var groupEntry in container.DialogueGroups)
+            {
+                if (groupEntry.Key.GroupName == "NORMAL")
+                {
+                    afterFinishGroup = groupEntry.Key;
+                    // Tìm dialogue khởi đầu trong group này
+                    foreach (var dialogue in groupEntry.Value)
+                    {
+                        if (dialogue.IsStartingDialogue)
+                        {
+                            startingDialogue = dialogue;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
 
+            if (afterFinishGroup != null && startingDialogue != null)
+            {
+                // Thay đổi dsDialogue
+                dsDialogue.dialogueGroup = afterFinishGroup;
+                dsDialogue.dialogue = startingDialogue;
+
+                // QUAN TRỌNG: Khởi tạo lại dialogueAdapter
+                if (dialogueAdapter != null)
+                {
+                    dialogueAdapter.Initialize(container);
+
+                    // Debug log để kiểm tra
+                    Debug.Log($"Changed to dialogue: {startingDialogue.DialogueName} in group: {afterFinishGroup.GroupName}");
+                    Debug.Log($"Reinitialized dialogueAdapter with container");
+                }
+            }
 
 
 
@@ -338,11 +447,23 @@ public class NPCController : TalkInteraction, IDialogueHandler
         if (QuestManager.instance.questMap[questConversation.id].info.questType == QuestInfoSO.QuestType.Passive)
         {
             FinishPassiveQuestStep();
+            QuestManager.instance.UpdateRequirementsMetQuest();
+            foreach (GameObject block in Block)
+            {
+                block.SetActive(false);
+            }
+            PlayerInventory.instance.Medal++;
         }
 
         else if (QuestManager.instance.questMap[questConversation.id].info.questType != QuestInfoSO.QuestType.Quiz)
         {
            FinishQuestStep();
+            QuestManager.instance.UpdateRequirementsMetQuest();
+            foreach (GameObject block in Block)
+            {
+                block.SetActive(false);
+            }
+            PlayerInventory.instance.Medal++;
         }
        
         else if(QuestManager.instance.questMap[questConversation.id].info.questType == QuestInfoSO.QuestType.Quiz)
@@ -353,9 +474,14 @@ public class NPCController : TalkInteraction, IDialogueHandler
             if (!string.IsNullOrEmpty(questId))
             {
                 FinishQuestStep();
+                QuestManager.instance.UpdateRequirementsMetQuest();
                 // StopInteract();
                 QuestManager.instance.questMap[questId].state = QuestState.FINISHED;
-
+                foreach (GameObject block in Block)
+                {
+                    block.SetActive(false);
+                }
+                PlayerInventory.instance.Medal++;
                 // Cập nhật một phần tử cụ thể
                 int stepIndex = 1;
                 QuestManager.instance.questMap[questId].questStepStates[stepIndex] = new QuestStepState("Bước 2", "Hoàn thành Quest Quiz A1");
@@ -392,6 +518,8 @@ public class NPCController : TalkInteraction, IDialogueHandler
             
             ResetNPC();
             questManager.OnFinishQuestStep(currentQuestId);
+            QuestManager.instance.UpdateRequirementsMetQuest();
+            
         }
         else
         {
@@ -413,6 +541,10 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
             ResetNPC();
             questManager.OnFinishQuestStep(currentQuestId);
+            QuestManager.instance.UpdateRequirementsMetQuest();
+
+           
+
         }
         else
         {
@@ -550,10 +682,12 @@ public class NPCController : TalkInteraction, IDialogueHandler
        
         int donatedAmount = PlayerInventory.instance.gold / 2;
       
-        PlayerInventory.instance.SubtractGold(donatedAmount);  
+        PlayerInventory.instance.SubtractGold(donatedAmount);
 
         // Hoàn thành quest (Passive)
-        FinishQuestStep();
+        OnQuestMinigameSuccess();
+
+
     }
 
     public void DonateBlood()
@@ -577,6 +711,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
             // b) Hoàn thành quest
             FinishQuestStep();
+            QuestManager.instance.UpdateRequirementsMetQuest();
         }            
     }
 
@@ -700,6 +835,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
         // Hoàn thành quest
         FinishQuestStep();
+        QuestManager.instance.UpdateRequirementsMetQuest();
     }
 
     #endregion

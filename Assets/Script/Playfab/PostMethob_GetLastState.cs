@@ -14,8 +14,16 @@ public class PlayerDataLoader : MonoBehaviour
 {
     public TMP_InputField outputArea;
 
+    public static PlayerDataLoader Instance;
+
     // Đường dẫn API
     private string apiUrl = "http://1.55.212.49:8098/DemoBackend3D_API/player/getLastStatePlayer";
+
+
+    private void Awake()
+    {
+        Instance = this;    
+    }
 
     void Start()
     {
@@ -107,6 +115,7 @@ public class PlayerDataLoader : MonoBehaviour
                 GlobalResponseData.HealthSlider = playerState.last_state.HealthSlider;
                 GlobalResponseData.FirstTimeQuest = playerState.last_state.FirstTimeQuest;
                 GlobalResponseData.Medal = playerState.last_state.Medal;
+                GlobalResponseData.CharacterName = playerState.last_state.CharacterName;
             }
 
             // 5) Lấy dialoguesJson (nếu có) để tái tạo tiến trình hội thoại
@@ -252,6 +261,7 @@ public class PlayerDataLoader : MonoBehaviour
         public float HealthSlider;
         public int Medal;
         public int gold;
+        public string CharacterName; 
 
         // Thêm biến này để nhận JSON
         public string dialoguesJson;

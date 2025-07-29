@@ -15,11 +15,11 @@ MonoBehaviour:
   <FileName>k__BackingField: CollectStar
   <DialogueGroups>k__BackingField:
     list:
-    - Key: {fileID: 11400000, guid: 98de0ff1e90adba45807483f895d9b00, type: 2}
+    - Key: {fileID: 11400000, guid: 1e57892dd7d541540a352cdda979236b, type: 2}
       Value:
-      - {fileID: 11400000, guid: 67cb594d998670e42ac949b5a5469641, type: 2}
-      - {fileID: 11400000, guid: 85c7955699272554c84be5397d633637, type: 2}
-      - {fileID: 11400000, guid: 7cceb78d83bf7ee4eb3ae107abe1dcea, type: 2}
+      - {fileID: 11400000, guid: 59e3300bf01937c45850d82fac944db8, type: 2}
+      - {fileID: 11400000, guid: d66fa1ae50235474088296e9124a01d7, type: 2}
+      - {fileID: 11400000, guid: 4b12286b6fed89646b45818287991c19, type: 2}
     - Key: {fileID: 11400000, guid: c573d2d8fffb5a14db1efc9d389bd501, type: 2}
       Value:
       - {fileID: 11400000, guid: 0a62fda7deb26234cade6cb661bcc461, type: 2}

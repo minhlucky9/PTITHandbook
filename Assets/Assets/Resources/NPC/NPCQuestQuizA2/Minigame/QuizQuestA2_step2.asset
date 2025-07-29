@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8675033c89e01e045840dacd37af3fa5, type: 3}
   m_Name: QuizQuestA2_step2
   m_EditorClassIdentifier: 
-  conservationId: QuizQuestA2_step2
+  minigameId: QuizQuestA2_step2
   questId: QuizQuestA2
   stepId: step2
+  targetNPC: {fileID: 0}
   numberOfQuestion: 8
-  numberOfMaxWrong: 3
+  numberOfMaxWrong: 2
   qnas:
   - Question: "H\xECnh th\u1EE9c mua h\xE0ng trong c\u0103ng tin H\u1ECDc vi\u1EC7n
       l\xE0 g\xEC?"
@@ -151,9 +152,12 @@ MonoBehaviour:
       c\u01A1 s\u1EDF v\u1EADt ch\u1EA5t</color> b\xEAn trong H\u1ECDc vi\u1EC7n
       m\xECnh. H\xE3y l\u01B0u \xFD em ch\u1EC9 \u0111\u01B0\u1EE3c ph\xE9p tr\u1EA3
       l\u1EDDi sai t\u1ED1i \u0111a 3 c\xE2u."
+    nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "V\xE2ng \u1EA1"
       icon: {fileID: 0}
       nextDialogId: 
       executedFunction: 4
+      NextExecutedFunction: 0
+    nodePosition: {x: 10, y: 10}

@@ -13,5 +13,7 @@ namespace DS.Data.Save
         [field: SerializeField] public DialogExecuteFunction ExecutedFunction { get; set; }
 
         [field: SerializeField] public DialogExecuteFunction NextExecutedFunction { get; set; }
+
+        [field: SerializeField] public Sprite Icon { get; set; }
     }
 }

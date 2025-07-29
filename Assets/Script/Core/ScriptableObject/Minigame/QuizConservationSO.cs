@@ -27,6 +27,9 @@ namespace Interaction.Minigame {
         public int CorrectAnswer;
         [TextArea(2, 4)]
         public string Explaination;
+
+        [Header("Image")]
+        public Sprite QuestionImage;
     }
 }
 

@@ -1,18 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MouseManager : MonoBehaviour
 {
+    public static MouseManager instance;
+    public GameObject menuUI;
+    public GameObject pauseUI;
     void Awake()
     {
+        instance = this;
         // Ẩn con trỏ chuột khi bắt đầu game
         Cursor.visible = false;
         // Khóa con trỏ chuột ở giữa màn hình
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Hàm ?? hi?n th? l?i con tr? chu?t khi c?n
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            menuUI.SetActive(true);
+            ShowCursor();
+        }
+      
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseUI.SetActive(true);
+            ShowCursor();
+        }
+    }
     public void ShowCursor()
     {
         // Hiện con trỏ chuột

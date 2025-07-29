@@ -41,6 +41,8 @@ using UnityEngine;
                 ChoicePort.portName = choice.Text;
 
                 outputContainer.Add(ChoicePort);
+
+
             }
             RefreshExpandedState();
         }

@@ -163,6 +163,7 @@ namespace DS.Utilities
                 ID = node.ID,
                 Name = node.DialogName,
                 Choices = choices,
+                Icon = node.Icon,
                 Text = node.Text,
                 GroupID = node.Group?.ID,
                 DialogueType = node.DialogueType,
@@ -195,6 +196,7 @@ namespace DS.Utilities
                 node.DialogName,
                 node.Text,
                 ConvertNodeChoicesToDialogueChoices(node.Choices),
+                node.Icon,
                 node.DialogueType,
                 node.IsStartingNode(),
                 node.ExecutedFunction,
@@ -215,8 +217,9 @@ namespace DS.Utilities
                 DSDialogueChoiceData choiceData = new DSDialogueChoiceData()
                 {
                     Text = nodeChoice.Text,
-                //    ExecutedFunction = nodeChoice.ExecutedFunction,
-               //     NextExecutedFunction = nodeChoice.NextExecutedFunction
+                    Icon = nodeChoice.Icon,
+                    //    ExecutedFunction = nodeChoice.ExecutedFunction,
+                    //     NextExecutedFunction = nodeChoice.NextExecutedFunction
                 };
 
                 dialogueChoices.Add(choiceData);
@@ -332,6 +335,7 @@ namespace DS.Utilities
 
                 node.ID = nodeData.ID;
                 node.Choices = choices;
+                node.Icon = nodeData.Icon;
                 node.Text = nodeData.Text;
                 node.ExecutedFunction = nodeData.ExecutedFunction;
                 node.NextExecutedFunction = nodeData.NextExecutedFunction;
@@ -480,7 +484,8 @@ namespace DS.Utilities
                 DSChoiceSaveData choiceData = new DSChoiceSaveData()
                 {
                     Text = choice.Text,
-                    NodeID = choice.NodeID
+                    NodeID = choice.NodeID,
+                    Icon = choice.Icon,
                 };
 
                 choices.Add(choiceData);

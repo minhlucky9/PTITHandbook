@@ -74,10 +74,11 @@ public class PostMethod_LeaderBoard : MonoBehaviour
      .ThenByDescending(player => player.score) // Sort by score if Medal is the same
      .Take(5)
      .ToList();
-
+           
                 // Update UI Text elements for the top 5 players
                 for (int i = 0; i < topPlayers.Count; i++)
                 {
+          
                     fullNameTexts[i].text = topPlayers[i].fullname + "-" + topPlayers[i].student_id;
         
                     scoreTexts[i].text = topPlayers[i].score.ToString();

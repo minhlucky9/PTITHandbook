@@ -13,7 +13,7 @@ public class UIAutoAnimation : MonoBehaviour
 
     private List<Component> componentList;
     private RectTransform[] rectTransformList;
-    private HorizontalOrVerticalLayoutGroup[] layoutGroupList;
+    private UnityEngine.UI.LayoutGroup[] layoutGroupList;
     private float[] originalAlpha;
     private Vector2[] originalPosition;
     private Vector3[] originalScale;
@@ -100,6 +100,7 @@ public class UIAutoAnimation : MonoBehaviour
 
                     elapsedTime[i] += Time.deltaTime;
                 }
+               
                 yield return null;
             }
         }
@@ -654,6 +655,8 @@ public class UIAutoAnimation : MonoBehaviour
             Vector2 position = rect.anchoredPosition;
             originalPosition[i] = position;
 
+
+
             Vector3 scale = rect.localScale;
             originalScale[i] = scale;
 
@@ -664,7 +667,7 @@ public class UIAutoAnimation : MonoBehaviour
         //Get the Vertical Layout Group if it exists.
         //If we set the position of the child object in the Layout Group,
         //their position will reset to zero. So we need to recalculate them.
-        layoutGroupList = GetComponentsInChildren<HorizontalOrVerticalLayoutGroup>();
+        layoutGroupList = GetComponentsInChildren<UnityEngine.UI.LayoutGroup>();
     }
 
     public void SetAllEntranceState()

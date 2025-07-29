@@ -24,6 +24,8 @@ namespace DS.Elements
 
         public string Text { get; set; }
 
+        public Sprite Icon { get; set; }
+
         public DSDialogType DialogueType { get; set; }
 
         public DialogExecuteFunction ExecutedFunction { get; set; } = DialogExecuteFunction.None;

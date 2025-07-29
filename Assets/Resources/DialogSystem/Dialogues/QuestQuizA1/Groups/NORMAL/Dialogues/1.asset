@@ -21,12 +21,16 @@ MonoBehaviour:
       type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 21300000, guid: 112a2c407dbbc4c409b7899ff96d1414,
+      type: 3}
   - <Text>k__BackingField: "D\u1EA1, em h\u1ECDc tr\u01B0\u1EDDng kh\xE1c \u1EA1"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 811fcac5b2689eb46910c32577030335,
       type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
+  <Icon>k__BackingField: {fileID: 0}
   <ExecutedFunction>k__BackingField: 0
   <NextExecutedFunction>k__BackingField: 0

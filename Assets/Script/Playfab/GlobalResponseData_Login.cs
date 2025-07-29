@@ -16,7 +16,7 @@ public class GlobalResponseData_Login : MonoBehaviour
         public static string session_id;
         public static int role;
         public static float HealthSlider;
-
+        public static string CharacterName; 
 
         public static float x;
         public static float y;

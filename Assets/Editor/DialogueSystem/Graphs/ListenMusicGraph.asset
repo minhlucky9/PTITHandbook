@@ -15,11 +15,11 @@ MonoBehaviour:
   <FileName>k__BackingField: ListenMusic
   <Groups>k__BackingField:
   - <ID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
-    <Name>k__BackingField: ListenMusic
-    <Position>k__BackingField: {x: 260.80005, y: 160.80005}
+    <Name>k__BackingField: NORMAL
+    <Position>k__BackingField: {x: 260.80002, y: 160.8}
   - <ID>k__BackingField: 86811b08-3dc7-4caa-aab6-2df64b9679c0
     <Name>k__BackingField: Dialog Group
-    <Position>k__BackingField: {x: 928.8, y: 1111.2001}
+    <Position>k__BackingField: {x: 928.7999, y: 1111.2}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 9c04ef1a-6a3d-4e29-a499-35672a46be50
     <Name>k__BackingField: 1
@@ -30,6 +30,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: a47ba72f-d9f2-4ec3-b444-19c4d1adede3
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 286.40002, y: 220.8}
@@ -44,10 +46,13 @@ MonoBehaviour:
       <NodeID>k__BackingField: 1d511690-345a-43f8-a0f5-2ff88b926b71
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
     - <Text>k__BackingField: "D\u1EA1 em nghe r\u1ED3i \u1EA1"
       <NodeID>k__BackingField: 774b27b1-1ed8-40f7-8058-62f04471fd5d
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 632, y: 224}
@@ -62,6 +67,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 3236eba9-8ed9-4682-b112-c4d4fb4c66df
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1029.6, y: 249.59999}
@@ -75,6 +82,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 7120de84-8f09-4fbc-a308-50e87ab91780
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1387.2, y: 301.59998}
@@ -89,6 +98,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1822.3999, y: 429.59998}
@@ -103,6 +114,8 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: a056d8e7-8cfb-435c-b51d-77148ad15d43
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 952.8, y: 679.2}
@@ -117,18 +130,20 @@ MonoBehaviour:
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
     <GroupID>k__BackingField: 86811b08-3dc7-4caa-aab6-2df64b9679c0
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 954.4, y: 1171.2001}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
-  - ListenMusic
+  - NORMAL
   - Dialog Group
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
-    - Key: ListenMusic
+    - Key: NORMAL
       Value:
       - 1
       - 2

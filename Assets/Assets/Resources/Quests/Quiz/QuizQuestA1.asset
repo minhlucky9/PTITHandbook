@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: QuizQuestA1
   displayName: Answer quiz outside A1
-  levelRequirement: 1
-  questPrerequisites: []
+  levelRequirement: 0
+  questPrerequisites:
+  - {fileID: 11400000, guid: ca591bef3db1ec247b2333cb87944a50, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0

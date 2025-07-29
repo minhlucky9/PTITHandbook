@@ -21,7 +21,9 @@ MonoBehaviour:
     <NextDialogue>k__BackingField: {fileID: 0}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+    <Icon>k__BackingField: {fileID: 0}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
+  <Icon>k__BackingField: {fileID: 0}
   <ExecutedFunction>k__BackingField: 0
   <NextExecutedFunction>k__BackingField: 0

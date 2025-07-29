@@ -1,4 +1,4 @@
-using Core;
+﻿using Core;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,7 +26,7 @@ namespace PlayerController
         public float pivotSpeed = 0.03f;
 
         private float targetPosition;
-        private float defaultPosition;
+        public float defaultPosition;
         private float lookAngle;
         private float pivotAngle;
         public float minimumPivot = -35;
@@ -71,6 +71,26 @@ namespace PlayerController
             Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position, targetTransform.position, ref cameraFollowVelocity, delta / followSpeed);
             myTransform.position = targetPosition;
             HandleCameraCollisions(delta);
+        }
+
+        public void ResetCameraVelocity()
+        {
+            cameraFollowVelocity = Vector3.zero;
+        }
+
+        public void ForceResetCamera(Vector3 newPosition)
+        {
+            // Reset position ngay lập tức
+            myTransform.position = newPosition;
+
+            // Reset velocity của SmoothDamp
+            cameraFollowVelocity = Vector3.zero;
+
+            // Force update target position để SmoothDamp không còn "nhớ" vị trí cũ
+            // Trick: gọi SmoothDamp với deltaTime = 0 để reset internal state
+            Vector3 dummyVelocity = Vector3.zero;
+            Vector3.SmoothDamp(newPosition, newPosition, ref dummyVelocity, 0.01f);
+            cameraFollowVelocity = Vector3.zero; // Reset lại sau trick
         }
 
         public void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)

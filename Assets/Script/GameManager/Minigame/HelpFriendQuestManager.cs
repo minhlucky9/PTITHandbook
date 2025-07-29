@@ -36,8 +36,9 @@ public class HelpFriendQuestManager : MonoBehaviour
             OnFinishQuest = () =>
             {
                 targetNPC.SendMessage("OnQuestMinigameSuccess");
-           //     QuestManager.instance.questMap[questId].OnQuestFinish += OnMainQuestComplete;
-           //     PlayerInventory.instance.RemoveItemById(data.requiredItemId, 1);
+            
+                //     QuestManager.instance.questMap[questId].OnQuestFinish += OnMainQuestComplete;
+                //     PlayerInventory.instance.RemoveItemById(data.requiredItemId, 1);
             }
         };
         quests.Add(questId, quest);

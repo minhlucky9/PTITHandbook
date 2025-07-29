@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PlayerController;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,11 @@ namespace PlayerStatsController
         public Slider slider;
         public Gradient gradient;
         public Image fill;
-        public static HealthBar instance;
+
+        [Header("Warning & Death UIs")]
+        public UIAnimationController lowHealthUI;
+        public UIAnimationController deadUI;
+        public Button resumeDrainButton;  // nút trên UI cảnh báo máu thấp
 
         [Header("Auto Drain Settings")]
         [Tooltip("Interval (in seconds) between each health tick")]
@@ -18,28 +23,33 @@ namespace PlayerStatsController
         [Tooltip("How much health to subtract each tick")]
         [SerializeField] private float damagePerTick = 1f;
 
-        // Lượng máu hiện tại
+        [Header("Respawn Settings")]
+        public Transform respawnPoint;
+
         private float currentHealth;
+        private Coroutine drainCoroutine;
+        private bool lowHealthAlerted = false;
+        private bool isDeadHandled = false;
+
+        public static HealthBar instance;
 
         private void Awake()
         {
             instance = this;
-            // Lấy component Slider nếu chưa gán
             if (slider == null)
                 slider = GetComponent<Slider>();
+
+            // Đăng ký nút resume
+            if (resumeDrainButton != null)
+                resumeDrainButton.onClick.AddListener(ResumeDrain);
         }
 
         private void Start()
         {
-            // Giả sử bạn đã gọi SetMaxHealth(...) từ script khác trước đó.
-            // Nếu không, bạn có thể gọi SetMaxHealth(100f) tại đây để test.
             currentHealth = slider.maxValue;
-            StartCoroutine(DrainHealthOverTime());
+            drainCoroutine = StartCoroutine(DrainHealthOverTime());
         }
 
-        /// <summary>
-        /// Thiết lập máu tối đa và đặt máu hiện tại = maxHealth
-        /// </summary>
         public void SetMaxHealth(float maxHealth)
         {
             slider.maxValue = maxHealth;
@@ -48,36 +58,109 @@ namespace PlayerStatsController
             currentHealth = maxHealth;
         }
 
-        /// <summary>
-        /// Cập nhật lượng máu hiện tại và UI
-        /// </summary>
         public void SetCurrentHealth(float newHealth)
         {
-            // Giới hạn trong [0, maxValue]
             currentHealth = Mathf.Clamp(newHealth, 0f, slider.maxValue);
             slider.value = currentHealth;
             fill.color = gradient.Evaluate(slider.normalizedValue);
 
-            // Xử lý khi máu cạn
-            if (currentHealth <= 0f)
+            // Nếu đã hồi phục trên ngưỡng thì cho phép cảnh báo lần sau
+            if (currentHealth >= 30f)
             {
-                // Ví dụ: phát hiện chết
-                Debug.Log("Player died");
-                // TODO: gọi event hoặc phương thức xử lý chết
+                lowHealthAlerted = false;
+            }
+
+            // Xử lý cảnh báo máu thấp chỉ lần đầu khi vượt ngưỡng
+            if (currentHealth < 30f && !lowHealthAlerted && currentHealth > 0f)
+            {
+                lowHealthUI?.Activate();
+                lowHealthAlerted = true;
+
+                // Dừng drain khi cảnh báo hiện
+                if (drainCoroutine != null)
+                {
+                    StopCoroutine(drainCoroutine);
+                    drainCoroutine = null;
+                }
+
+                PlayerManager.instance.isInteract = true;
+                PlayerManager.instance.DeactivateController();
+            }
+
+            // Xử lý chết
+            if (currentHealth <= 0f && !isDeadHandled)
+            {
+                deadUI?.Activate();
+                isDeadHandled = true;
+
+                // Dừng Drain hoàn toàn
+                if (drainCoroutine != null)
+                {
+                    StopCoroutine(drainCoroutine);
+                    drainCoroutine = null;
+                }
+
+                PlayerManager.instance.isInteract = true;
+                PlayerManager.instance.DeactivateController();
             }
         }
 
-        /// <summary>
-        /// Coroutine tự động trừ máu sau mỗi tickInterval
-        /// </summary>
         private IEnumerator DrainHealthOverTime()
         {
-            // Chạy liên tục cho đến khi currentHealth <= 0
             while (currentHealth > 0f)
             {
                 yield return new WaitForSeconds(tickInterval);
                 SetCurrentHealth(currentHealth - damagePerTick);
             }
+        }
+
+        /// <summary>
+        /// Resume drain khi người chơi confirm trên UI cảnh báo
+        /// </summary>
+        private void ResumeDrain()
+        {
+            PlayerManager.instance.isInteract = false;
+            PlayerManager.instance.ActivateController();
+            // Khởi động lại drain nếu đang dừng và vẫn còn máu
+            if (drainCoroutine == null && currentHealth > 0f)
+            {
+                lowHealthUI?.Deactivate();
+                drainCoroutine = StartCoroutine(DrainHealthOverTime());
+            }
+        }
+
+        /// <summary>
+        /// Hồi sinh nhân vật: trừ vàng, reset máu, vị trí, camera
+        /// </summary>
+        public void RespawnPlayer()
+        {
+            // Trừ 30% vàng
+            int goldToLose = Mathf.FloorToInt(PlayerInventory.instance.gold * 0.3f);
+            PlayerInventory.instance.SubtractGold(goldToLose);
+
+            // Hồi lại máu
+            SetCurrentHealth(slider.maxValue);
+            isDeadHandled = false;
+
+            // Tắt UI chết nếu đang hiện
+            deadUI?.Deactivate();
+
+            // Đưa nhân vật và camera về respawn
+            var player = PlayerManager.instance;
+            var cam = CameraHandle.singleton;
+            if (player != null && respawnPoint != null)
+                player.transform.position = respawnPoint.position;
+
+            if (cam != null)
+            {
+                cam.transform.position = respawnPoint.position - player.transform.forward * 3 + Vector3.up * 2;
+                cam.ClearLockOnTarget();
+            }
+
+            PlayerManager.instance.ActivateController();
+
+            // Tự động resume drain
+            ResumeDrain();
         }
     }
 }
