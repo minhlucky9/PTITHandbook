@@ -13,6 +13,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using static GlobalResponseData_Login;
 
 public class LoginOpenID : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class LoginOpenID : MonoBehaviour
     public Button loginBtn;
     public Button continueBtn;
     public Button changeAccountBtn;
+
+    [Header("UI")]
+    [SerializeField] private GameObject SuccessUI;
+    [SerializeField] private GameObject FailureUI;
+    [SerializeField] private GameObject NoInternetUI;
+
+    public PlayerDataLoader playerDataLoader;
 
     private void Start()
     { 
@@ -289,6 +297,48 @@ public class LoginOpenID : MonoBehaviour
 
                 Debug.Log(studentInfo.ma + " " + studentInfo.ten + " " + studentInfo.soDienThoai + " " + studentInfo.email);
                 //api ben Hieu
+
+                string uri = "http://1.55.212.49:8098/DemoBackend3D_API/user/login";
+                WWWForm form = new WWWForm();
+                form.AddField("student_id", studentInfo.ma);
+                form.AddField("fullname", studentInfo.ten);
+                form.AddField("email", studentInfo.soDienThoai);
+                form.AddField("tel", studentInfo.email);
+                using (UnityWebRequest request = UnityWebRequest.Post(uri, form))
+                {
+                    yield return request.SendWebRequest();
+                    if (request.isNetworkError || request.isHttpError)
+                    {
+                        //    outputArea.text = request.error;
+                    }
+                    else
+                    {
+                        // Assuming the response is a JSON string
+                        string jsonResponse = request.downloadHandler.text;
+                        // Parse JSON response
+                        ResponseData responseData = JsonUtility.FromJson<ResponseData>(jsonResponse);
+                        if (responseData.code == 200)
+                        {
+                            Debug.Log(responseData.code);
+                            GlobalResponseData.code = responseData.code;
+                            GlobalResponseData.user_id = responseData.user_id;
+                            GlobalResponseData.fullname = responseData.fullname;
+                            GlobalResponseData.student_id = responseData.student_id;
+                            GlobalResponseData.session_id = responseData.session_id;
+                            GlobalResponseData.role = responseData.role;
+
+                            StartCoroutine(CheckSaveData());
+                        }
+                        else if (responseData.code == 400)
+                        {
+                            FailureUI.SetActive(true);
+
+                        }
+
+                    }
+                }
+
+
             }
             else
             {
@@ -297,6 +347,7 @@ public class LoginOpenID : MonoBehaviour
             }
 
         }
+
     }
 
     private async Task<string> GetCodeForAuthentication(string redirectURI, string RedirectURIWithoutLastSlash)
@@ -384,6 +435,41 @@ public class LoginOpenID : MonoBehaviour
             listener.Stop(); // Release the port
         }
     }
+
+
+    public IEnumerator CheckSaveData()
+    {
+        yield return new WaitForSeconds(1f);
+
+        playerDataLoader.LoadPlayerData();
+
+        yield return new WaitForSeconds(3f);
+
+
+        Debug.Log(GlobalResponseData.FirstTimeQuest);
+
+        if (GlobalResponseData.FirstTimeQuest == 0)
+        {
+            AsyncLoader.Instance.ApplyToggle(true);
+        }
+        else
+        {
+            AsyncLoader.Instance.ApplyToggle(false);
+        }
+
+        SuccessUI.SetActive(true);
+    }
+}
+
+[System.Serializable]
+public class ResponseData
+{
+    public int code;
+    public int user_id;
+    public string student_id;
+    public string fullname;
+    public string session_id;
+    public int role;
 }
 
 public class TokenClass

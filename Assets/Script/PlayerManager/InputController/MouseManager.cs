@@ -49,8 +49,11 @@ public class MouseManager : MonoBehaviour
             if ((permission == MousePermission.All || permission == MousePermission.OnlyQuest)
                 && Input.GetKeyDown(KeyCode.Q) && !PlayerManager.instance.isInteract)
             {
-                QuestUI.Activate();
+                
                 QuestLogManager.instance.OpenQuestLog();
+                QuestUI.UpdateObjectChange();
+                QuestUI.Activate();
+
                 PlayerManager.instance.DeactivateController();
                 PlayerManager.instance.isInteract = true;
                 ShowCursor();

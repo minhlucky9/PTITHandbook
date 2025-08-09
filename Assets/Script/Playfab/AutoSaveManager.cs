@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class AutoSaveManager : MonoBehaviour
 {
-    // Tham chi?u ??n script PlayerDataManager
-    private PlayerDataManager dataManager;
+    public PlayerDataManager dataManager;
 
     void Awake()
     {
         // Gi? GameObject này su?t ??i ?ng d?ng
         DontDestroyOnLoad(gameObject);
 
-        dataManager = FindObjectOfType<PlayerDataManager>();
         // ??ng ký event
       Application.quitting += SaveOnQuit;
     }

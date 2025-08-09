@@ -120,6 +120,8 @@ public class InventoryUIManager : MonoBehaviour
                 slotUI.InitInventorySlot(all[i].inv, all[i].idx);
             }
         }
+
+
     }
 
     /// <summary>
@@ -143,10 +145,12 @@ public class InventoryUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         uiAnimation.Activate();
         RefreshUI();
+        
     }
 
     private IEnumerator CloseWindow()
     {
+        uiAnimation.UpdateObjectChange();
         uiAnimation.Deactivate();
         PlayerManager.instance.isInteract = false;
         yield return new WaitForSeconds(0.7f);

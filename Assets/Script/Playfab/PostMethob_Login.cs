@@ -13,7 +13,7 @@ public class PostMethod_Login : MonoBehaviour
     // public TextMeshProUGUI Respone;
     [SerializeField] private GameObject SuccessUI;
     [SerializeField] private GameObject FailureUI;
-    [SerializeField] private GameObject NoInternetUI; // UI thông báo không có k?t n?i internet
+    [SerializeField] private GameObject NoInternetUI; 
 
     public PlayerDataLoader playerDataLoader; 
 

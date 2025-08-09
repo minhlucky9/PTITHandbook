@@ -54,6 +54,7 @@ public class UIAnimationController : MonoBehaviour
 
             //run animation
             uIAutoAnimation.ExitAnimation();
+            
             Invoke("UpdateCanvasGroup", 0.5f);
             //
             OnDeactivate?.Invoke();
