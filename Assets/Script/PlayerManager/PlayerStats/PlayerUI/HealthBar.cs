@@ -26,7 +26,7 @@ namespace PlayerStatsController
         [Header("Respawn Settings")]
         public Transform respawnPoint;
 
-        private float currentHealth;
+        [SerializeField]private float currentHealth;
         private Coroutine drainCoroutine;
         private bool lowHealthAlerted = false;
         private bool isDeadHandled = false;
@@ -61,15 +61,15 @@ namespace PlayerStatsController
         public void SetCurrentHealth(float newHealth)
         {
             currentHealth = newHealth;
+          
+            currentHealth = Mathf.Clamp(newHealth, 0f, slider.maxValue);
+            slider.value = currentHealth;
+            fill.color = gradient.Evaluate(slider.normalizedValue);
             if (PlayerManager.instance != null && PlayerManager.instance.isTalkingWithNPC)
             {
                 // Không hiện cảnh báo máu yếu hoặc chết khi đang nói chuyện
                 return;
             }
-            currentHealth = Mathf.Clamp(newHealth, 0f, slider.maxValue);
-            slider.value = currentHealth;
-            fill.color = gradient.Evaluate(slider.normalizedValue);
-
             // Nếu đã hồi phục trên ngưỡng thì cho phép cảnh báo lần sau
             if (currentHealth >= 30f)
             {

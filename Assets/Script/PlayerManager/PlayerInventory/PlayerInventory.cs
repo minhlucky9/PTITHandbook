@@ -33,6 +33,7 @@ public class PlayerInventory : MonoBehaviour
         if (GlobalResponseData.FirstTimeQuest == 1)
         {
           Medal = GlobalResponseData.Medal;
+          
             inventoryItems = new List<InventoryItem>();
             for (int i = 0; i < GlobalResponseData.inventoryItems.Count; i++)
             {
@@ -69,7 +70,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void Start()
     {
-      
+        goldText.text = gold.ToString();
         OnGoldChanged += UpdateGoldText;
       
     }

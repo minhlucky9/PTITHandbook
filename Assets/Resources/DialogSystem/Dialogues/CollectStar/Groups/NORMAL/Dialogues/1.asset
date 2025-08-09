@@ -13,18 +13,21 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: 1
-  <Text>k__BackingField: "C\xF3 vi\u1EC7c g\xEC th\u1EBF em?"
+  <Text>k__BackingField: "\u201CCh\xE0o b\u1EA1n! \u0110o\xE0n tr\u01B0\u1EDDng PTIT
+    \u0111ang t\u1ED5 ch\u1EE9c gi\u1EA3i ch\u1EA1y \u2018Chi\u1EBFn binh s\u1ED1
+    PTIT\u2019 \u0111\u1EC3 kh\xEDch l\u1EC7 r\xE8n luy\u1EC7n th\u1EC3 thao v\xE0
+    \u1EE9ng d\u1EE5ng c\xF4ng ngh\u1EC7. B\u1EA1n \u0111\xE3 s\u1EB5n s\xE0ng ch\u01B0a?\u201D"
   <Choices>k__BackingField:
-  - <Text>k__BackingField: "Em \u0111ang \u0111i kh\xE1m ph\xE1 h\u1ECDc vi\u1EC7n
-      th\xF4i \u1EA1"
+  - <Text>k__BackingField: "T\xF4i \u0111\xE3 s\u1EB5n s\xE0ng"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 59e3300bf01937c45850d82fac944db8,
       type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 21300000, guid: 112a2c407dbbc4c409b7899ff96d1414,
       type: 3}
-  - <Text>k__BackingField: "Xin l\u1ED7i em \u0111i l\u1EA1c \u1EA1"
-    <NextDialogue>k__BackingField: {fileID: 0}
+  - <Text>k__BackingField: "T\xF4i ch\u01B0a"
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 1d8de620ad0164646b57bdba5e0cdeba,
+      type: 2}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 0}

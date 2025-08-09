@@ -44,6 +44,7 @@ public class ShopWindowManager : MonoBehaviour
     private void Start()
     {
         PlayerInventory.instance.OnGoldChanged += UpdateGoldText;
+        goldText.text = PlayerInventory.instance.gold.ToString();
         prevBtn.onClick.AddListener(delegate { PreviousTab(); });
         nextBtn.onClick.AddListener(delegate { NextTab(); });
         closeBtn.onClick.AddListener(delegate { CloseWindow(); });

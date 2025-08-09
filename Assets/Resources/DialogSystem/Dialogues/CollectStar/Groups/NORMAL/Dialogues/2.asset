@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: 2
-  <Text>k__BackingField: "Em mu\u1ED1n v\u1EEBa kh\xE1m ph\xE1 h\u1ECDc vi\u1EC7n
-    v\u1EEBa c\xF3 ph\u1EA7n th\u01B0\u1EDFng kh\xF4ng"
+  <Text>k__BackingField: "\u201CThu th\u1EADp \u0111\u1EE7 20 l\xE1 c\u1EDD theo
+    th\u1EE9 t\u1EF1 v\xE0 v\u1EC1 \u0111\xEDch trong 5 ph\xFAt nh\xE9! Tr\xEAn m\u1ED7i
+    c\u1EDD \u0111\u1EC1u ghi s\u1ED1 th\u1EE9 t\u1EF1."
   <Choices>k__BackingField:
-  - <Text>k__BackingField: "Ui c\xF3 ch\u1EE9 anh!"
+  - <Text>k__BackingField: "T\xF4i \u0111\xE3 hi\u1EC3u v\xE0 s\u1EB5n s\xE0ng"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 4b12286b6fed89646b45818287991c19,
       type: 2}
     <ExecutedFunction>k__BackingField: 0

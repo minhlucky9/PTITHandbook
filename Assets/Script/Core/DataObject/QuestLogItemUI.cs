@@ -12,6 +12,8 @@ public class QuestLogItemUI : MonoBehaviour
     [SerializeField] private GameObject requirementNotMetUI;
     [SerializeField] private Transform stateContainer; // chứa các icon/status child
 
+    private Transform npcTarget;
+
     private Quest boundQuest;
     private Action onStateChangedHandler;
 
@@ -33,6 +35,8 @@ public class QuestLogItemUI : MonoBehaviour
 
         // 4. Hiển thị state icon đúng
         UpdateStateIcons(boundQuest.state);
+
+        AddGotoNPCButtons();
 
         // 5. Đăng ký lắng nghe khi state thay đổi
         onStateChangedHandler = () =>
@@ -73,6 +77,35 @@ public class QuestLogItemUI : MonoBehaviour
         {
             boundQuest.OnStateChanged -= onStateChangedHandler;
             onStateChangedHandler = null;
+        }
+    }
+
+    public void SetNPC(Transform t)
+    {
+        npcTarget = t;
+    }
+
+    private void AddGotoNPCButtons()
+    {
+        // chỉ 3 icon đầu, clear listener cũ rồi add mới
+        int max = Mathf.Min(3, stateContainer.childCount);
+        for (int i = 0; i < max; i++)
+        {
+            var icon = stateContainer.GetChild(i);
+            var btn = icon.GetComponent<Button>();
+            if (btn == null) btn = icon.gameObject.AddComponent<Button>();
+
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(() =>
+            {
+                if (npcTarget != null && MoveToNPC.instance != null)
+                {
+                    MoveToNPC.instance.npcTarget = npcTarget;
+                    MoveToNPC.instance.StartAutoMove();
+                    MouseManager.instance.CloseQuestUI();
+                    PlayerInventory.instance.SubtractGold(20); 
+                }
+            });
         }
     }
 

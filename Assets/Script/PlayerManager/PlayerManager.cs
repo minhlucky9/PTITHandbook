@@ -13,16 +13,17 @@ namespace PlayerController
     {
         public static PlayerManager instance;
 
-        InputHandle inputHandle;
-        UIManager uiManager;
-        MouseManager mouseManager;
-        Animator anim;
-        CameraHandle cameraHandle;
-        PlayerAnimatorHandle animatorHandle;
-        PlayerStats playerStats;
-        PlayerLocomotion playerLocomotion;
-        public UIAnimationController interactionPopup;
-        TMP_Text interactionText;
+
+        [HideInInspector] public InputHandle inputHandle;
+        [HideInInspector] public UIManager uiManager;
+        [HideInInspector] public MouseManager mouseManager;
+        [HideInInspector] public Animator anim;
+        [HideInInspector] public CameraHandle cameraHandle;
+        [HideInInspector] public PlayerAnimatorHandle animatorHandle;
+        [HideInInspector] public PlayerStats playerStats;
+        [HideInInspector] public PlayerLocomotion playerLocomotion;
+        [HideInInspector] public UIAnimationController interactionPopup;
+        [HideInInspector] public TMP_Text interactionText;
 
         public GameObject itemPopup;
 
@@ -41,6 +42,7 @@ namespace PlayerController
         public bool isOnWall;
         public bool canDoubleJump;
         public bool isClimbable;
+        public bool isMouseTutor = false;
         LayerMask lootableMask;
         LayerMask talkableMask;
 
@@ -51,7 +53,7 @@ namespace PlayerController
         private void Awake()
         {
             instance = this;
-
+            //Application.targetFrameRate = 60;
             // Đọc lựa chọn (mặc định là 1 nếu chưa có)
             int sel = PlayerPrefs.GetInt("SelectedCharacter", 1);
 
@@ -109,7 +111,7 @@ namespace PlayerController
             if (inputHandle.enabled || isTransitioningToIdle)
             {
                 // Trong lúc transition, không capture input mới nhưng vẫn xử lý logic
-                if (inputHandle.enabled)
+                if (inputHandle.enabled && !isMouseTutor)
                 {
                     //capture input press event
                     inputHandle.TickInput(delta);
@@ -200,7 +202,7 @@ namespace PlayerController
             {
                 cameraHandle.FollowTarget(delta);
 
-                if (!isInteracting && !isInteract)
+                if (!isInteract)
                 {
                     cameraHandle.HandleCameraRotation(delta, inputHandle.mouseX, inputHandle.mouseY);
                 }
@@ -239,7 +241,7 @@ namespace PlayerController
             mouseManager.HideCursor();
             isTalkingWithNPC = false;
         }
-
+      
         public void DeactivateController()
         {
             inputHandle.enabled = false;

@@ -4,6 +4,7 @@ using DS.ScriptableObjects;
 using GameManager;
 using Interaction;
 using Interaction.Minigame;
+using PlayerController;
 using PlayerStatsController;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Linq;
 
 using UnityEngine;
 using UnityEngine.UIElements;
+using static MouseManager;
 
 public class NPCController : TalkInteraction, IDialogueHandler
 {
@@ -119,9 +121,6 @@ public class NPCController : TalkInteraction, IDialogueHandler
     public override void Interact()
     {
         base.Interact();
-
-      
-
 
         if (QuestManager.instance.questMap[questConversation.id].state == QuestState.FINISHED)
         {
@@ -477,6 +476,11 @@ public class NPCController : TalkInteraction, IDialogueHandler
                 QuestManager.instance.UpdateRequirementsMetQuest();
                 // StopInteract();
                 QuestManager.instance.questMap[questId].state = QuestState.FINISHED;
+                if (TutorialManager.Instance.isRunning)
+                {
+                    TutorialManager.Instance.ShowNextStepDelayed();
+                    StartCoroutine(ForScene16());
+                }
                 foreach (GameObject block in Block)
                 {
                     block.SetActive(false);
@@ -501,6 +505,11 @@ public class NPCController : TalkInteraction, IDialogueHandler
     {
         StopInteract();
         QuizManager.instance.currentQuizQuestId = string.Empty;
+        if (TutorialManager.Instance.isRunning)
+        {
+            TutorialManager.Instance.ShowNextStepDelayed();
+            StartCoroutine(ForScene16());
+        }
     }
     #endregion
 
@@ -526,6 +535,79 @@ public class NPCController : TalkInteraction, IDialogueHandler
         {
             Debug.LogError("Cannot finish quest step: No valid quest ID");
         }
+    }
+
+    public void FinishTutorialQuestStep()
+    {
+        // Lấy questId từ QuizManager nếu đang trong quiz, nếu không dùng questId hiện tại
+        string currentQuestId = string.IsNullOrEmpty(QuizManager.instance.currentQuizQuestId)
+                              ? this.questId
+                              : QuizManager.instance.currentQuizQuestId;
+
+        // Kiểm tra questId có hợp lệ không
+        if (!string.IsNullOrEmpty(currentQuestId))
+        {
+            if(currentQuestId == "QuizQuestA1" && TutorialManager.Instance.isRunning)
+            {
+                StopInteract();
+                ResetNPC();
+                questManager.OnFinishQuestStep(currentQuestId);
+                QuestManager.instance.UpdateRequirementsMetQuest();
+                MouseManager.instance.permission = MousePermission.Inventory;
+                TutorialManager.Instance.ShowNextStepDelayed();
+                StartCoroutine(ForScene16());
+            }
+            else
+            {
+                StopInteract();
+
+                ResetNPC();
+                questManager.OnFinishQuestStep(currentQuestId);
+                QuestManager.instance.UpdateRequirementsMetQuest();
+            }
+            
+
+        }
+        else
+        {
+            Debug.LogError("Cannot finish quest step: No valid quest ID");
+        }
+    }
+
+    public IEnumerator ForScene16()
+    {
+        yield return new WaitForSeconds(1.1f);
+        // ------------------------------For Scene_16-----------------------------------------------
+        PlayerManager.instance.inputHandle.enabled = false;
+        PlayerManager.instance.playerLocomotion.enabled = false;  // KHÔNG gọi HandleMovement nữa
+        PlayerManager.instance.cameraHandle.enabled = false;
+        PlayerManager.instance.playerLocomotion.rigidbody.velocity = Vector3.zero;
+
+        // Reset camera velocity để ngăn camera tiếp tục xoay do quán tính
+        if (PlayerManager.instance.cameraHandle != null)
+        {
+            PlayerManager.instance.cameraHandle.ResetCameraVelocity();
+        }
+
+        // Reset animator parameters để ngăn animation tiếp tục chạy
+        if (PlayerManager.instance.anim != null)
+        {
+            PlayerManager.instance.anim.SetFloat("Vertical", 0f);
+            PlayerManager.instance.anim.SetFloat("Horizontal", 0f);
+        }
+
+        // Reset tất cả input values để ngăn character tiếp tục di chuyển
+        if (PlayerManager.instance.inputHandle != null)
+        {
+            PlayerManager.instance.inputHandle.ResetAllInputValues();
+        }
+
+        // Reset player manager flags
+        PlayerManager.instance.isSprinting = false;
+
+        PlayerManager.instance.uiManager.hudWindow.Activate();
+        PlayerManager.instance.mouseManager.ShowCursor();
+        PlayerManager.instance.isTalkingWithNPC = true;
     }
 
     public void FinishPassiveQuestStep()

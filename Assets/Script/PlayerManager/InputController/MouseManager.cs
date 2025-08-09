@@ -10,6 +10,20 @@ public class MouseManager : MonoBehaviour
     public GameObject menuUI;
     public GameObject pauseUI;
     public UIAnimationController QuestUI;
+    public UIAnimationController LeaderBoardUI;
+    
+
+    public enum MousePermission
+    {
+        All,
+        OnlyQuest,
+        OnlyLeaderBoard,
+        Inventory,
+        EnterPress,
+        None
+    }
+
+    public MousePermission permission = MousePermission.All;
 
     void Awake()
     {
@@ -22,29 +36,53 @@ public class MouseManager : MonoBehaviour
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.M) )
+        if (permission != MousePermission.None)
         {
-            menuUI.SetActive(true);
-            
-            ShowCursor();
-        }
-        */
-        
-        if (Input.GetKeyDown(KeyCode.Escape) && !PlayerManager.instance.isInteract)
-        {
-            pauseUI.SetActive(true);
-            PlayerManager.instance.DeactivateController();
-            PlayerManager.instance.isInteract = true;
-            ShowCursor();
-        }
-        if (Input.GetKeyDown(KeyCode.Q) && !PlayerManager.instance.isInteract)
-        {
-            QuestUI.Activate();
-            QuestLogManager.instance.OpenQuestLog();
-            PlayerManager.instance.DeactivateController();
-            PlayerManager.instance.isInteract = true;
-            ShowCursor();
+            if (permission == MousePermission.All && Input.GetKeyDown(KeyCode.Escape) && !PlayerManager.instance.isInteract)
+            {
+                pauseUI.SetActive(true);
+                PlayerManager.instance.DeactivateController();
+                PlayerManager.instance.isInteract = true;
+                ShowCursor();
+            }
+
+            if ((permission == MousePermission.All || permission == MousePermission.OnlyQuest)
+                && Input.GetKeyDown(KeyCode.Q) && !PlayerManager.instance.isInteract)
+            {
+                QuestUI.Activate();
+                QuestLogManager.instance.OpenQuestLog();
+                PlayerManager.instance.DeactivateController();
+                PlayerManager.instance.isInteract = true;
+                ShowCursor();
+                if (TutorialManager.Instance.isRunning)
+                {
+                    TutorialManager.Instance.currentUI.Deactivate();
+                    TutorialManager.Instance.ShowNextStepDelayed();
+                    permission = MousePermission.None; 
+
+                }
+            }
+            if ((permission == MousePermission.All || permission == MousePermission.OnlyLeaderBoard)
+                && Input.GetKeyDown(KeyCode.I) && !PlayerManager.instance.isInteract)
+            {
+                LeaderBoardUI.Activate();           
+                PlayerManager.instance.DeactivateController();
+                PlayerManager.instance.isInteract = true;
+                ShowCursor();
+            }
+            if ((permission == MousePermission.All || permission == MousePermission.Inventory)
+              && Input.GetKeyDown(KeyCode.M) && !PlayerManager.instance.isInteract)
+            {
+                InventoryUIManager.instance.OpenInventory();
+                if (TutorialManager.Instance.isRunning)
+                {
+                    TutorialManager.Instance.currentUI.Deactivate();
+                    TutorialManager.Instance.ShowNextStepDelayed();
+                    permission = MousePermission.None;
+
+                }
+            }
+           
         }
     }
     public void ShowCursor()
@@ -78,6 +116,14 @@ public class MouseManager : MonoBehaviour
     public void CloseQuestUI()
     {
         QuestUI.Deactivate();
+        PlayerManager.instance.isInteract = false;
+        PlayerManager.instance.ActivateController();
+        HideCursor();
+    }
+
+    public void CloseLeaderBoardUI()
+    {
+        LeaderBoardUI.Deactivate();
         PlayerManager.instance.isInteract = false;
         PlayerManager.instance.ActivateController();
         HideCursor();

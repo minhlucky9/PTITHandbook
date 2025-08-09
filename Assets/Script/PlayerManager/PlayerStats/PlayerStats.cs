@@ -10,7 +10,7 @@ namespace PlayerStatsController
     {
         public static PlayerStats instance;
         PlayerManager playerManager;
-        HealthBar healthBar;
+        public HealthBar healthBar;
         StaminaBar staminaBar;
         PlayerAnimatorHandle animatorHandle;
 
@@ -21,7 +21,6 @@ namespace PlayerStatsController
         private void Awake()
         {
             instance = this;
-            healthBar = FindObjectOfType<HealthBar>();
             staminaBar = FindAnyObjectByType<StaminaBar>();
             playerManager = GetComponent<PlayerManager>();
             animatorHandle = GetComponentInChildren<PlayerAnimatorHandle>();

@@ -13,6 +13,10 @@ public class QuestLogManager : MonoBehaviour
     [SerializeField] private List<QuestInfoSO> basicQuestSOList;
     [SerializeField] private List<QuestInfoSO> advancedQuestSOList;
 
+    [Header("NPC Targets")]
+    [SerializeField] private List<Transform> basicQuestNPCs;      
+    [SerializeField] private List<Transform> advancedQuestNPCs;
+
     [Header("Prefabs & UI References")]
     [SerializeField] private GameObject questItemPrefab;   // Prefab c?a ô Quest
     [SerializeField] private Transform contentContainer;   // GameObject ch?a VerticalLayoutGroup
@@ -33,9 +37,11 @@ public class QuestLogManager : MonoBehaviour
     private void Start()
     {
 
-        basicButton.onClick.AddListener(() => ShowQuests(basicQuestSOList));
-        advancedButton.onClick.AddListener(() => ShowQuests(advancedQuestSOList));
-        ShowQuests(basicQuestSOList);
+        basicButton.onClick.AddListener(() => ShowQuests(basicQuestSOList, basicQuestNPCs));
+        advancedButton.onClick.AddListener(() => ShowQuests(advancedQuestSOList, advancedQuestNPCs));
+
+     
+        ShowQuests(basicQuestSOList, basicQuestNPCs);
         UpdateBasicQuest();
     }
 /*
@@ -69,18 +75,24 @@ public class QuestLogManager : MonoBehaviour
         ShowQuests(basicQuests);
     }
 */
-    private void ShowQuests(List<QuestInfoSO> soList)
+    private void ShowQuests(List<QuestInfoSO> soList, List<Transform> npcList)
     {
         // 1. Xoá UI cũ
         foreach (Transform c in contentContainer) Destroy(c.gameObject);
 
         // 2. Tạo theo đúng thứ tự trong soList
-        foreach (var so in soList)
+        for (int i = 0; i < soList.Count; i++)
         {
-            // Lấy Quest từ QuestManager
+            var so = soList[i];
             if (!QuestManager.instance.questMap.TryGetValue(so.id, out var quest)) continue;
+
             var go = Instantiate(questItemPrefab, contentContainer);
-            go.GetComponent<QuestLogItemUI>().Bind(quest);
+            var itemUI = go.GetComponent<QuestLogItemUI>();
+            itemUI.Bind(quest);
+
+            // gắn NPC target
+            if (i < npcList.Count)
+                itemUI.SetNPC(npcList[i]);
         }
     }
 
@@ -112,6 +124,6 @@ public class QuestLogManager : MonoBehaviour
 
     public void OpenQuestLog()
     {
-        ShowQuests(basicQuestSOList);
+        ShowQuests(basicQuestSOList, basicQuestNPCs);
     }
 }

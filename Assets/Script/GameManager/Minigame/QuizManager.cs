@@ -173,7 +173,7 @@ namespace Interaction
 
                 // ẩn UI timer
                 ConservationManager.instance.timerContainer.Deactivate();
-
+/*
                 // reset quest về CAN_START
                 GameManager.QuestManager.instance.UpdateQuestStep(
                  QuestState.CAN_START,
@@ -181,7 +181,7 @@ namespace Interaction
               );
 
                 targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
-                
+*/                
             } 
             else
             {

@@ -16,7 +16,7 @@ TagManager:
   - Environment
   - LootableObject
   - TalkableObject
-  - Ground
+  - Walkable
   - 
   - 
   - BackStab

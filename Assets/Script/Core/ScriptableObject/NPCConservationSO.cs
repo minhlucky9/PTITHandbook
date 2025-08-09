@@ -156,7 +156,8 @@ namespace Interaction
         HoiTruongA2,
         PhongHocA2,
         BackToHoiTruongA2,
-        BackToPhongHocA2
+        BackToPhongHocA2,
+        FinishTutorialQuestStep
 
     }
 }

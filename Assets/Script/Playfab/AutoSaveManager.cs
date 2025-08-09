@@ -14,18 +14,18 @@ public class AutoSaveManager : MonoBehaviour
 
         dataManager = FindObjectOfType<PlayerDataManager>();
         // ??ng ký event
-        Application.quitting += SaveOnQuit;
+      Application.quitting += SaveOnQuit;
     }
-
+/*
     void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)
             SaveOnQuit();
     }
-
+*/
     void SaveOnQuit()
     {
         if (dataManager != null)
-            dataManager.fomo();  // g?i hàm post d? li?u lên server :contentReference[oaicite:0]{index=0}
+            dataManager.fomo(); 
     }
 }

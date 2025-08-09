@@ -1,4 +1,4 @@
-
+﻿
 using GameManager;
 using PlayerStatsController;
 using System.Collections;
@@ -29,7 +29,7 @@ namespace PlayerController
         public float sprintInputTimer;
 
 
-        PlayerControls inputActions;
+        [HideInInspector] public PlayerControls inputActions;
         CameraHandle cameraHandle;
         UIWeatherManager uiManager;
         PlayerManager playerManager;
@@ -189,6 +189,51 @@ namespace PlayerController
             lockOnFlag = false;
             sprintFlag = false;
             sprintInputTimer = 0f;
+        }
+
+
+        // DISABLE CHỈ MOVEMENT INPUT, GIỮ CAMERA INPUT
+        public void DisableMovementOnly()
+        {
+            if (inputActions != null)
+            {
+                // Tắt chỉ Movement input (WASD), giữ nguyên Camera input (mouse)
+                inputActions.PlayerMovement.Movement.Disable();
+
+                // Tắt luôn các action input như Sprint, Roll, Jump
+                inputActions.PlayerAction.Sprint.Disable();
+                inputActions.PlayerAction.Roll.Disable();
+                inputActions.PlayerAction.Jump.Disable();
+
+                // Reset movement values về 0 để đảm bảo không còn input dính
+                movementInput = Vector2.zero;
+                horizontal = 0f;
+                vertical = 0f;
+                moveAmount = 0f;
+                sprint_input = false;
+                roll_input = false;
+                jump_input = false;
+                sprintFlag = false;
+                rollFlag = false;
+            }
+        }
+
+        // ENABLE LẠI MOVEMENT INPUT
+        public void EnableMovementOnly()
+        {
+            if (inputActions != null)
+            {
+                // Bật lại Movement input (WASD)
+                inputActions.PlayerMovement.Movement.Enable();
+
+                // Bật lại các action input
+                inputActions.PlayerAction.Sprint.Enable();
+                inputActions.PlayerAction.Roll.Enable();
+                inputActions.PlayerAction.Jump.Enable();
+
+                // Reset để đảm bảo sạch sẽ
+                ResetAllInputValues();
+            }
         }
 
     }

@@ -182,6 +182,10 @@ namespace PlayerController
             if (playerManager.isInteracting && !playerManager.isTransitioningToIdle)
                 return;
 
+            var moveToNPC = GetComponent<MoveToNPC>();
+            if (moveToNPC != null && moveToNPC.isAutoMoving)
+                return;
+
             moveDirection = cameraObject.forward * inputHandle.vertical;
             moveDirection += cameraObject.right * inputHandle.horizontal;
             moveDirection.Normalize();
@@ -299,12 +303,12 @@ namespace PlayerController
 
                     playerStats.ReduceStamina(rollStaminaCost);
                 }
-                else
-                {
-                    animatorHandle.PlayTargetAnimation("Backstep", true);
-                    animatorHandle.anim.SetBool("usingAnimationMove", true);
-                    playerStats.ReduceStamina(backStepStaminaCost);
-                }
+                //else
+                //{
+                //    animatorHandle.PlayTargetAnimation("Backstep", true);
+                //    animatorHandle.anim.SetBool("usingAnimationMove", true);
+                //    playerStats.ReduceStamina(backStepStaminaCost);
+                //}
             }
         }
 
@@ -414,6 +418,9 @@ namespace PlayerController
                         playerManager.isInAir = true;
                     }
                 }
+            } else if(velocity.y > 0.01f)
+            {
+                playerManager.isInAir = true;
             }
 
 

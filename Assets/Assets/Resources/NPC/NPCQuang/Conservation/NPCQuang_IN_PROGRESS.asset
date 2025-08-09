@@ -19,14 +19,12 @@ MonoBehaviour:
   startFromFirstDialog: 1
   dialogs:
   - dialogId: dialog1
-    message: "Em v\u1EABn ch\u01B0a t\xECm \u0111\u1EE7 c\xE1c ng\xF4i sao h\u1EA3?
-      C\xE1c ng\xF4i sao c\xF3 th\u1EC3 s\u1EBD n\u1EB1m \u1EDF nh\u1EEFng n\u01A1i
-      em kh\xF4ng ng\u1EDD t\u1EDBi. H\xE3y c\u1ED1 g\u1EAFng t\xECm th\u1EADt k\u0129
-      nh\xE9."
+    message: "C\u1ED1 l\xEAn n\xE0o!!! H\xE3y ch\u1EA1y th\u1EADt nhanh v\u1EC1 \u0111\xEDch
+      trong th\u1EDDi gian quy \u0111\u1ECBnh."
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
-    - message: "V\xE2ng \u1EA1"
+    - message: "T\xF4i s\u1EBD c\u1ED1 g\u1EAFng"
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
       executedFunction: 1

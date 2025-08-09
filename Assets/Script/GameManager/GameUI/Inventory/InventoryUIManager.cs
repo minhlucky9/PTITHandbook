@@ -4,7 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Interaction;
-using System.Collections; // để dùng InventoryItem, UsableItemSO, QuestItemSO
+using System.Collections;
+using static GlobalResponseData_Login; // để dùng InventoryItem, UsableItemSO, QuestItemSO
 
 public class InventoryUIManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class InventoryUIManager : MonoBehaviour
 
     [Header("UI chính")]
     public TMP_Text goldText;
+    public TMP_Text goldText2;         
     public TMP_Text countText;              // hiển thị “số lượng/8”
     public Button usableTabBtn;             // nút chuyển sang đồ dùng
     public Button questTabBtn;              // nút chuyển sang nhiệm vụ
@@ -22,6 +24,10 @@ public class InventoryUIManager : MonoBehaviour
     [Header("Detail Prefab")]
     public GameObject detailUIPrefab;       // prefab InventoryItemDetailUI
     public Transform detailUIParent;        // parent để hiển thị detail
+
+    [Header("Tab Indicators")]
+    public GameObject usableTabIndicator;   // ví dụ: underline, highlight cho Usable
+    public GameObject questTabIndicator;
 
     UIAnimationController uiAnimation;
     private bool showingUsable = true;      // đang hiển thị Usable hay Quest
@@ -40,6 +46,8 @@ public class InventoryUIManager : MonoBehaviour
     {
         // cập nhật số vàng
         PlayerInventory.instance.OnGoldChanged += UpdateGoldText;
+        goldText.text = PlayerInventory.instance.gold.ToString();
+        goldText2.text = PlayerInventory.instance.gold.ToString();
         // cập nhật inventory
         PlayerInventory.instance.OnInventoryUpdated += _ => RefreshUI();
 
@@ -48,20 +56,35 @@ public class InventoryUIManager : MonoBehaviour
         {
             showingUsable = true;
             RefreshUI();
+            UpdateTabIndicators();
         });
         questTabBtn.onClick.AddListener(() =>
         {
             showingUsable = false;
             RefreshUI();
+            UpdateTabIndicators();
         });
 
         // khởi tạo lần đầu
         RefreshUI();
+        UpdateTabIndicators();
     }
 
     public void UpdateGoldText(int changeAmount, int goldAmount)
     {
         goldText.text = goldAmount.ToString();
+        goldText2.text = goldAmount.ToString();
+    }
+
+    /// <summary>
+    /// Bật/tắt indicator dựa trên tab đang active
+    /// </summary>
+    private void UpdateTabIndicators()
+    {
+        if (usableTabIndicator != null)
+            usableTabIndicator.SetActive(showingUsable);
+        if (questTabIndicator != null)
+            questTabIndicator.SetActive(!showingUsable);
     }
 
     /// <summary>
@@ -130,9 +153,17 @@ public class InventoryUIManager : MonoBehaviour
         PlayerManager.instance.ActivateController();
     }
 
+    public void OpenInventory()
+    {
+        StartCoroutine(OpenWindow());
+    }
+
+/*
+
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.I))
+        if (Input.GetKeyUp(KeyCode.I) && !PlayerManager.instance.isInteract)
             StartCoroutine(OpenWindow());
     }
+*/
 }

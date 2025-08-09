@@ -27,7 +27,7 @@ public class TalkInteraction : Interactable
     {
         gameObject.layer = LayerMask.NameToLayer("TalkableObject");
         gameObject.tag = "Talkable";
-        interactableText = "Press E to talk to NPC";
+        interactableText = "Nhấn E để trò chuyện";
 
         originalRotation = transform.rotation;
         playerManager = FindObjectOfType<PlayerManager>();
@@ -118,13 +118,30 @@ public class TalkInteraction : Interactable
         yield return new WaitForSeconds(0.4f);
 
         // Bước 3: Bây giờ mới set isInteracting = true để NPC xoay về phía player
-        isInteracting = true;
+     //   isInteracting = true;
 
         // Bước 4: Hoàn tất deactivate controller và bắt đầu conversation
         playerManager.CompleteDeactivateController();
 
         // Bước 5: Bắt đầu conversation
         yield return StartConservation();
+    }
+
+    public IEnumerator SmoothTransitionToTraceMiniGame()
+    {
+        // Bước 1: Ngừng input nhưng vẫn để animation chạy về idle
+        playerManager.StartTransitionToIdle();
+
+        // Bước 2: Đợi animation transition về idle (khoảng 0.3-0.5 giây)
+        yield return new WaitForSeconds(0.4f);
+
+        // Bước 3: Bây giờ mới set isInteracting = true để NPC xoay về phía player
+        //   isInteracting = true;
+
+        // Bước 4: Hoàn tất deactivate controller và bắt đầu conversation
+        playerManager.CompleteDeactivateController();
+
+        
     }
 
     public override void StopInteract()

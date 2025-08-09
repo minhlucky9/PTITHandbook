@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee12e8daeebe51f4eb9424240c9c63f9, type: 3}
+  m_Name: TraceObject
+  m_EditorClassIdentifier: 
+  minigameId: QuestTruyTimDauVet_step2
+  questId: QuestTruyTimDauVet
+  stepId: step2
+  targetNPC: {fileID: 0}
+  traceObjects:
+  - prefab: {fileID: 1439705550933544942, guid: 7ff27afaca7f629449107b2f6ecb7d95,
+      type: 3}
+  - prefab: {fileID: 1439705550933544942, guid: e0ac3c5c039600542a23818ef64d8681,
+      type: 3}
+  - prefab: {fileID: 1439705550933544942, guid: b61b6af1dda1f484a99f4b06b81ab4b0,
+      type: 3}
+  - prefab: {fileID: 1439705550933544942, guid: eca4112e7277caa45b9735fbab06ec6d,
+      type: 3}
+  - prefab: {fileID: 1439705550933544942, guid: e5f9c0ae2485a5245b94bde508f8ec39,
+      type: 3}
+  - prefab: {fileID: 1439705550933544942, guid: 6dccc832bcfb0c24bbb015fac1f124e6,
+      type: 3}

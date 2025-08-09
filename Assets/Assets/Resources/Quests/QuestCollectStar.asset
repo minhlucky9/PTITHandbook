@@ -45,7 +45,9 @@ MonoBehaviour:
     npcStatus: 3
     conservation: {fileID: 11400000, guid: c453cda50e7c4f74589abd1e36c8f98f, type: 2}
     nextStep: 
-  goldReward: 50
+  goldReward: 120
   experienceReward: 250
   itemRewards: []
+  questIcon: {fileID: 0}
+  isAdvancedQuest: 0
   questType: 2

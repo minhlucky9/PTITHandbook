@@ -19,13 +19,28 @@ MonoBehaviour:
   startFromFirstDialog: 1
   dialogs:
   - dialogId: dialog1
-    message: "\u0110\xE2y l\xE0 ph\u1EA7n th\u01B0\u1EDFng c\u1EE7a em."
+    message: "\u201CXu\u1EA5t s\u1EAFc! B\u1EA1n ch\xEDnh l\xE0 Chi\u1EBFn binh s\u1ED1
+      PTIT \u2013 ti\xEAn phong c\u1EA3 v\u1EC1 th\u1EC3 l\u1EF1c l\u1EABn c\xF4ng
+      ngh\u1EC7!\u201D"
+    nodeSize: {x: 200, y: 100}
+    voice: {fileID: 0}
+    possibleResponses:
+    - message: "Em c\u1EA3m \u01A1n a \u1EA1."
+      icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
+      nextDialogId: dialog2
+      executedFunction: 0
+      NextExecutedFunction: 0
+    nodePosition: {x: 10, y: 10}
+  - dialogId: dialog2
+    message: "\u201CTinh th\u1EA7n th\u1EC3 thao l\xE0 c\u1ED1t l\xF5i c\u1EE7a tu\u1ED5i
+      tr\u1EBB. V\xE0 tinh th\u1EA7n chuy\u1EC3n \u0111\u1ED5i s\u1ED1 l\xE0 \u0111i\u1EC1u
+      m\xE0 PTIT h\u01B0\u1EDBng t\u1EDBi m\u1ED7i ng\xE0y.\u201D"
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em c\u1EA3m \u01A1n a \u1EA1."
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
-      executedFunction: 2
+      executedFunction: 6
       NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}

@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
 
 public class TelePort : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class TelePort : MonoBehaviour
     public Transform PhongHocA2;
     public Transform BackToHoiTruongA2;
     public Transform BackToPhongHocA2;
+    public Transform Tutorial;
 
     private void Awake()
     {
@@ -32,6 +34,24 @@ public class TelePort : MonoBehaviour
             targetButton.onClick.Invoke();
         }
     }
+
+    /// <summary>
+    /// Reset rotation của camera và xóa các giá trị góc xoay cũ trong CameraHandle (lookAngle, pivotAngle).
+    /// </summary>
+    private void ResetCameraHandleRotation(CameraHandle camHandle)
+    {
+        // 1) Reset biến private lookAngle & pivotAngle
+        var type = typeof(CameraHandle);
+        var lookField = type.GetField("lookAngle", BindingFlags.NonPublic | BindingFlags.Instance);
+        var pivotField = type.GetField("pivotAngle", BindingFlags.NonPublic | BindingFlags.Instance);
+        lookField.SetValue(camHandle, 0f);
+        pivotField.SetValue(camHandle, 0f);
+
+        // 2) Reset trực tiếp transform và pivot local rotation
+        camHandle.transform.rotation = Quaternion.identity;
+        camHandle.cameraPivotTransform.localRotation = Quaternion.identity;
+    }
+
 
     #region SafeZone
 
@@ -66,14 +86,100 @@ public class TelePort : MonoBehaviour
         LoadingScreen.SetActive(false);
         // 4) Teleport player và rig‐root camera
         player.transform.position = Safezone.position;
+        player.transform.rotation = Safezone.rotation; 
         camHandle.transform.position = Safezone.position + camOffset;
-        camHandle.ClearLockOnTarget();
 
+        camHandle.ClearLockOnTarget();
+        ResetCameraHandleRotation(camHandle);
         // 5) Bật lại controller đúng cách (bao gồm input)
         locomotion.enabled = true;
         camHandle.enabled = true;
         player.ActivateController(); // Bật lại input và UI
         PlayerManager.instance.isInteract = false;
+    }
+
+    #endregion
+
+    #region Tutorial
+
+    public void ReturnToTutorial()
+    {
+        var player = PlayerManager.instance;
+        var camHandle = CameraHandle.singleton;
+        var locomotion = player.GetComponent<PlayerLocomotion>();
+        if (player == null || Tutorial == null || camHandle == null || locomotion == null)
+            return;
+
+        // 1) Tính offset camera (3m sau + 2m cao)
+        Vector3 camOffset = -player.transform.forward * 3f + Vector3.up * 2f;
+
+        // 2) Tắt controller đúng cách (bao gồm input)
+        player.DeactivateController();
+        camHandle.enabled = false;
+        locomotion.enabled = false;
+        LoadingScreen.SetActive(true);
+        // 3) Start coroutine: đợi 1s → teleport → bật lại
+        StartCoroutine(TeleportTutorial(player, camHandle, locomotion, camOffset));
+    }
+
+    private IEnumerator TeleportTutorial(
+        PlayerManager player,
+        CameraHandle camHandle,
+        PlayerLocomotion locomotion,
+        Vector3 camOffset)
+    {
+        // đợi 1 giây trước khi dịch chuyển
+        yield return new WaitForSeconds(1f);
+        LoadingScreen.SetActive(false);
+        // 4) Teleport player và rig‐root camera
+        player.transform.position = Tutorial.position;
+        player.transform.rotation = Tutorial.rotation;
+        camHandle.transform.position = Tutorial.position + camOffset;
+        camHandle.ClearLockOnTarget();
+
+
+
+    }
+
+    public void ReturnToTutorial_EndPhase1()
+    {
+        var player = PlayerManager.instance;
+        var camHandle = CameraHandle.singleton;
+        var locomotion = player.GetComponent<PlayerLocomotion>();
+        if (player == null || Safezone == null || camHandle == null || locomotion == null)
+            return;
+
+        // 1) Tính offset camera (3m sau + 2m cao)
+        Vector3 camOffset = -player.transform.forward * 3f + Vector3.up * 2f;
+
+        // 2) Tắt controller đúng cách (bao gồm input)
+        player.DeactivateController();
+        camHandle.enabled = false;
+        locomotion.enabled = false;
+        LoadingScreen.SetActive(true);
+        // 3) Start coroutine: đợi 1s → teleport → bật lại
+        StartCoroutine(TeleportTutorial_EndPhase1(player, camHandle, locomotion, camOffset));
+    }
+
+    private IEnumerator TeleportTutorial_EndPhase1(
+        PlayerManager player,
+        CameraHandle camHandle,
+        PlayerLocomotion locomotion,
+        Vector3 camOffset)
+    {
+        // đợi 1 giây trước khi dịch chuyển
+        yield return new WaitForSeconds(1f);
+        LoadingScreen.SetActive(false);
+        // 4) Teleport player và rig‐root camera
+        player.transform.position = Safezone.position;
+        player.transform.rotation = Safezone.rotation;
+        camHandle.transform.position = Safezone.position + camOffset;
+
+        camHandle.ClearLockOnTarget();
+        ResetCameraHandleRotation(camHandle);
+
+
+
     }
 
     #endregion

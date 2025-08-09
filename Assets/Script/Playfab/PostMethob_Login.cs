@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -13,7 +13,7 @@ public class PostMethod_Login : MonoBehaviour
     // public TextMeshProUGUI Respone;
     [SerializeField] private GameObject SuccessUI;
     [SerializeField] private GameObject FailureUI;
-    [SerializeField] private GameObject NoInternetUI; // UI thÙng b·o khÙng cÛ k?t n?i internet
+    [SerializeField] private GameObject NoInternetUI; // UI th√¥ng b√°o kh√¥ng c√≥ k?t n?i internet
 
     public PlayerDataLoader playerDataLoader; 
 
@@ -31,13 +31,13 @@ public class PostMethod_Login : MonoBehaviour
         // Ki?m tra k?t n?i internet
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            outputArea.text = "KhÙng cÛ k?t n?i internet.";
-            NoInternetUI.SetActive(true); // Hi?n th? UI thÙng b·o khÙng cÛ internet
+            outputArea.text = "Kh√¥ng c√≥ k·∫øt n·ªëi internet.";
+            NoInternetUI.SetActive(true); // Hi?n th? UI th√¥ng b√°o kh√¥ng c√≥ internet
             yield break; // D?ng coroutine
         }
 
         outputArea.text = "Loading...";
-        string uri = "http://1.55.212.49:8098/DemoBackend3D_API/user/login";
+        string uri = "http://1.55.212.49:8098/DemoBackend3D_API/user/loginGuest";
         WWWForm form = new WWWForm();
         form.AddField("student_id", MSV.text);
         form.AddField("password", Password.text);
@@ -84,7 +84,7 @@ public class PostMethod_Login : MonoBehaviour
                 else if (responseData.code == 400)
                 {
                     FailureUI.SetActive(true);
-                    // Respone.text = $"??ng nh?p th?t b?i. H„y ki?m tra l?i m„ sinh viÍn ho?c m?t kh?u";
+                    // Respone.text = $"??ng nh?p th?t b?i. H√£y ki?m tra l?i m√£ sinh vi√™n ho?c m?t kh?u";
                 }
 
             }

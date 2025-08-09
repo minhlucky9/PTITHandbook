@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: NPCQuang
   m_EditorClassIdentifier: 
   npcId: NPCQuang
-  npcName: Quang
-  npcRole: "Sinh vi\xEAn"
+  npcName: "Duy Hi\u1EBFu"
+  npcRole: "B\xED th\u01B0 chi \u0111o\xE0n"
   normalConservation: {fileID: 11400000, guid: c7685342012aeba478958414d613ce55, type: 2}
