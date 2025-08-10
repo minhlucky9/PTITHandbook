@@ -238,6 +238,8 @@ MonoBehaviour:
   isKeyboardTutorial: 0
   isShowHUDTutorial: 0
   isEndPhase1Tutorial: 0
+  isQuizPhaseTutorial: 0
+  isEndEnterPressTutorial: 0
 --- !u!1 &4426156570531937554
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +277,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 3.869995}
-  m_SizeDelta: {x: 160, y: 51.744995}
+  m_SizeDelta: {x: 160, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4875115537307102987
 CanvasRenderer:
@@ -529,8 +531,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 33
+  m_fontSizeBase: 33
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

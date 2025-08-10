@@ -53,7 +53,7 @@ namespace PlayerController
         private void Awake()
         {
             instance = this;
-            //Application.targetFrameRate = 60;
+            Application.targetFrameRate = 60;
             // Đọc lựa chọn (mặc định là 1 nếu chưa có)
             int sel = PlayerPrefs.GetInt("SelectedCharacter", 1);
 

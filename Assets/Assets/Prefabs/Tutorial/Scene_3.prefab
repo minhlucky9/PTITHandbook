@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u1EA4n Enter \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
+  m_text: "\u1EA4n E \u0111\u1EC3 ti\u1EBFp t\u1EE5c"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0826abe8b5fae9245b5bd11662668feb, type: 2}
   m_sharedMaterial: {fileID: 3934972858970450254, guid: 0826abe8b5fae9245b5bd11662668feb,

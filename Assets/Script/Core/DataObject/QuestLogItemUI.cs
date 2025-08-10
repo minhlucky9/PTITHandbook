@@ -17,14 +17,14 @@ public class QuestLogItemUI : MonoBehaviour
     private Quest boundQuest;
     private Action onStateChangedHandler;
 
-    public void Bind(Quest quest)
+    public void Bind(int index, Quest quest)
     {
         Unbind();
 
         boundQuest = quest;
 
         // 1. Text + description (clamp index)
-        nameText.text = boundQuest.info.displayName;
+        nameText.text = $"Nhiệm vụ {index + 1}";
         UpdateDescription();
 
         // 2. Ảnh
@@ -96,6 +96,7 @@ public class QuestLogItemUI : MonoBehaviour
             if (btn == null) btn = icon.gameObject.AddComponent<Button>();
 
             btn.onClick.RemoveAllListeners();
+            if (TutorialManager.Instance.isRunning) TutorialManager.Instance.UpdateButtonNextTutoriorEvent(btn, false);
             btn.onClick.AddListener(() =>
             {
                 if (npcTarget != null && MoveToNPC.instance != null)

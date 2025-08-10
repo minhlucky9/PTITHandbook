@@ -88,7 +88,7 @@ public class QuestLogManager : MonoBehaviour
 
             var go = Instantiate(questItemPrefab, contentContainer);
             var itemUI = go.GetComponent<QuestLogItemUI>();
-            itemUI.Bind(quest);
+            itemUI.Bind(i , quest);
 
             // gắn NPC target
             if (i < npcList.Count)

@@ -28,6 +28,7 @@ namespace PlayerController
         public bool sprintFlag;
         public float sprintInputTimer;
 
+        public bool enableJumpInput = false;
 
         [HideInInspector] public PlayerControls inputActions;
         CameraHandle cameraHandle;
@@ -69,7 +70,7 @@ namespace PlayerController
 
                 inputActions.PlayerAction.PickUp.performed += i => pick_up = true;
                 inputActions.PlayerAction.Talk.performed += i => talk_input = true;
-                inputActions.PlayerAction.Jump.performed += i => jump_input = true;
+                inputActions.PlayerAction.Jump.performed += i => jump_input = true && enableJumpInput;
                 inputActions.PlayerAction.Inventory.performed += i => inventory_input = true;
 
                 inputActions.PlayerAction.Roll.performed += i => roll_input = true;

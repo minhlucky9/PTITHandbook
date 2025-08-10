@@ -138,7 +138,7 @@ public class Tutorial_Scene : MonoBehaviour
     void Update()
     {
         if ((MouseManager.instance.permission == MousePermission.All || MouseManager.instance.permission == MousePermission.EnterPress)
-           && Input.GetKeyDown(KeyCode.Return) && !PlayerManager.instance.isInteract)
+           && Input.GetKeyDown(KeyCode.E) && !PlayerManager.instance.isInteract)
         {
             Scene.Deactivate();
             if (!isQuizPhaseTutorial)

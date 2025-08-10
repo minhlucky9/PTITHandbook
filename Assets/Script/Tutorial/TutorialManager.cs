@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static MouseManager;
 
@@ -40,8 +41,32 @@ public class TutorialManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-      
-        
+        //update tutorior button event
+
+
+        UpdateButtonNextTutoriorEvent(button17);
+        UpdateButtonNextTutoriorEvent(button18);
+    }
+
+    public void UpdateButtonNextTutoriorEvent(Button button, bool nextStep = true)
+    {
+        UnityAction showNextTutoriorOnButton = () =>
+        {
+            if(nextStep)
+            {
+                ShowNextStepDelayed();
+            } else
+            {
+                if (currentUI != null)
+                    Destroy(currentUI.gameObject);
+            }
+            
+        };
+        button.onClick.AddListener(showNextTutoriorOnButton);
+        button.onClick.AddListener(delegate
+        {
+            button.onClick.RemoveListener(showNextTutoriorOnButton);
+        });
     }
 
     private void Start()
@@ -109,10 +134,6 @@ public class TutorialManager : MonoBehaviour
         if (currentUI != null)
             Destroy(currentUI.gameObject);
 
-     
-       
-
-      
         currentIndex++;
         isUpdatingTutorior = false;
         if (currentIndex < steps.Count)
@@ -135,32 +156,5 @@ public class TutorialManager : MonoBehaviour
         MouseManager.instance.permission = MousePermission.All;
         Debug.Log("[Tutorial] Đã hoàn thành.");
     }
-
-    #region Buttons Disable
-    public void DisableButton17()
-    {
-        StartCoroutine(DisableButton17Coroutine());
-    }
-
-    public IEnumerator DisableButton17Coroutine()
-    {
-        button17.interactable = false;         
-        yield return new WaitForSeconds(2f);
-        button17.interactable = true;
-    }
-
-    public void DisableButton18()
-    {
-        StartCoroutine(DisableButton18Coroutine());
-    }
-
-    public IEnumerator DisableButton18Coroutine()
-    {
-        button18.interactable = false;
-        yield return new WaitForSeconds(2f);
-        button18.interactable = true;
-    }
-
-    #endregion
 
 }
