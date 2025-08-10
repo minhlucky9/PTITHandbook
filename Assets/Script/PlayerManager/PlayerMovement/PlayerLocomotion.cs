@@ -40,8 +40,11 @@ namespace PlayerController
         public float fallingVelocity = 0;
         public float gravity = 15f;
         public float stepHeight = 0.4f;
+        public float stepVelocity = 1.5f;
         public float jumpVelocity = 7f;
         Vector3 wallNormal;
+        float steppingTimer = 0;
+        bool isStepping => steppingTimer > 0f;
 
         [Header("Stamina Costs")]
         [SerializeField]
@@ -229,6 +232,8 @@ namespace PlayerController
 
         public void HandleStepping(float delta)
         {
+            //isStepping = false;
+            steppingTimer -= Time.deltaTime;
             if (playerManager.usingAnimationMove)
                 return;
 
@@ -267,11 +272,14 @@ namespace PlayerController
                     {
                         Vector3 move = moveDirection.normalized + Vector3.up;
                         SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
+                        steppingTimer = 0.1f;
                     }
 
                     return;
                 }
             }
+
+            
         }
 
         public void HandleRollingAndSprinting(float delta)
@@ -320,6 +328,8 @@ namespace PlayerController
             if (playerManager.isOnWall)
                 return;
 
+            //if (isStepping) return;
+
             playerManager.isGrounded = false;
             RaycastHit hit;
             Vector3 origin = myTransform.position;
@@ -362,6 +372,12 @@ namespace PlayerController
                 velocity += Vector3.up * jumpVelocity;
             }
 
+            if(isStepping)
+            {
+                velocity += Vector3.up * stepVelocity;
+                //SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
+            }
+
             SetRigidbodyVelocity(velocity);
 
             Vector3 dir = moveDirection;
@@ -381,7 +397,7 @@ namespace PlayerController
 
                     if (playerManager.isInAir)
                     {
-                        if (inAirTimer > 0.1f)
+                        if (inAirTimer > 0.2f)
                         {
                             Debug.Log("You were in the air for " + inAirTimer);
                             animatorHandle.PlayTargetAnimation("Land", true);
@@ -420,17 +436,13 @@ namespace PlayerController
                 }
             } else if(velocity.y > 0.01f)
             {
-                playerManager.isInAir = true;
+                playerManager.isInAir = true && !isStepping;
             }
 
 
             if (playerManager.isGrounded)
             {
-                if (playerManager.isInteracting || inputHandle.moveAmount > 0)
-                {
-                    myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
-                }
-                else
+                if(!isStepping) 
                 {
                     myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
                 }
