@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System;
+
 public class CartManager : MonoBehaviour
 {
     public static CartManager instance;
@@ -11,8 +13,8 @@ public class CartManager : MonoBehaviour
     public GameObject cartItemPrefab;  // Prefab chứa CartItemUI
     public Button checkoutBtn;
     public TMP_Text TotalPriceText;
-
-
+    public Action OnBuyItemSuccess;
+    int totalPrice = 0;
 
     // lưu quantity theo itemId
     private Dictionary<string, int> cartData = new Dictionary<string, int>();
@@ -35,6 +37,8 @@ public class CartManager : MonoBehaviour
         {
             sum += itemUI.UnitPrice * itemUI.Quantity;
         }
+
+        totalPrice = sum;
         TotalPriceText.text = "Tổng: " + sum.ToString();
     }
 
@@ -56,6 +60,7 @@ public class CartManager : MonoBehaviour
             uiItems[id] = ui;
         }
         UpdateTotalPrice();
+        
     }
 
     // xóa 1 mục khỏi giỏ
@@ -71,6 +76,12 @@ public class CartManager : MonoBehaviour
     // thanh toán toàn bộ
     private void Checkout()
     {
+        if(PlayerInventory.instance.gold <= totalPrice)
+        {
+            Debug.LogWarning($"Không đủ tiền để mua vật phẩm");
+            return;
+        }
+
         foreach (var kv in cartData)
         {
             string id = kv.Key;
@@ -87,11 +98,13 @@ public class CartManager : MonoBehaviour
                 return;
             }
         }
+
+        OnBuyItemSuccess?.Invoke();
         ClearCart();
        
     }
 
-    private void ClearCart()
+    public void ClearCart()
     {
         foreach (var ui in uiItems.Values)
             Destroy(ui.gameObject);

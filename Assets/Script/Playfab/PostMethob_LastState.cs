@@ -30,11 +30,26 @@ public class PlayerDataManager : MonoBehaviour
         {
             outputArea = GameObject.Find("OutputArea").GetComponent<TMP_InputField>();
         }
+
+        //save data when quest finish
+        QuestManager.instance.OnQuestFinished += (quest) =>
+        {
+            Invoke(nameof(fomo), 1f);
+        };
+
+        CartManager.instance.OnBuyItemSuccess += () =>
+        {
+            Invoke(nameof(fomo), 1f);
+        };
+
     }
 
     // Ví dụ nút bấm
     public void fomo()
     {
+        Debug.Log("fomo");
+        if (GlobalResponseData.session_id == null) return;
+
         Vector3 pos = player.transform.position;
         PostPlayerData(pos.x, pos.y, pos.z, FirstTimeQuest, HealthSlider.value, GlobalResponseData.student_id, GlobalResponseData.fullname, PlayerInventory.instance.gold, PlayerInventory.instance.Medal, GlobalResponseData.CharacterName);
     }

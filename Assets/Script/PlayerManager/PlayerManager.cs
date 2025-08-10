@@ -135,7 +135,7 @@ namespace PlayerController
             if (!inputHandle.enabled && !isTransitioningToIdle)
             {
                 // Chỉ đảm bảo rigidbody dừng lại khi hoàn toàn deactivated
-                playerLocomotion.rigidbody.velocity = Vector3.zero;
+                if(!playerLocomotion.rigidbody.isKinematic) playerLocomotion.rigidbody.velocity = Vector3.zero;
                 return;
             }
 
@@ -145,7 +145,7 @@ namespace PlayerController
             if (isTransitioningToIdle)
             {
                 // Đảm bảo rigidbody không di chuyển
-                playerLocomotion.rigidbody.velocity = Vector3.zero;
+                if (!playerLocomotion.rigidbody.isKinematic) playerLocomotion.rigidbody.velocity = Vector3.zero;
 
                 // Vẫn gọi HandleMovement để animator được cập nhật với moveAmount = 0
                 // Điều này sẽ làm animator transition từ running về idle tự nhiên
