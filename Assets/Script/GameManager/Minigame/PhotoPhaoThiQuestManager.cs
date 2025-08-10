@@ -58,7 +58,7 @@ public class PhotoPhaoThiQuestManager : MonoBehaviour
         PhotoPhaothi_inventoryListeners.Add(questId, listener);
         PlayerInventory.instance.OnInventoryUpdated += listener;
 
-        // Ki?m tra ngay l?p t?c phòng khi ?ã có s?n item
+       
         listener.Invoke(PlayerInventory.instance.GetCurrentInventoryState());
 
         QuestManager.instance.questMap[questId]
