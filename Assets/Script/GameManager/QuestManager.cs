@@ -22,6 +22,7 @@ namespace GameManager
         PlayerStats playerStats;
         public TextMeshProUGUI CharacterName;
         public event Action OnQuestsInitialized;
+        public event Action<Quest> OnQuestFinished;
 
         [Header("Config")]
         [SerializeField] private bool loadQuestState = true;
@@ -155,7 +156,9 @@ namespace GameManager
                 {
                     PlayerInventory.instance.AddItem(quest.info.itemRewards[i].item, quest.info.itemRewards[i].quantity);
                 }
-                
+
+                OnQuestFinished?.Invoke(quest);
+
             } else
             {
                 InitQuestStep(quest.info.questSteps[quest.currentQuestStepIndex], quest.info.id);

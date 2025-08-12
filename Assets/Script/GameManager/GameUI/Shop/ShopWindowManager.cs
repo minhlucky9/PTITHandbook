@@ -91,7 +91,8 @@ public class ShopWindowManager : MonoBehaviour
         }
 
         stemNums = data.shopCategories.Count;
-
+        CartManager.instance.ClearCart();
+        GoToCategory(0);
         openAnimation.UpdateObjectChange();
     }
 
@@ -110,6 +111,7 @@ public class ShopWindowManager : MonoBehaviour
 
     IEnumerator DeactivateWindow()
     {
+        openAnimation.UpdateObjectChange();
         openAnimation.Deactivate();
         yield return new WaitForSeconds(0.7f);
         PlayerManager.instance.ActivateController();
