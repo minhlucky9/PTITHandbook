@@ -19,13 +19,17 @@ MonoBehaviour:
   startFromFirstDialog: 1
   dialogs:
   - dialogId: dialog1
-    message: "\u0110\xE2y l\xE0 ph\u1EA7n th\u01B0\u1EDFng c\u1EE7a em."
+    message: "X\u1ECBn \u0111\u1EA5y! Anh m\u1EDBi ch\u1EC9 h\u01B0\u1EDBng th\xF4i
+      m\xE0 em l\xE0m \u0111\u01B0\u1EE3c th\u1EBF n\xE0y th\xEC ch\u1EAFc ch\u1EAFn
+      l\xE0 sinh vi\xEAn PTIT ch\xEDnh hi\u1EC7u r\u1ED3i! Gi\u1EDD em thi \u0111i
+      \u2013 nh\u1EDB nhai b\xE1nh m\xEC tr\u01B0\u1EDBc khi v\xE0o ph\xF2ng thi
+      nh\xE9!"
     nodeSize: {x: 200, y: 100}
     voice: {fileID: 0}
     possibleResponses:
     - message: "Em c\u1EA3m \u01A1n a \u1EA1."
       icon: {fileID: 21300000, guid: a74640281c76e2a469a527c1713bd5e4, type: 3}
       nextDialogId: 
-      executedFunction: 2
+      executedFunction: 6
       NextExecutedFunction: 0
     nodePosition: {x: 10, y: 10}

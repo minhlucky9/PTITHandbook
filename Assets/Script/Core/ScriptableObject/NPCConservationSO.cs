@@ -157,7 +157,18 @@ namespace Interaction
         PhongHocA2,
         BackToHoiTruongA2,
         BackToPhongHocA2,
-        FinishTutorialQuestStep
+        FinishTutorialQuestStep,
+
+
+        //SanA+
+        Hybrid_PayCostThenFinish,
+        Hybrid_CheckStudentCard,
+        Hybrid_FinishStep3_EnableBreadWatcher,
+        Hybrid_OnExitNPC3OrShop,
+        Hybrid_OnNPC6Interact,
+        Hybrid_OnNPC6TryEnded,
+        Hybrid_FinishNPC6,
+        Hybrid_ShowRewardPopupForCurrentStep
 
     }
 }
