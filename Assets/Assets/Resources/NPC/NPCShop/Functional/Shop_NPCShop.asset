@@ -51,3 +51,6 @@ MonoBehaviour:
     - itemInfo: {fileID: 11400000, guid: 6d6d50406b18dc841bc6cf325b2c3c1b, type: 2}
       price: 50
       valueIcon: {fileID: 21300000, guid: 3a3421065c8bb4f49b4a8b9d5822d4b6, type: 3}
+    - itemInfo: {fileID: 11400000, guid: 86c8f8007aae33b41852e3310f6ba979, type: 2}
+      price: 50
+      valueIcon: {fileID: 21300000, guid: 3a3421065c8bb4f49b4a8b9d5822d4b6, type: 3}
