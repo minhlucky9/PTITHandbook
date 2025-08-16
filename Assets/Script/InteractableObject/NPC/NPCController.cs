@@ -879,8 +879,8 @@ public class NPCController : TalkInteraction, IDialogueHandler
             dialogueAdapter.Initialize(container);
             var conv = dialogueAdapter.ConvertDSDialogueToConservation(startDia);
             StartCoroutine(ConservationManager.instance.UpdateConservation(conv));
-
-         //   StartCoroutine(DelayedInitConservation(gameObject, conv));
+ 
+           // StartCoroutine(DelayedInitConservation(gameObject, conv));
 
 
         }

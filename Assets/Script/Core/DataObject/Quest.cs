@@ -69,16 +69,16 @@ public class Quest
         } 
         else
         {
-            OnQuestFinish?.Invoke();
             ChangeQuestState(QuestState.FINISHED);
+            OnQuestFinish?.Invoke();            
             return false;
         }
     }
 
     public void ChangeQuestState(QuestState state)
     {
-        OnStateChanged?.Invoke();
         this.state = state;
+        OnStateChanged?.Invoke();      
     }
 
 }

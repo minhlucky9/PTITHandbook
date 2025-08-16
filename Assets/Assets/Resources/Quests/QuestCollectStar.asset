@@ -28,9 +28,10 @@ MonoBehaviour:
     nextStep: step2
   - stepId: step2
     missionType: 1
-    stepName: "Thu th\u1EADp ng\xF4i sao"
-    stepDescription: "Thu th\u1EADp \u0111\u1EE7 15 ng\xF4i sao \u0111\u1EC3 nh\u1EADn
-      ph\u1EA7n qu\xE0 t\u1EEB Quang"
+    stepName: "Gi\u1EA3i ch\u1EA1y \u0111\xE3 b\u1EAFt \u0111\u1EA7u, h\xE3y thu
+      th\u1EADp c\xE1c l\xE1 c\u1EDD v\xE0 v\u1EC1 \u0111\xEDch th\xF4i n\xE0o"
+    stepDescription: "Gi\u1EA3i ch\u1EA1y \u0111\xE3 b\u1EAFt \u0111\u1EA7u, h\xE3y
+      thu th\u1EADp c\xE1c l\xE1 c\u1EDD v\xE0 v\u1EC1 \u0111\xEDch th\xF4i n\xE0o"
     npcId: NPCQuang
     npcStatus: 2
     conservation: {fileID: 11400000, guid: 371ca145fdfe2c64aa429940b7c1b171, type: 2}
