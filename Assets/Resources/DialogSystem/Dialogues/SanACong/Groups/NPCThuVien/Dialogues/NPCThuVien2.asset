@@ -18,7 +18,7 @@ MonoBehaviour:
     t\xE0i li\u1EC7u \u1EDF \u0111\xE2y ch\u1EC9 d\xE0nh cho ng\u01B0\u1EDDi c\xF3
     th\u1EBB th\u01B0 vi\u1EC7n th\xF4i. Quy \u0111\u1ECBnh l\xE0 quy \u0111\u1ECBnh!\u201D"
   <Choices>k__BackingField:
-  - <Text>k__BackingField: "Em ch\u01B0a c\xF3 th\u1EBB"
+  - <Text>k__BackingField: "Ki\u1EC3m tra th\u1EBB sinh vi\xEAn"
     <NextDialogue>k__BackingField: {fileID: 0}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0

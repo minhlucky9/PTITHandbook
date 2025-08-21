@@ -16,10 +16,13 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 0167479e-3612-4e0b-940c-257358ed72ab
     <Name>k__BackingField: NORMAL
-    <Position>k__BackingField: {x: 54.00004, y: 101}
+    <Position>k__BackingField: {x: 54.000034, y: 101}
   - <ID>k__BackingField: ae97c197-e5c6-464b-9450-d4534e09374b
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 734.99994, y: 849.00006}
+    <Position>k__BackingField: {x: 735, y: 849.0001}
+  - <ID>k__BackingField: 553b5f56-1c2d-463b-b6d1-f0f965bc42b6
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Position>k__BackingField: {x: 1222, y: 852}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: a62b3dfd-3228-45e2-a9ca-a5b93b1cef86
     <Name>k__BackingField: 1
@@ -111,9 +114,26 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 1232, y: 518}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: da3d376b-849d-47fc-bc56-1870c6c9c8d0
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Text>k__BackingField: "B\u1EA1n c\u1EA7n ho\xE0n th\xE0nh c\xE1c nhi\u1EC7m
+      v\u1EE5 tr\u01B0\u1EDBc \u0111\u1EC3 m\u1EDF kh\xF3a nhi\u1EC7m v\u1EE5 n\xE0y"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0110\xE3 hi\u1EC3u"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 553b5f56-1c2d-463b-b6d1-f0f965bc42b6
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1247, y: 911}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - AfterFinish
+  - REQUIREMENTSNOTMET
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -126,3 +146,6 @@ MonoBehaviour:
       - 2
       - 3
       - 5
+    - Key: REQUIREMENTSNOTMET
+      Value:
+      - REQUIREMENTSNOTMET

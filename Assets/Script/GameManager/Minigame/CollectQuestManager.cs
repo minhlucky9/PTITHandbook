@@ -45,7 +45,7 @@ public class CollectQuestManager : MonoBehaviour
         __colectquest = collectQuest;
         collectQuest.numberToCollect = lootEvent.numberOfLoot;
         collectQuest.OnFinishQuest = () => {
-            targetNPC.SendMessage("FinishQuestStep");
+            targetNPC.SendMessage("OnQuestMinigameSuccess");
             ConservationManager.instance.StarContainer.Deactivate();
             if(CollectTimerRoutine != null)
         {
@@ -147,7 +147,7 @@ public class CollectQuest
     public void OnCollectedChange()
     {
         currentCollected++;
-        ConservationManager.instance.StarText.text = $"{currentCollected}/{numberToCollect}";
+        ConservationManager.instance.StarText.text = "Số lá cờ thu thập: " + $"{currentCollected}/{numberToCollect}";
         Debug.Log(currentCollected + "/" + numberToCollect);
         if(currentCollected == numberToCollect)
         {

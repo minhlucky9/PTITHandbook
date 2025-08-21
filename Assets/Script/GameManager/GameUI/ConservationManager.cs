@@ -62,6 +62,16 @@ namespace Interaction
 
         public TMP_Text StarText;
 
+        [Header("Mission Complete")]
+
+        public UIAnimationController missionCompleteContainer;
+
+        public TMP_Text missionCompleteText;
+
+        [Header("Mission Fail")]
+
+        public UIAnimationController missionFailContainer;
+
 
         #region ImageTimedQuiz
 

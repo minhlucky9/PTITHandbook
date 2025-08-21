@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuestCollectStar
   displayName: "Thu th\u1EADp c\xE1c ng\xF4i sao"
   levelRequirement: 1
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: a55a516c0793ee3408021ea44ca26ba8, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
@@ -50,5 +51,5 @@ MonoBehaviour:
   experienceReward: 250
   itemRewards: []
   questIcon: {fileID: 0}
-  isAdvancedQuest: 0
+  isAdvancedQuest: 1
   questType: 2

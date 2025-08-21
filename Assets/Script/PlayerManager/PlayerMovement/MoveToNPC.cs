@@ -1,3 +1,4 @@
+using GameManager;
 using PlayerController;
 using PlayerStatsController;
 using System.Collections;
@@ -156,6 +157,8 @@ public class MoveToNPC : MonoBehaviour
     // Method để bắt đầu auto move đơn giản
     public void StartAutoMove()
     {
+       
+
         isAutoMoving = true;
         agent.enabled = true;
         SetOptimalSpeed();
