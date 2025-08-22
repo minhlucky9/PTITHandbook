@@ -46,7 +46,7 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 550, y: 2034}
   - <ID>k__BackingField: 3f4f7e62-5011-4ed5-8d2d-eb48a0a7f970
     <Name>k__BackingField: NPCThuVienHaveCard
-    <Position>k__BackingField: {x: 1275, y: 1211}
+    <Position>k__BackingField: {x: 1249, y: 1207}
   - <ID>k__BackingField: a48fe4cf-51cf-434e-843f-8f8ff6fa6949
     <Name>k__BackingField: CotWifi
     <Position>k__BackingField: {x: 3292, y: 98}
@@ -62,6 +62,9 @@ MonoBehaviour:
   - <ID>k__BackingField: 03c6c79a-95c0-4dcc-ad3a-1cb7872e75cf
     <Name>k__BackingField: DaThanStep
     <Position>k__BackingField: {x: -1063, y: 2033}
+  - <ID>k__BackingField: f82fadd7-dc98-442d-ad6b-51410ee1e7dd
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Position>k__BackingField: {x: 3288, y: 454}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 02297cfc-fc7e-424c-b9ed-4883721dc85f
     <Name>k__BackingField: 7
@@ -278,21 +281,6 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 109, y: 2092}
     <ExecutedFunction>k__BackingField: 29
     <NextExecutedFunction>k__BackingField: 0
-  - <ID>k__BackingField: b6301395-f447-4169-8be0-ce5e8d2b0d6c
-    <Name>k__BackingField: 17
-    <Text>k__BackingField: "\u0110\xE2y, t\xE0i li\u1EC7u c\u1EE7a em  "
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: "Ho\xE0n t\u1EA5t"
-      <NodeID>k__BackingField: 
-      <ExecutedFunction>k__BackingField: 0
-      <NextExecutedFunction>k__BackingField: 0
-      <Icon>k__BackingField: {fileID: 0}
-    <Icon>k__BackingField: {fileID: 0}
-    <GroupID>k__BackingField: 3f4f7e62-5011-4ed5-8d2d-eb48a0a7f970
-    <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1300, y: 1270}
-    <ExecutedFunction>k__BackingField: 31
-    <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: 8c26a422-2786-439c-8d88-68d97390905d
     <Name>k__BackingField: 8
     <Text>k__BackingField: "\u0110\xE2y l\xE0 c\u1ED9t wifi \u1EDF k\xED t\xFAc x\xE1
@@ -377,7 +365,7 @@ MonoBehaviour:
       t\xE0i li\u1EC7u \u1EDF \u0111\xE2y ch\u1EC9 d\xE0nh cho ng\u01B0\u1EDDi c\xF3
       th\u1EBB th\u01B0 vi\u1EC7n th\xF4i. Quy \u0111\u1ECBnh l\xE0 quy \u0111\u1ECBnh!\u201D"
     <Choices>k__BackingField:
-    - <Text>k__BackingField: "Em ch\u01B0a c\xF3 th\u1EBB"
+    - <Text>k__BackingField: "Ki\u1EC3m tra th\u1EBB sinh vi\xEAn"
       <NodeID>k__BackingField: 
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
@@ -393,7 +381,7 @@ MonoBehaviour:
     <Text>k__BackingField: "Ch\xE0o m\u1EEBng em \u0111\u1EBFn v\u1EDBi th\u01B0
       vi\u1EC7n"
     <Choices>k__BackingField:
-    - <Text>k__BackingField: New Choice
+    - <Text>k__BackingField: "Em ch\xE0o anh \u1EA1"
       <NodeID>k__BackingField: 2df5b99e-9cef-4bf1-8b10-90535755e3e7
       <ExecutedFunction>k__BackingField: 0
       <NextExecutedFunction>k__BackingField: 0
@@ -455,6 +443,53 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 575, y: 2093}
     <ExecutedFunction>k__BackingField: 31
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: 3a44cdf8-a880-413c-9879-9fe19073b0ec
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Text>k__BackingField: "B\u1EA1n c\u1EA7n ho\xE0n th\xE0nh c\xE1c nhi\u1EC7m
+      v\u1EE5 tr\u01B0\u1EDBc \u0111\u1EC3 m\u1EDF kh\xF3a nhi\u1EC7m v\u1EE5 n\xE0y"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0110\xE3 hi\u1EC3u"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: f82fadd7-dc98-442d-ad6b-51410ee1e7dd
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 3313, y: 513}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: c9e99520-b5c6-4f25-849d-d7a8b043249f
+    <Name>k__BackingField: NPCThuVienHaveCard1
+    <Text>k__BackingField: "V\u1EADy l\xE0 em \u0111\xE3 c\xF3 th\u1EBB th\u01B0
+      vi\u1EC7n"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "L\u1EA5y t\xE0i li\u1EC7u"
+      <NodeID>k__BackingField: b6301395-f447-4169-8be0-ce5e8d2b0d6c
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 3f4f7e62-5011-4ed5-8d2d-eb48a0a7f970
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1274, y: 1266}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: b6301395-f447-4169-8be0-ce5e8d2b0d6c
+    <Name>k__BackingField: NPCThuVienHaveCard2
+    <Text>k__BackingField: "\u0110\xE2y, t\xE0i li\u1EC7u c\u1EE7a em  "
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "Ho\xE0n t\u1EA5t"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 3f4f7e62-5011-4ed5-8d2d-eb48a0a7f970
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1801, y: 1304}
+    <ExecutedFunction>k__BackingField: 31
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - NotQuest
@@ -472,6 +507,7 @@ MonoBehaviour:
   - EnoughCoin
   - NPCThuVienDontHaveCard
   - DaThanStep
+  - REQUIREMENTSNOTMET
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -502,9 +538,6 @@ MonoBehaviour:
     - Key: DaThanTry2
       Value:
       - 21
-    - Key: NPCThuVienHaveCard
-      Value:
-      - 17
     - Key: CotWifi
       Value:
       - 8
@@ -530,3 +563,10 @@ MonoBehaviour:
     - Key: DaThanTry3
       Value:
       - 22
+    - Key: REQUIREMENTSNOTMET
+      Value:
+      - REQUIREMENTSNOTMET
+    - Key: NPCThuVienHaveCard
+      Value:
+      - NPCThuVienHaveCard1
+      - NPCThuVienHaveCard2

@@ -452,6 +452,8 @@ public class NPCController : TalkInteraction, IDialogueHandler
                 block.SetActive(false);
             }
             PlayerInventory.instance.Medal++;
+
+            StartCoroutine(MissionComplete());
         }
 
         else if (QuestManager.instance.questMap[questConversation.id].info.questType != QuestInfoSO.QuestType.Quiz)
@@ -463,6 +465,8 @@ public class NPCController : TalkInteraction, IDialogueHandler
                 block.SetActive(false);
             }
             PlayerInventory.instance.Medal++;
+
+            StartCoroutine(MissionComplete());
         }
        
         else if(QuestManager.instance.questMap[questConversation.id].info.questType == QuestInfoSO.QuestType.Quiz)
@@ -492,7 +496,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
 
                 QuizManager.instance.currentQuizQuestId = string.Empty;
 
-
+                StartCoroutine(MissionComplete());
             }
             else
             {
@@ -510,6 +514,8 @@ public class NPCController : TalkInteraction, IDialogueHandler
             TutorialManager.Instance.ShowNextStepDelayed();
             StartCoroutine(ForScene16());
         }
+
+        StartCoroutine(MissionFail());
     }
     #endregion
 
@@ -879,8 +885,8 @@ public class NPCController : TalkInteraction, IDialogueHandler
             dialogueAdapter.Initialize(container);
             var conv = dialogueAdapter.ConvertDSDialogueToConservation(startDia);
             StartCoroutine(ConservationManager.instance.UpdateConservation(conv));
-
-         //   StartCoroutine(DelayedInitConservation(gameObject, conv));
+ 
+           // StartCoroutine(DelayedInitConservation(gameObject, conv));
 
 
         }
@@ -997,6 +1003,34 @@ public class NPCController : TalkInteraction, IDialogueHandler
         yield return new WaitForSeconds(1f);
         TelePort.instance.ReturnToPhongHocA2();
         isInteracting = false;
+    }
+
+    #endregion
+
+    #region Mission Complete & Mission Fail Popup
+
+    private IEnumerator MissionComplete()
+    {
+        yield return new WaitForSeconds(1f);
+
+        ConservationManager.instance.missionCompleteText.text = "+ " + questConversation.goldReward;
+
+        ConservationManager.instance.missionCompleteContainer.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        ConservationManager.instance.missionCompleteContainer.Deactivate();
+    }
+
+    private IEnumerator MissionFail()
+    {
+        yield return new WaitForSeconds(1f);
+
+        ConservationManager.instance.missionFailContainer.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        ConservationManager.instance.missionFailContainer.Deactivate();
     }
 
     #endregion

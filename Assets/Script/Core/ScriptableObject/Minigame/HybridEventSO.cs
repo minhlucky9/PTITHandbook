@@ -29,7 +29,7 @@ public class HybridEventSO : MinigameDataSO
 
     [Header("Countdown")]
     [Tooltip("Thời lượng quest (giây), hiển thị như CollectStar")]
-    public float durationSeconds = 300f; // mặc định 5 phút
+    public float durationSeconds = 5f; // mặc định 5 phút
 
     public override void Init(GameObject targetGameObject)
     {

@@ -15,7 +15,8 @@ MonoBehaviour:
   <id>k__BackingField: QuestTruyTimDauVet
   displayName: "Truy T\xECm gi\u1EA5u v\u1EBFt"
   levelRequirement: 0
-  questPrerequisites: []
+  questPrerequisites:
+  - {fileID: 11400000, guid: ed0f71cfb43e24d4f9bbdccec10dafe7, type: 2}
   questSteps:
   - stepId: step1
     missionType: 0
