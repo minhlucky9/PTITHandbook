@@ -71,6 +71,8 @@ public class NPCDaThan : TalkInteraction, IDialogueHandler
             return;
         }
 
+        interactableText = "Nhấn E để tương tác";
+
         QuestManager.instance.questMap[questConversation.id]
           .OnStateChanged += () =>
           {

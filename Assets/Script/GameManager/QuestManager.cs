@@ -317,8 +317,10 @@ namespace GameManager
             {
                 if (quest.info.id == questId)
                 {
-                    quest.state = questState;
                     quest.currentQuestStepIndex = 0; // Reset current step index
+                    // quest.state = questState;
+                    quest.ChangeQuestState(questState);
+                                    
                 }
             }
         }

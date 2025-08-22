@@ -20,6 +20,9 @@ MonoBehaviour:
   - <ID>k__BackingField: ae97c197-e5c6-464b-9450-d4534e09374b
     <Name>k__BackingField: AfterFinish
     <Position>k__BackingField: {x: 740, y: 745}
+  - <ID>k__BackingField: b955199a-dbd7-4cbe-b6be-38f674b65345
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Position>k__BackingField: {x: 1228, y: 747}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: a62b3dfd-3228-45e2-a9ca-a5b93b1cef86
     <Name>k__BackingField: 1
@@ -98,9 +101,26 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 3598, y: 439}
     <ExecutedFunction>k__BackingField: 4
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: a17f13ce-5587-430e-ba27-962f840e876e
+    <Name>k__BackingField: REQUIREMENTSNOTMET
+    <Text>k__BackingField: "B\u1EA1n c\u1EA7n ho\xE0n th\xE0nh c\xE1c nhi\u1EC7m
+      v\u1EE5 tr\u01B0\u1EDBc \u0111\u1EC3 m\u1EDF kh\xF3a nhi\u1EC7m v\u1EE5 n\xE0y"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "\u0110\xE3 hi\u1EC3u"
+      <NodeID>k__BackingField: 
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: b955199a-dbd7-4cbe-b6be-38f674b65345
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1253, y: 806}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - AfterFinish
+  - REQUIREMENTSNOTMET
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -112,3 +132,6 @@ MonoBehaviour:
       - 2
       - 1
       - 3
+    - Key: REQUIREMENTSNOTMET
+      Value:
+      - REQUIREMENTSNOTMET

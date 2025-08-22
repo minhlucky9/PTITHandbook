@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using Interaction;    // để dùng Quest, QuestState
 using System;
+using static QuestLogManager;
 
 public class QuestLogItemUI : MonoBehaviour
 {
@@ -17,11 +18,15 @@ public class QuestLogItemUI : MonoBehaviour
     private Quest boundQuest;
     private Action onStateChangedHandler;
 
+    private QuestState _lastState;
+
     public void Bind(int index, Quest quest)
     {
         Unbind();
 
         boundQuest = quest;
+        _lastState = boundQuest.state;
+
 
         // 1. Text + description (clamp index)
         nameText.text = $"Nhiệm vụ {index + 1}";
@@ -44,6 +49,11 @@ public class QuestLogItemUI : MonoBehaviour
             UpdateDescription();
             requirementNotMetUI.SetActive(boundQuest.state == QuestState.REQUIREMENTS_NOT_MET);
             UpdateStateIcons(boundQuest.state);
+            if (QuestLogManager.instance != null)
+                QuestLogManager.instance.RefreshCurrentQuestUI();
+
+           
+
         };
         boundQuest.OnStateChanged += onStateChangedHandler;
     }

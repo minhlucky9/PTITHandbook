@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using GameManager;
 using Interaction;
 using PlayerController;
 using UnityEngine;
+
 
 /// <summary>
 /// Manager cho HybridQuest (Trace + PhotoPhaoThi) + countdown + chuỗi popup bánh mì tích hợp sẵn.
@@ -55,6 +57,20 @@ public class HybridQuestManager : MonoBehaviour
         public bool npc6TryEndLock = false;
     }
 
+    [System.Serializable]
+    public class StepNpcBinding
+    {
+        [Tooltip("stepId trong QuestInfoSO (vd: step1, step2, ...)")]
+        public string stepId;
+
+        [Tooltip("Script của NPC tương ứng (NPCPhoto, NPCThuVien, NPCDaThan, NPCController, ...)")]
+        public MonoBehaviour npc; // script có field 'iconDefault: GameObject'
+    }
+
+    [Header("Bindings: stepId → NPC (để bật icon theo step)")]
+    public List<StepNpcBinding> stepNpcBindings = new();
+
+
     private readonly Dictionary<string, QuestStateData> states = new();
 
     private void Awake()
@@ -92,6 +108,9 @@ public class HybridQuestManager : MonoBehaviour
         {
             quest.OnQuestFinish += () => StopTimer(questId, hideUI: true);
         }
+
+        RefreshStepIcon(data.questId);
+
     }
 
     // ====== TIMER ======
@@ -148,6 +167,9 @@ public class HybridQuestManager : MonoBehaviour
         }
         ConservationManager.instance.timerContainer.Deactivate();
 
+        ForceCloseAllPopupsAndDialog(questId);
+
+
         // Reset quest về CAN_START + quay NPC về HAVE_QUEST + chuyển Fail
         QuestManager.instance.UpdateQuestStep(QuestState.CAN_START, questId);
         if (q.targetNPC != null)
@@ -172,7 +194,7 @@ public class HybridQuestManager : MonoBehaviour
     // === API cho các bước ===
     // =========================
 
-    // Hiển thị popup thưởng cho "bước hiện tại", khóa tiến trình cho đến khi bấm Confirm
+    
     public void ShowStepRewardPopup(NPCController npc, UIAnimationController popup)
     {
         if (npc == null || popup == null) { Debug.LogWarning("[Hybrid] Popup hoặc NPC null"); return; }
@@ -194,7 +216,7 @@ public class HybridQuestManager : MonoBehaviour
         StartCoroutine(ShowPopupAfterConservation(q.stepRewardPopup));   // hiển thị popup
     }
 
-    // Được gắn vào nút trên popup: ẩn popup, rồi mới FinishQuestStep()
+   
     public void ConfirmStepRewardAndFinish()
     {
         // Tìm quest đang chờ gate
@@ -235,6 +257,7 @@ public class HybridQuestManager : MonoBehaviour
         if (q.stepRewardNPC != null) q.stepRewardNPC.FinishQuestStep();
         else QuestManager.instance.OnFinishQuestStep(questId);
 
+        RefreshStepIcon(questId);
         // Clear gate
         q.gateActive = false;
         q.gateStepId = null;
@@ -254,7 +277,7 @@ public class HybridQuestManager : MonoBehaviour
 
 
 
-    // STEP 2: Trừ gold (mặc định 10) rồi finish; thiếu tiền -> group NotEnoughCoin
+    // -------------------------------STEP 2 -----------------------------------------
     public void TryPayCostThenFinish(NPCController npc, NPCQuanPhoTo nPCQuanPhoTo)
     {
 
@@ -276,10 +299,11 @@ public class HybridQuestManager : MonoBehaviour
         }
 
         PlayerInventory.instance.SubtractGold(cost);
-       // npc.FinishQuestStep(); // sang Step 3
+        
+
     }
 
-    // STEP 3: Kiểm tra thẻ SV để rẽ nhánh group
+    // --------------------------------STEP 3 -------------------------------------
     public void CheckStudentCard(NPCController npc, NPCThuVien npcThuVien)
     {
         string questId = npc.questConversation.id;
@@ -539,12 +563,108 @@ public class HybridQuestManager : MonoBehaviour
             yield return q.popupRoutine;
         }
 
-        // 5) Kết thúc Step 4
+     
         QuestManager.instance.OnFinishQuestStep(questId);
         QuestManager.instance.UpdateRequirementsMetQuest();
+        RefreshStepIcon(questId);
     }
 
 
     #endregion
+
+    #region Switch Icon
+
+    public void RefreshStepIcon(string questId)
+    {
+        if (!QuestManager.instance.questMap.TryGetValue(questId, out var quest)) return;
+        var steps = quest.info.questSteps;
+        if (steps == null || steps.Count == 0) return;
+
+        string targetStepId = null;
+
+        if (quest.state == QuestState.IN_PROGRESS && quest.isCurrentStepExists())
+            targetStepId = steps[quest.currentQuestStepIndex].stepId;
+        else if (quest.state != QuestState.FINISHED)
+            targetStepId = steps[0].stepId; // trước khi start → bật icon step1
+        else
+        {
+            // FINISHED → tắt tất cả
+            foreach (var b in stepNpcBindings) SetNpcIcon(b.npc, false);
+            return;
+        }
+
+        foreach (var b in stepNpcBindings)
+        {
+            bool on = !string.IsNullOrEmpty(b.stepId) && b.stepId == targetStepId;
+            SetNpcIcon(b.npc, on);
+        }
+    }
+
+    private void SetNpcIcon(MonoBehaviour npcScript, bool isOn)
+    {
+        if (npcScript == null) return;
+        var fld = npcScript.GetType().GetField(
+            "iconDefault",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (fld == null) return;
+
+        if (fld.GetValue(npcScript) is GameObject iconGo && iconGo != null)
+            iconGo.SetActive(isOn);
+    }
+
+ 
+
+    private void ForceCloseAllPopupsAndDialog(string questId)
+    {
+        foreach (var b in stepNpcBindings)
+            SetNpcIcon(b.npc, false);
+
+        // 1) Popups thuộc quest (reward + bread)
+        if (states.TryGetValue(questId, out var q))
+        {
+            // dừng chuỗi popup nếu đang chạy
+            if (q.popupRoutine != null)
+            {
+                StopCoroutine(q.popupRoutine);
+                q.popupRoutine = null;
+            }
+            q.popupPlaying = false;
+            q.popupNextRequested = false;
+            q.popupIndex = 0;
+
+            // tắt reward popup (nếu có)
+            if (q.stepRewardPopup != null) q.stepRewardPopup.Deactivate();
+
+            // tắt toàn bộ bread popups đã đăng ký
+            if (q.breadPopups != null)
+            {
+                for (int i = 0; i < q.breadPopups.Count; i++)
+                    if (q.breadPopups[i] != null) q.breadPopups[i].Deactivate();
+            }
+        }
+
+        // 2) Đóng Conservation (dialog) và các UI liên quan
+        if (Interaction.ConservationManager.instance != null)
+        {
+            // dùng coroutine đóng hộp thoại: tắt response/image rồi tắt messageContainer
+            StartCoroutine(Interaction.ConservationManager.instance.DeactivateConservationDialog()); // :contentReference[oaicite:0]{index=0}
+
+            // tắt thêm các khung phụ nếu đang bật
+            Interaction.ConservationManager.instance.imageQuizContainer?.Deactivate();
+            Interaction.ConservationManager.instance.timerContainer?.Deactivate();
+            Interaction.ConservationManager.instance.StarContainer?.Deactivate();
+        }
+
+        
+        var pm = PlayerController.PlayerManager.instance;
+        if (pm != null)
+        {
+            pm.isInteract = false;               
+            pm.ActivateController();           
+        }
+    }
+
+    #endregion
+
 
 }

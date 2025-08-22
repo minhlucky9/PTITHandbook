@@ -15,7 +15,7 @@ MonoBehaviour:
   <DialogueName>k__BackingField: NPCThuVien1
   <Text>k__BackingField: "Ch\xE0o m\u1EEBng em \u0111\u1EBFn v\u1EDBi th\u01B0 vi\u1EC7n"
   <Choices>k__BackingField:
-  - <Text>k__BackingField: New Choice
+  - <Text>k__BackingField: "Em ch\xE0o anh \u1EA1"
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: c0973076913ba204fb602981cb165dbc,
       type: 2}
     <ExecutedFunction>k__BackingField: 0
