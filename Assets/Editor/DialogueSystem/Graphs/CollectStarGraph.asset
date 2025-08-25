@@ -16,10 +16,10 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 0167479e-3612-4e0b-940c-257358ed72ab
     <Name>k__BackingField: NORMAL
-    <Position>k__BackingField: {x: 54.000034, y: 101}
+    <Position>k__BackingField: {x: 54, y: 101}
   - <ID>k__BackingField: ae97c197-e5c6-464b-9450-d4534e09374b
     <Name>k__BackingField: AfterFinish
-    <Position>k__BackingField: {x: 735, y: 849.0001}
+    <Position>k__BackingField: {x: 735, y: 849}
   - <ID>k__BackingField: 553b5f56-1c2d-463b-b6d1-f0f965bc42b6
     <Name>k__BackingField: REQUIREMENTSNOTMET
     <Position>k__BackingField: {x: 1222, y: 852}
@@ -67,9 +67,8 @@ MonoBehaviour:
     <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: 405355a9-0666-4cf2-90b0-1050cabff47b
     <Name>k__BackingField: 2
-    <Text>k__BackingField: "\u201CThu th\u1EADp \u0111\u1EE7 20 l\xE1 c\u1EDD theo
-      th\u1EE9 t\u1EF1 v\xE0 v\u1EC1 \u0111\xEDch trong 5 ph\xFAt nh\xE9! Tr\xEAn
-      m\u1ED7i c\u1EDD \u0111\u1EC1u ghi s\u1ED1 th\u1EE9 t\u1EF1."
+    <Text>k__BackingField: "\u201CThu th\u1EADp \u0111\u1EE7 28 l\xE1 c\u1EDD theo
+      th\u1EE9 t\u1EF1 v\xE0 v\u1EC1 \u0111\xEDch trong 5 ph\xFAt nh\xE9! "
     <Choices>k__BackingField:
     - <Text>k__BackingField: "T\xF4i \u0111\xE3 hi\u1EC3u v\xE0 s\u1EB5n s\xE0ng"
       <NodeID>k__BackingField: 014d8af4-d452-4a7c-83e7-4c759eff7a6d
