@@ -83,4 +83,28 @@ public class TraceObjectInteraction : TalkInteraction
            
         }
     }
+
+    /// <summary>
+    /// Tắt tất cả UI của object này (gọi từ TraceQuestManager khi hết thời gian)
+    /// </summary>
+    public void ForceCloseAllUI()
+    {
+        if (uiControllers != null)
+        {
+            foreach (UIAnimationController uiController in uiControllers)
+            {
+                if (uiController != null)
+                {
+                    uiController.Deactivate();
+                }
+            }
+        }
+
+        // Stop tất cả coroutines đang chạy
+        StopAllCoroutines();
+
+        // Reset sequence index
+        sequenceIndex = 0;
+    }
+
 }

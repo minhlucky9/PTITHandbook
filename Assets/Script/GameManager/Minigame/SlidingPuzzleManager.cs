@@ -8,97 +8,51 @@ public class UISlidingPuzzleManager : MonoBehaviour
 {
     [Header("UI Setup")]
     [SerializeField] private RectTransform puzzleContainer;
-    [SerializeField] private GameObject piecePrefab; // UI Button hoặc Image prefab
+    [SerializeField] private GameObject piecePrefab;
     [SerializeField] private Texture2D puzzleImage;
 
     [Header("Puzzle Settings")]
-    [SerializeField] private int size = 4;
+    [SerializeField] private int size = 3;
     [SerializeField] private float gapSize = 5f;
+    [SerializeField] private bool emptyAtStart = true; // Empty ở vị trí đầu (0,0)
 
     [Header("Animation")]
     [SerializeField] private float moveAnimationDuration = 0.2f;
-    [SerializeField] private LeanTweenType animationEase = LeanTweenType.easeOutCubic;
 
-    private List<RectTransform> pieces;
-    private List<Image> pieceImages;
-    private int emptyLocation;
-    private bool shuffling = false;
-    private bool isAnimating = false;
-
-    // Grid layout helper
+    private List<GameObject> pieces; // Danh sách các piece objects
+    private int emptyIndex; // Vị trí hiện tại của ô trống
     private Vector2 pieceSize;
-    private Vector2 containerSize;
+    private bool isMoving = false;
+
+    public event System.Action PuzzleCompleted;
 
     void Start()
     {
-        pieces = new List<RectTransform>();
-        pieceImages = new List<Image>();
+        InitializePuzzle();
+    }
+
+    void InitializePuzzle()
+    {
+        pieces = new List<GameObject>();
 
         if (puzzleContainer == null)
             puzzleContainer = GetComponent<RectTransform>();
 
         CreatePuzzlePieces();
-
-        // Debug info
-        DebugPuzzleState();
-
-        // Shuffle sau khi tạo xong
-        StartCoroutine(DelayedShuffle(1f));
+        StartCoroutine(ShuffleAfterDelay(1f));
     }
 
-    // Debug method để kiểm tra trạng thái puzzle
-    private void DebugPuzzleState()
+    void CreatePuzzlePieces()
     {
-        Debug.Log($"=== Puzzle State Debug ===");
-        Debug.Log($"Size: {size}x{size} = {size * size} total positions");
-        Debug.Log($"Pieces array count: {pieces.Count}");
-        Debug.Log($"Empty location (grid position): {emptyLocation}");
-
-        // Show grid layout
-        string gridDisplay = "Grid Layout:\n";
-        for (int row = 0; row < size; row++)
+        // Clear existing pieces
+        foreach (Transform child in puzzleContainer)
         {
-            for (int col = 0; col < size; col++)
-            {
-                int gridIndex = row * size + col;
-                if (gridIndex == emptyLocation)
-                {
-                    gridDisplay += "[EMPTY] ";
-                }
-                else if (pieces[gridIndex] != null)
-                {
-                    string pieceName = pieces[gridIndex].name;
-                    string pieceNumber = pieceName.Replace("Piece_", "");
-                    gridDisplay += $"[{pieceNumber}] ";
-                }
-                else
-                {
-                    gridDisplay += "[NULL] ";
-                }
-            }
-            gridDisplay += "\n";
+            DestroyImmediate(child.gameObject);
         }
-        Debug.Log(gridDisplay);
+        pieces.Clear();
 
-        // Detailed piece info
-        for (int i = 0; i < pieces.Count; i++)
-        {
-            if (pieces[i] != null)
-            {
-                Debug.Log($"Grid pos {i}: {pieces[i].name} - Active: {pieces[i].gameObject.activeSelf}");
-            }
-            else
-            {
-                string status = (i == emptyLocation) ? "EMPTY SPACE" : "UNEXPECTED NULL";
-                Debug.Log($"Grid pos {i}: NULL ({status})");
-            }
-        }
-    }
-
-    private void CreatePuzzlePieces()
-    {
-        // Tính toán kích thước container và pieces
-        containerSize = puzzleContainer.rect.size;
+        // Calculate piece size
+        Vector2 containerSize = puzzleContainer.rect.size;
         float totalGapX = gapSize * (size - 1);
         float totalGapY = gapSize * (size - 1);
 
@@ -107,195 +61,190 @@ public class UISlidingPuzzleManager : MonoBehaviour
             (containerSize.y - totalGapY) / size
         );
 
-        // Tạo từng piece
-        for (int row = 0; row < size; row++)
+        // Create pieces
+        for (int i = 0; i < size * size; i++)
         {
-            for (int col = 0; col < size; col++)
+            int row = i / size;
+            int col = i % size;
+
+            GameObject pieceObj = Instantiate(piecePrefab, puzzleContainer);
+            pieces.Add(pieceObj);
+
+            // Setup RectTransform
+            RectTransform pieceRect = pieceObj.GetComponent<RectTransform>();
+            pieceRect.sizeDelta = pieceSize;
+            pieceRect.anchorMin = Vector2.zero;
+            pieceRect.anchorMax = Vector2.zero;
+
+            Vector2 position = new Vector2(
+                col * (pieceSize.x + gapSize),
+                -row * (pieceSize.y + gapSize)
+            );
+            pieceRect.anchoredPosition = position;
+
+            // Setup piece
+            if (emptyAtStart && i == 0) // Empty at position 0
             {
-                int index = (row * size) + col;
-
-                // Tạo piece từ prefab
-                GameObject pieceObj = Instantiate(piecePrefab, puzzleContainer);
-                RectTransform pieceRect = pieceObj.GetComponent<RectTransform>();
-                Image pieceImage = pieceObj.GetComponent<Image>();
-
-                // Nếu prefab không có Image component, thêm vào
-                if (pieceImage == null)
-                    pieceImage = pieceObj.AddComponent<Image>();
-
-                // Setup Button component nếu chưa có
-                Button pieceButton = pieceObj.GetComponent<Button>();
-                if (pieceButton == null)
-                    pieceButton = pieceObj.AddComponent<Button>();
-
-                // Add click listener
-                int capturedIndex = index; // Capture for closure
-                pieceButton.onClick.AddListener(() => OnPieceClicked(capturedIndex));
-
-                // Set size và position
-                pieceRect.sizeDelta = pieceSize;
-                pieceRect.anchorMin = Vector2.zero;
-                pieceRect.anchorMax = Vector2.zero;
-
-                // Tính position (từ top-left)
-                Vector2 position = new Vector2(
-                    col * (pieceSize.x + gapSize),
-                    -row * (pieceSize.y + gapSize) // Negative vì UI coordinate system
-                );
-                pieceRect.anchoredPosition = position;
-
-                // Set name
-                pieceObj.name = $"Piece_{index}";
-
-                // Add to lists
-                pieces.Add(pieceRect);
-                pieceImages.Add(pieceImage);
-
-                // Handle empty space (bottom-right piece)
-                if (row == size - 1 && col == size - 1)
-                {
-                    emptyLocation = index; // Vị trí trống trong grid
-                    pieceObj.SetActive(false);
-                    // Vẫn add vào list nhưng set null để đánh dấu vị trí trống
-                    pieces[pieces.Count - 1] = null;
-                    pieceImages[pieceImages.Count - 1] = null;
-                }
-                else
-                {
-                    // Set up sprite từ puzzle image
-                    if (puzzleImage != null)
-                    {
-                        Sprite pieceSprite = CreateSpriteFromTexture(puzzleImage, col, row);
-                        pieceImage.sprite = pieceSprite;
-                    }
-                    else
-                    {
-                        // Fallback: tạo màu random hoặc số
-                        pieceImage.color = Random.ColorHSV(0f, 1f, 0.5f, 1f, 0.8f, 1f);
-
-                        // Thêm text hiển thị số
-                        GameObject textObj = new GameObject("Text");
-                        textObj.transform.SetParent(pieceObj.transform, false);
-                        Text text = textObj.AddComponent<Text>();
-                        text.text = index.ToString();
-                        text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-                        text.fontSize = Mathf.RoundToInt(pieceSize.x * 0.3f);
-                        text.alignment = TextAnchor.MiddleCenter;
-                        text.color = Color.white;
-
-                        RectTransform textRect = text.GetComponent<RectTransform>();
-                        textRect.anchorMin = Vector2.zero;
-                        textRect.anchorMax = Vector2.one;
-                        textRect.offsetMin = Vector2.zero;
-                        textRect.offsetMax = Vector2.zero;
-                    }
-                }
+                emptyIndex = 0;
+                pieceObj.SetActive(false);
+                pieceObj.name = "EmptySpace";
+            }
+            else if (!emptyAtStart && i == size * size - 1) // Empty at last position
+            {
+                emptyIndex = size * size - 1;
+                pieceObj.SetActive(false);
+                pieceObj.name = "EmptySpace";
+            }
+            else
+            {
+                SetupPieceVisual(pieceObj, i, row, col);
+                SetupPieceButton(pieceObj, i);
             }
         }
     }
 
-    private Sprite CreateSpriteFromTexture(Texture2D sourceTexture, int col, int row)
+    void SetupPieceVisual(GameObject pieceObj, int index, int row, int col)
     {
-        int pieceWidth = sourceTexture.width / size;
-        int pieceHeight = sourceTexture.height / size;
+        Image pieceImage = pieceObj.GetComponent<Image>();
+        if (pieceImage == null)
+            pieceImage = pieceObj.AddComponent<Image>();
 
-        Rect spriteRect = new Rect(
-            col * pieceWidth,
-            (size - 1 - row) * pieceHeight, // Flip Y vì texture coordinate
-            pieceWidth,
-            pieceHeight
-        );
+        if (puzzleImage != null)
+        {
+            // Create sprite from puzzle image
+            int pieceWidth = puzzleImage.width / size;
+            int pieceHeight = puzzleImage.height / size;
 
-        return Sprite.Create(sourceTexture, spriteRect, new Vector2(0.5f, 0.5f), 100f);
+            Rect spriteRect = new Rect(
+                col * pieceWidth,
+                (size - 1 - row) * pieceHeight, // Flip Y
+                pieceWidth,
+                pieceHeight
+            );
+
+            Sprite pieceSprite = Sprite.Create(puzzleImage, spriteRect, new Vector2(0.5f, 0.5f));
+            pieceImage.sprite = pieceSprite;
+            pieceImage.color = Color.white;
+        }
+        else
+        {
+            // Fallback color and number
+            float hue = (index * 0.618f) % 1f;
+            pieceImage.color = Color.HSVToRGB(hue, 0.6f, 0.9f);
+
+            // Add text
+            GameObject textObj = new GameObject("Text");
+            textObj.transform.SetParent(pieceObj.transform, false);
+
+            Text text = textObj.AddComponent<Text>();
+            text.text = (index + 1).ToString();
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            text.fontSize = Mathf.RoundToInt(pieceSize.x * 0.3f);
+            text.alignment = TextAnchor.MiddleCenter;
+            text.color = Color.white;
+            text.fontStyle = FontStyle.Bold;
+
+            RectTransform textRect = text.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
+        }
+
+        pieceObj.name = $"Piece_{index}";
     }
 
-    private void OnPieceClicked(int originalPieceIndex)
+    void SetupPieceButton(GameObject pieceObj, int index)
     {
-        if (shuffling || isAnimating) return;
+        Button button = pieceObj.GetComponent<Button>();
+        if (button == null)
+            button = pieceObj.AddComponent<Button>();
 
-        // Tìm vị trí hiện tại của piece này trong grid
-        int currentGridPosition = -1;
+        button.onClick.AddListener(() => OnPieceClicked(index));
+    }
+
+    void OnPieceClicked(int originalIndex)
+    {
+        if (isMoving) return;
+
+        // Find current position of this piece
+        int currentPos = FindPiecePosition(originalIndex);
+        if (currentPos == -1) return;
+
+        // Check if can move to empty space
+        if (CanMovePiece(currentPos, emptyIndex))
+        {
+            StartCoroutine(MovePieceToEmpty(currentPos));
+        }
+    }
+
+    int FindPiecePosition(int originalIndex)
+    {
         for (int i = 0; i < pieces.Count; i++)
         {
-            if (pieces[i] != null && pieces[i].name == $"Piece_{originalPieceIndex}")
+            if (pieces[i].name == $"Piece_{originalIndex}")
             {
-                currentGridPosition = i;
-                break;
+                return i;
             }
         }
-
-        if (currentGridPosition == -1) return;
-
-        // Check valid moves
-        if (IsValidMove(currentGridPosition))
-        {
-            StartCoroutine(AnimateSwap(currentGridPosition, emptyLocation));
-        }
+        return -1;
     }
 
-    private bool IsValidMove(int pieceIndex)
+    bool CanMovePiece(int piecePos, int emptyPos)
     {
-        int row = pieceIndex / size;
-        int col = pieceIndex % size;
-        int emptyRow = emptyLocation / size;
-        int emptyCol = emptyLocation % size;
+        int pieceRow = piecePos / size;
+        int pieceCol = piecePos % size;
+        int emptyRow = emptyPos / size;
+        int emptyCol = emptyPos % size;
 
-        // Check if adjacent (same row/col and distance of 1)
-        bool sameRow = (row == emptyRow) && Mathf.Abs(col - emptyCol) == 1;
-        bool sameCol = (col == emptyCol) && Mathf.Abs(row - emptyRow) == 1;
+        // Check if adjacent
+        bool sameRow = (pieceRow == emptyRow) && Mathf.Abs(pieceCol - emptyCol) == 1;
+        bool sameCol = (pieceCol == emptyCol) && Mathf.Abs(pieceRow - emptyRow) == 1;
 
         return sameRow || sameCol;
     }
 
-    private IEnumerator AnimateSwap(int pieceGridPosition, int emptyGridPosition)
+    IEnumerator MovePieceToEmpty(int piecePosition)
     {
-        isAnimating = true;
+        isMoving = true;
 
-        // Get piece at the grid position
-        RectTransform pieceToMove = pieces[pieceGridPosition];
-        if (pieceToMove == null)
-        {
-            isAnimating = false;
-            yield break;
-        }
+        GameObject pieceToMove = pieces[piecePosition];
+        Vector2 targetPosition = GetPositionForIndex(emptyIndex);
 
-        // Get target position for the piece
-        Vector2 targetPosition = GetPositionForIndex(emptyGridPosition);
-
-        // Animate piece to empty position
         if (moveAnimationDuration > 0)
         {
-            LeanTween.move(pieceToMove, targetPosition, moveAnimationDuration)
-                    .setEase(animationEase);
+            Vector2 startPos = pieceToMove.GetComponent<RectTransform>().anchoredPosition;
+            float elapsed = 0f;
 
-            yield return new WaitForSeconds(moveAnimationDuration);
+            while (elapsed < moveAnimationDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / moveAnimationDuration;
+                t = Mathf.SmoothStep(0f, 1f, t); // Smooth animation
+
+                pieceToMove.GetComponent<RectTransform>().anchoredPosition =
+                    Vector2.Lerp(startPos, targetPosition, t);
+
+                yield return null;
+            }
         }
-        else
+
+        pieceToMove.GetComponent<RectTransform>().anchoredPosition = targetPosition;
+
+        // Swap pieces in list
+        (pieces[piecePosition], pieces[emptyIndex]) = (pieces[emptyIndex], pieces[piecePosition]);
+        emptyIndex = piecePosition;
+
+        isMoving = false;
+
+        // Check win condition
+        if (CheckWinCondition())
         {
-            pieceToMove.anchoredPosition = targetPosition;
-        }
-
-        // Swap in pieces array: move piece to empty position, set old position to null
-        pieces[emptyGridPosition] = pieces[pieceGridPosition];
-        pieces[pieceGridPosition] = null;
-
-        // Swap images array too
-        pieceImages[emptyGridPosition] = pieceImages[pieceGridPosition];
-        pieceImages[pieceGridPosition] = null;
-
-        // Update empty location
-        emptyLocation = pieceGridPosition;
-
-        isAnimating = false;
-
-        // Check completion
-        if (CheckCompletion())
-        {
-            OnPuzzleCompleted();
+            OnPuzzleComplete();
         }
     }
 
-    private Vector2 GetPositionForIndex(int index)
+    Vector2 GetPositionForIndex(int index)
     {
         int row = index / size;
         int col = index % size;
@@ -306,185 +255,118 @@ public class UISlidingPuzzleManager : MonoBehaviour
         );
     }
 
-    private bool CheckCompletion()
+    bool CheckWinCondition()
     {
-        // Kiểm tra nếu tất cả pieces đang ở đúng vị trí
-        for (int i = 0; i < size * size - 1; i++) // Không check empty space
-        {
-            if (pieces[i] == null) return false; // Vị trí này không nên trống
+        // Check if empty is in correct position
+        int correctEmptyPos = emptyAtStart ? 0 : (size * size - 1);
+        if (emptyIndex != correctEmptyPos) return false;
 
-            // Extract original piece number từ name
-            string pieceName = pieces[i].name;
-            if (pieceName.StartsWith("Piece_"))
-            {
-                if (int.TryParse(pieceName.Substring(6), out int originalIndex))
-                {
-                    if (originalIndex != i) return false; // Piece không ở đúng vị trí
-                }
-            }
+        // Check if all pieces are in correct positions
+        for (int i = 0; i < pieces.Count; i++)
+        {
+            if (i == correctEmptyPos) continue; // Skip empty space
+
+            if (pieces[i].name != $"Piece_{i}")
+                return false;
         }
 
-        // Empty space phải ở vị trí cuối cùng
-        return emptyLocation == (size * size - 1);
+        return true;
     }
 
-    private void OnPuzzleCompleted()
+    void OnPuzzleComplete()
     {
-        Debug.Log("Puzzle Completed!");
+        Debug.Log("Puzzle Complete!");
 
-        // Hiện empty piece - kiểm tra bounds
-        if (emptyLocation >= 0 && emptyLocation < pieces.Count && pieces[emptyLocation] != null)
-        {
-            pieces[emptyLocation].gameObject.SetActive(true);
-        }
+        // Show empty piece temporarily
+        pieces[emptyIndex].SetActive(true);
 
-        // Optional: Effect hoặc callback
-        StartCoroutine(DelayedShuffle(2f));
+        PuzzleCompleted?.Invoke();
+
+        // Auto shuffle after delay
+        StartCoroutine(ShuffleAfterDelay(2f));
     }
 
-    private IEnumerator DelayedShuffle(float delay)
+    IEnumerator ShuffleAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        shuffling = true;
 
-        // Ẩn empty piece trở lại - kiểm tra bounds
-        if (emptyLocation >= 0 && emptyLocation < pieces.Count && pieces[emptyLocation] != null)
-        {
-            pieces[emptyLocation].gameObject.SetActive(false);
-        }
+        // Hide empty piece
+        pieces[emptyIndex].SetActive(false);
 
-        Shuffle();
-        shuffling = false;
-    }
-
-    private void Shuffle()
-    {
-        int shuffleCount = size * size * size;
-
-        for (int i = 0; i < shuffleCount; i++)
+        // Perform shuffle
+        for (int i = 0; i < size * size * 10; i++)
         {
             List<int> validMoves = GetValidMoves();
-
             if (validMoves.Count > 0)
             {
-                int randomPiecePosition = validMoves[Random.Range(0, validMoves.Count)];
-                SwapInstant(randomPiecePosition, emptyLocation);
+                int randomMove = validMoves[Random.Range(0, validMoves.Count)];
+                SwapInstant(randomMove, emptyIndex);
             }
         }
     }
 
-    private List<int> GetValidMoves()
+    List<int> GetValidMoves()
     {
         List<int> validMoves = new List<int>();
 
-        int emptyRow = emptyLocation / size;
-        int emptyCol = emptyLocation % size;
+        int emptyRow = emptyIndex / size;
+        int emptyCol = emptyIndex % size;
 
-        // Check all four directions
+        // Check four directions
         int[] directions = { -size, size, -1, 1 }; // Up, Down, Left, Right
 
-        for (int i = 0; i < directions.Length; i++)
+        foreach (int dir in directions)
         {
-            int newIndex = emptyLocation + directions[i];
+            int newPos = emptyIndex + dir;
 
-            // Boundary checks
-            if (newIndex >= 0 && newIndex < pieces.Count)
+            if (newPos >= 0 && newPos < pieces.Count)
             {
-                int newRow = newIndex / size;
-                int newCol = newIndex % size;
+                int newRow = newPos / size;
+                int newCol = newPos % size;
 
-                // Additional check for horizontal moves (prevent wrapping)
-                if (directions[i] == -1 && emptyCol == 0) continue;
-                if (directions[i] == 1 && emptyCol == size - 1) continue;
+                // Check for horizontal wrapping
+                if (dir == -1 && emptyCol == 0) continue;
+                if (dir == 1 && emptyCol == size - 1) continue;
 
-                validMoves.Add(newIndex);
+                validMoves.Add(newPos);
             }
         }
 
         return validMoves;
     }
 
-    private void SwapInstant(int pieceGridPosition, int emptyGridPosition)
+    void SwapInstant(int pos1, int pos2)
     {
-        // Kiểm tra bounds
-        if (pieceGridPosition < 0 || pieceGridPosition >= pieces.Count ||
-            emptyGridPosition < 0 || emptyGridPosition >= pieces.Count)
-        {
-            Debug.LogError($"SwapInstant: Invalid indices {pieceGridPosition}, {emptyGridPosition}");
-            return;
-        }
+        // Swap pieces
+        (pieces[pos1], pieces[pos2]) = (pieces[pos2], pieces[pos1]);
 
-        // Kiểm tra rằng emptyGridPosition thực sự trống
-        if (pieces[emptyGridPosition] != null)
-        {
-            Debug.LogError($"SwapInstant: Target position {emptyGridPosition} is not empty!");
-            return;
-        }
+        // Update positions
+        pieces[pos1].GetComponent<RectTransform>().anchoredPosition = GetPositionForIndex(pos1);
+        pieces[pos2].GetComponent<RectTransform>().anchoredPosition = GetPositionForIndex(pos2);
 
-        // Move piece từ pieceGridPosition sang emptyGridPosition
-        pieces[emptyGridPosition] = pieces[pieceGridPosition];
-        pieces[pieceGridPosition] = null;
-
-        // Move image reference
-        pieceImages[emptyGridPosition] = pieceImages[pieceGridPosition];
-        pieceImages[pieceGridPosition] = null;
-
-        // Update position
-        if (pieces[emptyGridPosition] != null)
-        {
-            pieces[emptyGridPosition].anchoredPosition = GetPositionForIndex(emptyGridPosition);
-        }
-
-        // Update empty location
-        emptyLocation = pieceGridPosition;
+        // Update empty index
+        emptyIndex = pos1;
     }
 
-    // Public methods để control từ bên ngoài
+    // Public methods
     public void SetPuzzleImage(Texture2D newImage)
     {
         puzzleImage = newImage;
-        UpdatePuzzleVisuals();
+        CreatePuzzlePieces();
     }
 
     public void SetSize(int newSize)
     {
-        if (newSize < 2 || newSize > 10) return;
+        if (newSize >= 2 && newSize <= 6)
+        {
+            size = newSize;
+            CreatePuzzlePieces();
+        }
+    }
 
-        size = newSize;
-        ClearPuzzle();
+    public void ToggleEmptyPosition()
+    {
+        emptyAtStart = !emptyAtStart;
         CreatePuzzlePieces();
-    }
-
-    private void UpdatePuzzleVisuals()
-    {
-        if (puzzleImage == null) return;
-
-        for (int i = 0; i < pieces.Count; i++)
-        {
-            if (i != emptyLocation)
-            {
-                int row = i / size;
-                int col = i % size;
-                Sprite newSprite = CreateSpriteFromTexture(puzzleImage, col, row);
-                pieceImages[i].sprite = newSprite;
-            }
-        }
-    }
-
-    private void ClearPuzzle()
-    {
-        foreach (RectTransform piece in pieces)
-        {
-            if (piece != null)
-                DestroyImmediate(piece.gameObject);
-        }
-
-        pieces.Clear();
-        pieceImages.Clear();
-    }
-
-    private void OnDestroy()
-    {
-        ClearPuzzle();
     }
 }

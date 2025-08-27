@@ -107,6 +107,7 @@ public class CollectQuestManager : MonoBehaviour
             ConservationManager.instance.timerText.text = $"{minutes:00}:{seconds:00}";
 
             t -= Time.deltaTime;
+            timeRemaining = t;
             yield return null;
         }
 

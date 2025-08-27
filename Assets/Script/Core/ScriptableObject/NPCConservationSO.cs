@@ -168,7 +168,8 @@ namespace Interaction
         Hybrid_OnNPC6Interact,
         Hybrid_OnNPC6TryEnded,
         Hybrid_FinishNPC6,
-        Hybrid_ShowRewardPopupForCurrentStep
+        Hybrid_ShowRewardPopupForCurrentStep,
+        Hybrid_QuestFail,
 
     }
 }

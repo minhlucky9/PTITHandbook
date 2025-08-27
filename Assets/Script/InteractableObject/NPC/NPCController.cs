@@ -514,7 +514,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
             TutorialManager.Instance.ShowNextStepDelayed();
             StartCoroutine(ForScene16());
         }
-
+        if (TraceQuestManager.instance.currentObject) Destroy(TraceQuestManager.instance.currentObject);
         StartCoroutine(MissionFail());
     }
     #endregion

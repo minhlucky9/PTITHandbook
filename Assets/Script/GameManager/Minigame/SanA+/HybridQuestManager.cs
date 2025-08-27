@@ -23,6 +23,10 @@ public class HybridQuestManager : MonoBehaviour
     [Header("Shop UI (tìm theo tên 'Shop' nếu để trống)")]
     public UIAnimationController shopUI;
 
+    [Header("Sliding Puzzle")]
+    public UIAnimationController slidingPuzzleBoard;     
+    private UISlidingPuzzleManager slidingPuzzle;
+
     private class QuestStateData
     {
         public HybridEventSO data;
@@ -30,6 +34,11 @@ public class HybridQuestManager : MonoBehaviour
 
         // NPC6 Try flow
         public int npc6TryCount = 0;
+
+        public System.Action puzzleListener;
+        public bool puzzleHooked = false;
+        public NPCController step3Npc;                       // để biết Relayer nào hiển thị popup Step 3
+        public HybridQuestRelayer step3Relayer;
 
         // Bánh mì (Step 4)
         public bool breadWatcherEnabled = false;
@@ -172,13 +181,36 @@ public class HybridQuestManager : MonoBehaviour
 
         // Reset quest về CAN_START + quay NPC về HAVE_QUEST + chuyển Fail
         QuestManager.instance.UpdateQuestStep(QuestState.CAN_START, questId);
+        var target = q.targetNPC;
         if (q.targetNPC != null)
         {
             q.targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
             q.targetNPC.SendMessage("OnQuizTimerFail");
         }
 
+        StartCoroutine(QuestFail(target));
+
         states.Remove(questId);
+    }
+
+    private IEnumerator QuestFail(GameObject targetNPC)
+    {
+        yield return new WaitForSeconds(1f);
+
+       
+
+        DialogConservation correctDialog = new DialogConservation();
+        DialogResponse response = new DialogResponse();
+
+        correctDialog.message = "Thời gian đã hết. Bạn đã không thể hoàn thành nhiệm vụ. Hãy thử lại vào lần tới";
+        response.executedFunction = DialogExecuteFunction.Hybrid_QuestFail;
+
+        response.message = "Đã hiểu";
+        correctDialog.possibleResponses.Add(response);
+        TalkInteraction.instance.StartCoroutine(TalkInteraction.instance.SmoothTransitionToTraceMiniGame());
+        StartCoroutine(ConservationManager.instance.UpdateConservation(correctDialog));
+
+        targetNPC.SendMessage("OnQuizTimerFail");
     }
 
     private bool IsInStep(string questId, string stepId)
@@ -310,9 +342,66 @@ public class HybridQuestManager : MonoBehaviour
         if (!states.TryGetValue(questId, out var q)) return;
         if (!IsInStep(questId, q.data.step3_NPC3_checkCard)) return;
 
-        bool hasCard = PlayerInventory.instance.HasItem(q.data.studentCardItemId);
-        npcThuVien.SendMessage("SwitchDialogueGroupInstance", hasCard ? "NPCThuVienHaveCard" : "NPCThuVienDontHaveCard");
+        // Cache relayer để POPUP Step 3 sau khi thắng
+       
+        q.step3Relayer = npcThuVien.GetComponent<HybridQuestRelayer>();
+
+        // Lấy refs puzzle/board
+        if (slidingPuzzle == null)
+        {
+            if (slidingPuzzleBoard != null)
+                slidingPuzzle = slidingPuzzleBoard.GetComponentInChildren<UISlidingPuzzleManager>(true);
+            if (slidingPuzzle == null)
+                slidingPuzzle = FindObjectOfType<UISlidingPuzzleManager>(true);
+            if (slidingPuzzleBoard == null && slidingPuzzle != null)
+                slidingPuzzleBoard = slidingPuzzle.GetComponent<UIAnimationController>();
+        }
+
+        // Gắn listener 1 lần
+        if (slidingPuzzle != null && !q.puzzleHooked)
+        {
+            q.puzzleListener = () => StartCoroutine(OnSlidingPuzzleComplete(questId));
+            slidingPuzzle.PuzzleCompleted += q.puzzleListener;
+            q.puzzleHooked = true;
+        }
+
+        if (ConservationManager.instance != null)
+        {
+           
+            StartCoroutine(ConservationManager.instance.DeactivateConservationDialog()); 
+
+           
+            
+        }
+
+
+        // Khoá điều khiển & mở board
+        PlayerManager.instance.DeactivateController();
+        if (slidingPuzzleBoard != null) slidingPuzzleBoard.Activate();
     }
+
+
+    private IEnumerator OnSlidingPuzzleComplete(string questId)
+    {
+        if (!states.TryGetValue(questId, out var q)) yield break;
+
+        // Tháo listener (an toàn khi chơi lại)
+        if (slidingPuzzle != null && q.puzzleListener != null)
+            slidingPuzzle.PuzzleCompleted -= q.puzzleListener;
+        q.puzzleHooked = false;
+
+        // Ẩn board
+        if (slidingPuzzleBoard != null) slidingPuzzleBoard.Deactivate();
+
+        // Chờ 1 giây theo yêu cầu
+        yield return new WaitForSeconds(1f);
+
+        // Mở POPUP thưởng của Step 3 (dùng relayer hiện có để map đúng popup)
+        var rel = q.step3Relayer ?? q.step3Npc?.GetComponent<HybridQuestRelayer>();
+        rel?.Hybrid_ShowRewardPopupForCurrentStep();
+    }
+
+    // -----------------------------------------------------------------------------
 
     // Kết thúc nhánh HaveCard -> enable watcher cho Step 4
     public void FinishStep3_EnableBreadWatcher(NPCController npc)
@@ -634,6 +723,8 @@ public class HybridQuestManager : MonoBehaviour
 
             // tắt reward popup (nếu có)
             if (q.stepRewardPopup != null) q.stepRewardPopup.Deactivate();
+
+            if (slidingPuzzleBoard != null) slidingPuzzleBoard.Deactivate();
 
             // tắt toàn bộ bread popups đã đăng ký
             if (q.breadPopups != null)

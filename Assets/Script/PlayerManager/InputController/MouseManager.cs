@@ -1,6 +1,9 @@
-﻿using PlayerController;
+﻿using GameManager;
+using PlayerController;
+using PlayerStatsController;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +14,13 @@ public class MouseManager : MonoBehaviour
     public GameObject pauseUI;
     public UIAnimationController QuestUI;
     public UIAnimationController LeaderBoardUI;
-    
+    public UIAnimationController SupportUI;
+
+
+    [Header("Minigame - Extend Time")]
+    public UIAnimationController TimeExtendUI;
+    public UIAnimationController NotInQuestUI;
+
 
     public enum MousePermission
     {
@@ -20,7 +29,8 @@ public class MouseManager : MonoBehaviour
         OnlyLeaderBoard,
         Inventory,
         EnterPress,
-        None
+        None,
+        OnlySupport
     }
 
     public MousePermission permission = MousePermission.All;
@@ -69,6 +79,14 @@ public class MouseManager : MonoBehaviour
                 && Input.GetKeyDown(KeyCode.I) && !PlayerManager.instance.isInteract)
             {
                 LeaderBoardUI.Activate();           
+                PlayerManager.instance.DeactivateController();
+                PlayerManager.instance.isInteract = true;
+                ShowCursor();
+            }
+            if ((permission == MousePermission.All || permission == MousePermission.OnlySupport)
+                && Input.GetKeyDown(KeyCode.P) && !PlayerManager.instance.isInteract)
+            {
+                SupportUI.Activate();
                 PlayerManager.instance.DeactivateController();
                 PlayerManager.instance.isInteract = true;
                 ShowCursor();
@@ -124,6 +142,14 @@ public class MouseManager : MonoBehaviour
         HideCursor();
     }
 
+    public void CloseSupportUI()
+    {
+        SupportUI.Deactivate();
+        PlayerManager.instance.isInteract = false;
+        PlayerManager.instance.ActivateController();
+        HideCursor();
+    }
+
     public void CloseLeaderBoardUI()
     {
         LeaderBoardUI.Deactivate();
@@ -131,4 +157,98 @@ public class MouseManager : MonoBehaviour
         PlayerManager.instance.ActivateController();
         HideCursor();
     }
+
+    #region Extend Time
+
+    public void OnClickExtendTime()
+    {
+        string questId = FindActiveEligibleQuestId();
+        if (string.IsNullOrEmpty(questId))
+        {
+            NotInQuestUI.Activate();
+            Debug.Log("[ExtendTime] Không có quest Hybrid/Collect/Trace nào đang IN_PROGRESS.");
+            return;
+        }
+
+        if (QuestTimeExtender.TryAddOneMinute(questId))
+        {
+            Debug.Log($"[ExtendTime] +60s cho '{questId}'. Đã trừ 50 vàng.");
+        }
+        else
+        {
+            TimeExtendUI.Activate();
+            Debug.Log("[ExtendTime] Gia hạn thất bại (có thể không đủ vàng / quest không còn IN_PROGRESS / Trace chưa expose timer).");
+        }
+    }
+
+    // Tìm questId của 1 trong 3 loại Hybrid/Collect/Trace đang IN_PROGRESS
+    private string FindActiveEligibleQuestId()
+    {
+        var qm = QuestManager.instance;
+        if (qm == null) return null;
+
+        // 1) Collect
+        if (CollectQuestManager.instance != null)
+        {
+            var id = CollectQuestManager.instance.currentCollectQuestId;
+            if (!string.IsNullOrEmpty(id) && qm.questMap.TryGetValue(id, out var q) && q.state == QuestState.IN_PROGRESS)
+                return id;
+        }
+
+        // 2) Hybrid (bất kỳ questId nào có trong dictionary 'states' và đang IN_PROGRESS)
+        if (HybridQuestManager.instance != null)
+        {
+            var h = HybridQuestManager.instance;
+            var statesF = typeof(HybridQuestManager).GetField("states", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            var states = statesF?.GetValue(h);
+            if (states != null)
+            {
+                var dictT = states.GetType();
+                var keysProp = dictT.GetProperty("Keys");
+                var keys = keysProp?.GetValue(states) as System.Collections.IEnumerable;
+                if (keys != null)
+                {
+                    foreach (var k in keys)
+                    {
+                        string id = k as string;
+                        if (!string.IsNullOrEmpty(id) && qm.questMap.TryGetValue(id, out var q) && q.state == QuestState.IN_PROGRESS)
+                            return id;
+                    }
+                }
+            }
+        }
+
+        // 3) Trace (lấy questId hiện tại từ field private traceEvent.questId)
+        if (TraceQuestManager.instance != null)
+        {
+            var t = TraceQuestManager.instance;
+            var traceEventF = typeof(TraceQuestManager).GetField("traceEvent", BindingFlags.Instance | BindingFlags.NonPublic);
+            var traceEvent = traceEventF?.GetValue(t);
+            var questIdF = traceEvent?.GetType().GetField("questId", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var id = questIdF?.GetValue(traceEvent) as string;
+
+            if (!string.IsNullOrEmpty(id) && qm.questMap.TryGetValue(id, out var q) && q.state == QuestState.IN_PROGRESS)
+                return id;
+        }
+
+        return null;
+    }
+
+    #endregion
+
+    #region Healing Suuport
+
+    public void HealingSupport()
+    {
+        if(PlayerInventory.instance.gold < 50)
+        {
+            TimeExtendUI.Activate();
+            return;
+        }
+        HealthBar.instance.SetCurrentHealth(HealthBar.instance.slider.maxValue);
+        PlayerInventory.instance.SubtractGold(50);
+        CloseSupportUI();
+    }
+
+    #endregion
 }
