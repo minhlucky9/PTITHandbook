@@ -25,6 +25,7 @@ public class TalkInteraction : Interactable
 
     public virtual void Awake()
     {
+        instance = this;
         gameObject.layer = LayerMask.NameToLayer("TalkableObject");
         gameObject.tag = "Talkable";
         interactableText = "Nhấn E để trò chuyện";

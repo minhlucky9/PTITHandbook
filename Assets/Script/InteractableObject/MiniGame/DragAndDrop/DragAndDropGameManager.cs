@@ -17,13 +17,27 @@ public class DragAndDropGameManager : MonoBehaviour
     public Slider timerSlider;               // UI Slider 
 
     [Header("Thời gian")]
-    public float totalTime = 60f;            
+    public float totalTime = 25f;            
     private float timeRemaining;
     private int correctCount;
     private string questId;
 
     DialogConservation dialog = null;
+    GameObject targetNPC;
+    DragAndDropEventSO data;
+    public string currentCollectQuestId;
 
+    // Lưu trạng thái ban đầu của các item
+    private List<ItemInitialState> initialStates = new List<ItemInitialState>();
+
+    [System.Serializable]
+    public class ItemInitialState
+    {
+        public DraggableItem item;
+        public Transform originalParent;
+        public Vector3 originalPosition;
+        public bool wasEnabled;
+    }
 
 
     private void Awake()
@@ -58,14 +72,17 @@ public class DragAndDropGameManager : MonoBehaviour
        StartCoroutine(ConservationManager.instance.ClearConservation());
 
         questId = data.questId;
-
+        this.targetNPC = targetNPC;
+        this.data = data;
         timeRemaining = totalTime;
         correctCount = 0;
         timerSlider.maxValue = totalTime;
         timerSlider.value = totalTime;
 
+        ResetGameState();
+
         foreach (var slot in dropSlots)
-            slot.gameManager = this;
+         //   slot.gameManager = this;
 
 
 
@@ -96,6 +113,51 @@ public class DragAndDropGameManager : MonoBehaviour
 
     }
 
+    // Reset game về trạng thái ban đầu
+    private void ResetGameState()
+    {
+        // Lưu trạng thái ban đầu nếu chưa có
+        if (initialStates.Count == 0)
+        {
+            SaveInitialStates();
+        }
+
+        // Reset tất cả items về vị trí ban đầu
+        foreach (var state in initialStates)
+        {
+            if (state.item != null)
+            {
+                state.item.transform.SetParent(state.originalParent);
+                state.item.transform.localPosition = state.originalPosition;
+                state.item.transform.localRotation = Quaternion.identity;
+                state.item.enabled = state.wasEnabled;
+                state.item.image.raycastTarget = true;
+            }
+        }
+
+        correctCount = 0;
+    }
+
+    // Lưu trạng thái ban đầu của tất cả draggable items
+    private void SaveInitialStates()
+    {
+        initialStates.Clear();
+
+        // Tìm tất cả DraggableItem trong scene
+        DraggableItem[] allItems = FindObjectsOfType<DraggableItem>();
+
+        foreach (var item in allItems)
+        {
+            ItemInitialState state = new ItemInitialState
+            {
+                item = item,
+                originalParent = item.transform.parent,
+                originalPosition = item.transform.localPosition,
+                wasEnabled = item.enabled
+            };
+            initialStates.Add(state);
+        }
+    }
 
     // Gọi khi thả đúng
     public void OnCorrectDrop(DraggableItem item)
@@ -136,12 +198,14 @@ public class DragAndDropGameManager : MonoBehaviour
         else
         {
             Debug.Log("Lose");
-            var quest = QuestManager.instance.questMap[questId];
-            quest.ChangeQuestState(QuestState.CAN_START);
-            QuestManager.instance.InitQuestStep(
-                quest.info.questSteps[quest.currentQuestStepIndex],
-                questId
-            );
+            GameManager.QuestManager.instance.UpdateQuestStep(
+       QuestState.CAN_START,
+        questId
+    );
+            quests.Remove(questId);
+            targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+            StartCoroutine(DragAndDropUIManager.instance.DeActivateMiniGameUI());
+            targetNPC.SendMessage("OnQuestMinigameFail");
         }
     }
 

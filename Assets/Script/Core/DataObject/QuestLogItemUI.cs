@@ -114,7 +114,7 @@ public class QuestLogItemUI : MonoBehaviour
                     MoveToNPC.instance.npcTarget = npcTarget;
                     MoveToNPC.instance.StartAutoMove();
                     MouseManager.instance.CloseQuestUI();
-                    PlayerInventory.instance.SubtractGold(20); 
+                    
                 }
             });
         }

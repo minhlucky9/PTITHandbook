@@ -169,7 +169,7 @@ public class QuestLogManager : MonoBehaviour
         }
 
         // 2) Basic đã hoàn tất, xét Advanced
-        if (!AreAllFinished(advancedQuestSOList))
+       else if (!AreAllFinished(advancedQuestSOList))
         {
             if (TryFindCurrentInList(advancedQuestSOList, out var q, out int idx))
             {

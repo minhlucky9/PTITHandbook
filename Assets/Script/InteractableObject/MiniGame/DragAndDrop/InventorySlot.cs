@@ -9,7 +9,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     )]
     public string slotID = "";
 
-    [HideInInspector] public DragAndDropGameManager gameManager;
+    [HideInInspector] public TraceQuestManager gameManager;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -28,7 +28,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
         // --- 2) Nếu đã có item rồi, ignore ---
         if (transform.childCount > 0)
+        {
+            draggable.parentAfterDrag = draggable.originalParent;
             return;
+        }
+           
 
         // --- 3) Đây là ô đích: kiểm tra đúng/sai ---
         if (draggable.itemID == slotID)

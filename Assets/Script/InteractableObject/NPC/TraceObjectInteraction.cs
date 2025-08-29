@@ -26,7 +26,7 @@ public class TraceObjectInteraction : TalkInteraction
     public void Initialize(int index)
     {
         this.index = index;
-        interactableText = "Press E to examine";
+        interactableText = "Nhấn E để tương tác";
 
         // Nếu chưa assign qua Inspector, tự động tìm trong children (bao gồm inactive)
         if (uiControllers == null || uiControllers.Count == 0)
@@ -83,4 +83,43 @@ public class TraceObjectInteraction : TalkInteraction
            
         }
     }
+
+    /// <summary>
+    /// Tắt tất cả UI của object này (gọi từ TraceQuestManager khi hết thời gian)
+    /// </summary>
+    public void ForceCloseAllUI()
+    {
+        if (uiControllers != null)
+        {
+            foreach (UIAnimationController uiController in uiControllers)
+            {
+                if (uiController != null)
+                {
+                    uiController.Deactivate();
+                }
+            }
+        }
+
+        // Stop tất cả coroutines đang chạy
+        StopAllCoroutines();
+
+        // Reset sequence index
+        sequenceIndex = 0;
+    }
+
+    public void StartPuzzle()
+    {
+        if (sequenceIndex < uiControllers.Count)
+            uiControllers[sequenceIndex].Deactivate();
+
+        StartCoroutine(ShowPuzzleAfterDelay());
+    }
+
+    public IEnumerator ShowPuzzleAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+
+        TraceQuestManager.instance.InitPuzzle();
+    }
+
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 public class CoinLootInteraction : LootInteraction
 {
     string questId = "";
-    public GameObject coinPrefab;
     public void SetupCoinMinigame(string questId)
     {
         this.questId = questId;
@@ -19,10 +18,10 @@ public class CoinLootInteraction : LootInteraction
 
         if(questId != "")
         {
+            CollectQuestManager.instance.MarkCoinAsCollected(this);
             CollectQuestManager.instance.OnCollectQuestChange(questId);
         }
         AudioManager.instance.PlayCorrectSound();
-     //   coinPrefab.SetActive(true);
         gameObject.SetActive(false);
     }
 }

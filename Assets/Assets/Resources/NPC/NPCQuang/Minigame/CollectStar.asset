@@ -19,4 +19,4 @@ MonoBehaviour:
   lootObjects:
   - prefabs: {fileID: 7535746368800408008, guid: 80e520cf0b2785c4fad64db061442f41,
       type: 3}
-  numberOfLoot: 20
+  numberOfLoot: 28
