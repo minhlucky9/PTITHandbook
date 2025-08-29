@@ -17,14 +17,31 @@ public class TraceQuestManager : MonoBehaviour
     private int currentIndex = 0;
     public GameObject currentObject;
     private TraceQuest traceQuest;
+    private TraceObjectInteraction DragAndDropPuzzle;
 
     [Header("UI Progress")]
     [SerializeField] private UIAnimationController progressUI;
     [SerializeField] private TextMeshProUGUI progressText;
 
+    [Header("Slots & UI")]
+    public List<InventorySlot> dropSlots;
+    private int correctCount;
+
     private Coroutine CollectTimerRoutine;
     private float timeRemaining;
-    private const float COLLECT_DURATION = 20f;
+    private const float COLLECT_DURATION = 300f;
+
+
+    private List<ItemInitialState> initialStates = new List<ItemInitialState>();
+
+    [System.Serializable]
+    public class ItemInitialState
+    {
+        public DraggableItem item;
+        public Transform originalParent;
+        public Vector3 originalPosition;
+        public bool wasEnabled;
+    }
 
     void Awake()
     {
@@ -112,6 +129,7 @@ public class TraceQuestManager : MonoBehaviour
          QuestState.CAN_START,
           traceEvent.questId
       );
+        EndGame(false);
 
         ForceCloseAllActiveUI();
 
@@ -185,7 +203,7 @@ public class TraceQuestManager : MonoBehaviour
         traceQuest.OnTracedChange();
         if(currentIndex+1 >= traceEvent.traceObjects.Count)
         {
-            targetNPC.SendMessage("OnQuestMinigameSuccess");
+            targetNPC.SendMessage("FinishQuestStep");
             ConservationManager.instance.StarContainer.Deactivate();
         }
         else
@@ -210,6 +228,128 @@ public class TraceQuestManager : MonoBehaviour
         currentIndex++;
         SpawnNextObject();
     }
+
+    #region Drag and Drop Puzzle
+
+    private void ResetGameState()
+    {
+        // Lưu trạng thái ban đầu nếu chưa có
+        if (initialStates.Count == 0)
+        {
+            SaveInitialStates();
+        }
+
+        // Reset tất cả items về vị trí ban đầu
+        foreach (var state in initialStates)
+        {
+            if (state.item != null)
+            {
+                state.item.transform.SetParent(state.originalParent);
+                state.item.transform.localPosition = state.originalPosition;
+                state.item.transform.localRotation = Quaternion.identity;
+                state.item.enabled = state.wasEnabled;
+                state.item.image.raycastTarget = true;
+            }
+        }
+
+        correctCount = 0;
+    }
+
+    // Lưu trạng thái ban đầu của tất cả draggable items
+    private void SaveInitialStates()
+    {
+        initialStates.Clear();
+
+        // Tìm tất cả DraggableItem trong scene
+        DraggableItem[] allItems = FindObjectsOfType<DraggableItem>();
+
+        foreach (var item in allItems)
+        {
+            ItemInitialState state = new ItemInitialState
+            {
+                item = item,
+                originalParent = item.transform.parent,
+                originalPosition = item.transform.localPosition,
+                wasEnabled = item.enabled
+            };
+            initialStates.Add(state);
+        }
+    }
+
+    // Gọi khi thả đúng
+    public void OnCorrectDrop(DraggableItem item)
+    {
+        correctCount++;
+        item.enabled = false;
+
+        if (correctCount >= dropSlots.Count)
+            EndGame(true);
+    }
+
+    // Gọi khi thả sai (tuỳ feedback)
+    public void OnWrongDrop(DraggableItem item)
+    {
+        Debug.Log($"Wrong {item.itemID}");
+    }
+
+    // Kết thúc game: win=true hoặc false
+    private void EndGame(bool win)
+    {
+ 
+
+        // Vô hiệu hoá kéo thả toàn bộ
+        foreach (var slot in dropSlots)
+            foreach (Transform child in slot.transform)
+                if (child.TryGetComponent<DraggableItem>(out var di))
+                    di.enabled = false;
+
+        if (win)
+        {
+            Debug.Log("Win");
+            
+           
+
+            StartCoroutine(DragAndDropUIManager.instance.DeActivateMiniGameUI());
+
+            StartCoroutine(DelayAfterFinishPuzzle());
+
+        }
+        else
+        {
+            Debug.Log("Lose");
+           
+           
+          
+            StartCoroutine(DragAndDropUIManager.instance.DeActivateMiniGameUI());
+           
+        }
+    }
+
+    public void InitPuzzle()
+    {
+        ResetGameState();
+
+        foreach (var slot in dropSlots)
+            slot.gameManager = this;
+
+
+
+        StartCoroutine(DragAndDropUIManager.instance.ActivateMiniGameUI());
+    }
+
+    private IEnumerator DelayAfterFinishPuzzle()
+    {
+        yield return new WaitForSeconds(1f);
+
+        DragAndDropPuzzle = FindAnyObjectByType<TraceObjectInteraction>();
+
+        if (DragAndDropPuzzle != null)
+        {
+            DragAndDropPuzzle.OnClick_NextUI();
+        }
+    }
+
+    #endregion
 
     public class TraceQuest
     {

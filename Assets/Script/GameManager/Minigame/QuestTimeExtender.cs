@@ -113,8 +113,8 @@ public static class QuestTimeExtender
             if (!string.IsNullOrEmpty(curId) && curId == questId)
             {
                 var timeF = typeof(TraceQuestManager).GetField("timeRemaining", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var routineF = typeof(TraceQuestManager).GetField("traceTimerRoutine", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                var startMI = typeof(TraceQuestManager).GetMethod("StartTraceTimer", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var routineF = typeof(TraceQuestManager).GetField("CollectTimerRoutine", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var startMI = typeof(TraceQuestManager).GetMethod("StartCollectTimer", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
                 if (timeF != null && startMI != null)
                 {

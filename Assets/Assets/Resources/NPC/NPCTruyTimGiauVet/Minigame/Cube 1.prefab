@@ -123,7 +123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3547657313245951396}
         m_TargetAssemblyTypeName: TraceObjectInteraction, Assembly-CSharp
-        m_MethodName: OnClick_NextUI
+        m_MethodName: StartPuzzle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

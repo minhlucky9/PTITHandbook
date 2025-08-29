@@ -22,6 +22,14 @@ public class MouseManager : MonoBehaviour
     public UIAnimationController NotInQuestUI;
 
 
+    [Header("QR")]
+    public UIAnimationController QR_UI;
+
+    [Header("NavMesh")]
+    public UIAnimationController NavMeshUI;
+
+
+
     public enum MousePermission
     {
         All,
@@ -156,6 +164,30 @@ public class MouseManager : MonoBehaviour
         PlayerManager.instance.isInteract = false;
         PlayerManager.instance.ActivateController();
         HideCursor();
+    }
+
+    public void CloseQR_UI()
+    {
+        QR_UI.Deactivate();
+        PlayerManager.instance.isInteract = false;
+        PlayerManager.instance.ActivateController();
+        HideCursor();
+    }
+
+    public void CloseNavMeshUI()
+    {
+        NavMeshUI.Deactivate();
+        PlayerManager.instance.isInteract = false;
+        PlayerManager.instance.ActivateController();
+        HideCursor();
+    }
+
+    public void OpenNavMeshUI()
+    {
+        NavMeshUI.Activate();
+        PlayerManager.instance.isInteract = true;
+        PlayerManager.instance.DeactivateController();
+        ShowCursor();
     }
 
     #region Extend Time
