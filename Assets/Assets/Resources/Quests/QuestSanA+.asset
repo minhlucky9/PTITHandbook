@@ -15,8 +15,7 @@ MonoBehaviour:
   <id>k__BackingField: QuestSanA+
   displayName: "S\u0103n A+"
   levelRequirement: 0
-  questPrerequisites:
-  - {fileID: 11400000, guid: 0aa1745188a07aa41b2adaf065a8fea1, type: 2}
+  questPrerequisites: []
   questSteps:
   - stepId: step1
     missionType: 0
