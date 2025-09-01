@@ -171,7 +171,8 @@ namespace Interaction
         Hybrid_ShowRewardPopupForCurrentStep,
         Hybrid_QuestFail,
 
-        ShowQR
+        ShowQR,
+        FinishPassiveQuestStepThenStartMinigame
 
     }
 }

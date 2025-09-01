@@ -24,7 +24,7 @@ public class DragAndDropGameManager : MonoBehaviour
 
     DialogConservation dialog = null;
     GameObject targetNPC;
-    DragAndDropEventSO data;
+    CryptogramEventSO data;
     public string currentCollectQuestId;
 
     // Lưu trạng thái ban đầu của các item
@@ -67,7 +67,7 @@ public class DragAndDropGameManager : MonoBehaviour
     }
 
 
-    public void InitDragAndDropGame(GameObject targetNPC, DragAndDropEventSO data)
+    public void InitDragAndDropGame(GameObject targetNPC, CryptogramEventSO data)
     {
        StartCoroutine(ConservationManager.instance.ClearConservation());
 

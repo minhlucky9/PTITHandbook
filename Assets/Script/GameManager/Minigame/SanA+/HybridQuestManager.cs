@@ -366,12 +366,8 @@ public class HybridQuestManager : MonoBehaviour
         }
 
         if (ConservationManager.instance != null)
-        {
-           
-            StartCoroutine(ConservationManager.instance.DeactivateConservationDialog()); 
-
-           
-            
+        {          
+            StartCoroutine(ConservationManager.instance.DeactivateConservationDialog());           
         }
 
 

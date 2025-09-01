@@ -647,6 +647,12 @@ public class NPCController : TalkInteraction, IDialogueHandler
         StartQuestMinigame();
     }
 
+    public void FinishPassiveQuestStepThenStartMinigame()
+    {
+        FinishPassiveQuestStep();
+        StartQuestMinigame();
+    }
+
     public void ResetNPC()
     {
         Debug.Log("zzzzzzzzzzz");

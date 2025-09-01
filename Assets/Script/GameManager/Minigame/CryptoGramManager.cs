@@ -4,9 +4,150 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using Interaction.Minigame;
+using Interaction;
+using System;
+using GameManager;
 
 public class CryptoGramManager : MonoBehaviour
 {
+    //--------------------------------------------FOR QUEST------------------------------------------------//
+
+    public static CryptoGramManager instance;
+
+    [HideInInspector] public Dictionary<string, CryptoQuest> cryptoQuests = new Dictionary<string, CryptoQuest>();
+    public string currentCollectQuestId;
+    GameObject container;
+    GameObject targetNPC;
+    CryptoQuest __cryptoquest;
+    CryptogramEventSO cryptoEvent;
+    private Coroutine CryptoTimerRoutine;
+    private float timeRemaining;
+    private const float COLLECT_DURATION = 480f;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public void InitCryptoQuest(GameObject targetNPC, CryptogramEventSO cryptoEvent)
+    {
+        timeRemaining = COLLECT_DURATION;
+        this.targetNPC = targetNPC;
+        this.cryptoEvent = cryptoEvent;
+        currentCollectQuestId = cryptoEvent.questId;
+
+        //setup collect quest
+        CryptoQuest cryptoQuest = new CryptoQuest();
+        __cryptoquest = cryptoQuest;
+
+        cryptoQuest.OnFinishQuest = () => {
+            targetNPC.SendMessage("FinishQuestStep");
+            ConservationManager.instance.StarContainer.Deactivate();
+            if (CryptoTimerRoutine != null)
+            {
+                StopCoroutine(CryptoTimerRoutine);
+                CryptoTimerRoutine = null;
+            }
+
+            // ẩn UI timer
+            ConservationManager.instance.timerContainer.Deactivate();
+           QuestManager.instance.questMap[cryptoEvent.questId].OnQuestFinish += OnMainQuestComplete;
+        
+        };
+        cryptoQuests.Add(cryptoEvent.minigameId, cryptoQuest);
+        if (ConservationManager.instance != null)
+        {
+            StartCoroutine(ConservationManager.instance.DeactivateConservationDialog());
+        }
+        Init();
+        Invoke(nameof(StartCryptoTimer), 0.5f);
+
+
+    }
+
+    private void StartCryptoTimer()
+    {
+        // Tránh gọi nhiều lần
+        if (CryptoTimerRoutine != null)
+        {
+            StopCoroutine(CryptoTimerRoutine);
+        }
+
+        CryptoTimerRoutine = StartCoroutine(CollectCountdown(timeRemaining));
+    }
+
+    private IEnumerator CollectCountdown(float duration)
+    {
+        float t = duration;
+        ConservationManager.instance.timerContainer.Activate();
+
+
+        while (t > 0f)
+        {
+            // tính phút và giây
+            int minutes = (int)(t / 60);
+            int seconds = (int)(t % 60);
+            // format “MM:SS”
+            ConservationManager.instance.timerText.text = $"{minutes:00}:{seconds:00}";
+
+            t -= Time.deltaTime;
+            timeRemaining = t;
+            yield return null;
+        }
+
+        // khi hết giờ
+        ConservationManager.instance.timerText.text = "00:00";
+        OnCollectTimerExpired();
+    }
+
+    private void OnCollectTimerExpired()
+    {
+        // dừng coroutine nếu còn chạy
+        if (CryptoTimerRoutine != null)
+        {
+            StopCoroutine(CryptoTimerRoutine);
+            CryptoTimerRoutine = null;
+        }
+
+        // ẩn UI timer
+        ConservationManager.instance.timerContainer.Deactivate();
+        cryptoQuests.Remove(cryptoEvent.minigameId);
+        // reset quest về CAN_START
+        GameManager.QuestManager.instance.UpdateQuestStep(
+         QuestState.CAN_START,
+          currentCollectQuestId
+      );
+
+        targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+
+        DialogConservation correctDialog = new DialogConservation();
+        DialogResponse response = new DialogResponse();
+
+        correctDialog.message = "Thời gian đã hết. Bạn đã không thể hoàn thành nhiệm vụ. Hãy thử lại vào lần tới";
+        response.executedFunction = DialogExecuteFunction.OnQuestMinigameFail;
+
+        response.message = "Đã hiểu";
+        correctDialog.possibleResponses.Add(response);
+        TalkInteraction.instance.StartCoroutine(TalkInteraction.instance.SmoothTransitionToTraceMiniGame());
+        StartCoroutine(ConservationManager.instance.UpdateConservation(correctDialog));
+
+        targetNPC.SendMessage("OnQuizTimerFail");
+    }
+
+    public void OnMainQuestComplete()
+    {
+       
+    }
+
+    public void Win(string minigameId)
+    {
+        CryptoQuest quest = cryptoQuests[minigameId];
+        quest.Win();
+   
+    }
+
+    //--------------------------------------------FOR MINIGAME------------------------------------------------//
     [System.Serializable]
     public class HiddenLetterConfig
     {
@@ -56,6 +197,8 @@ public class CryptoGramManager : MonoBehaviour
     private Dictionary<char, KeyButton> keyButtons = new Dictionary<char, KeyButton>();
     private LetterSlot selectedSlot = null;
     private bool gameActive = false;
+    private List<CryptoLevel> selectedLevels = new List<CryptoLevel>(); // Levels selected for this game session
+    private const int MAX_LEVELS_PER_GAME = 5; // Maximum levels per game
 
     // Classes for UI elements
     private class LetterSlot
@@ -145,13 +288,253 @@ public class CryptoGramManager : MonoBehaviour
                     }
                 }
             });
+
+            // Level 3
+            levels.Add(new CryptoLevel
+            {
+                quote = "BE THE CHANGE YOU WISH TO SEE",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 5, hideAtPositions = new List<int> { 0, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'H', assignedNumber = 8, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 2, hideAtPositions = new List<int> { 0 } }
+                }
+            });
+
+            // Level 4
+            levels.Add(new CryptoLevel
+            {
+                quote = "DREAM BIG AND DARE TO FAIL",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 3, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'D', assignedNumber = 7, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'I', assignedNumber = 11, hideAtPositions = new List<int> { 0, 1 } }
+                }
+            });
+
+            // Level 5
+            levels.Add(new CryptoLevel
+            {
+                quote = "LIFE IS SHORT MAKE IT SWEET",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'I', assignedNumber = 9, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'S', assignedNumber = 15, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 4, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 6
+            levels.Add(new CryptoLevel
+            {
+                quote = "BELIEVE YOU CAN AND YOU ARE HALFWAY THERE",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 12, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 16, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'Y', assignedNumber = 20, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 7
+            levels.Add(new CryptoLevel
+            {
+                quote = "SUCCESS IS NOT FINAL FAILURE IS NOT FATAL",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'S', assignedNumber = 10, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'F', assignedNumber = 13, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 21, hideAtPositions = new List<int> { 0, 1, 2, 3 } }
+                }
+            });
+
+            // Level 8
+            levels.Add(new CryptoLevel
+            {
+                quote = "HAPPINESS IS A JOURNEY NOT A DESTINATION",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 22, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'N', assignedNumber = 23, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'O', assignedNumber = 24, hideAtPositions = new List<int> { 0, 1 } }
+                }
+            });
+
+            // Level 9
+            levels.Add(new CryptoLevel
+            {
+                quote = "THE BEST TIME TO PLANT A TREE WAS YESTERDAY",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'T', assignedNumber = 25, hideAtPositions = new List<int> { 0, 1, 2, 3, 4 } },
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 26, hideAtPositions = new List<int> { 0, 1, 2, 3, 4 } },
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 27, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 10
+            levels.Add(new CryptoLevel
+            {
+                quote = "EVERY MOMENT IS A FRESH BEGINNING",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 28, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'M', assignedNumber = 29, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'N', assignedNumber = 30, hideAtPositions = new List<int> { 0, 1, 2, 3 } }
+                }
+            });
+
+            // Level 11
+            levels.Add(new CryptoLevel
+            {
+                quote = "KINDNESS IS ALWAYS FASHIONABLE",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'N', assignedNumber = 31, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'S', assignedNumber = 32, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 33, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 12
+            levels.Add(new CryptoLevel
+            {
+                quote = "COURAGE IS GRACE UNDER PRESSURE",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'R', assignedNumber = 34, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 35, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'U', assignedNumber = 36, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 13
+            levels.Add(new CryptoLevel
+            {
+                quote = "STARS CANNOT SHINE WITHOUT DARKNESS",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'S', assignedNumber = 37, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'T', assignedNumber = 38, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'N', assignedNumber = 39, hideAtPositions = new List<int> { 0, 1, 2, 3 } }
+                }
+            });
+
+            // Level 14
+            levels.Add(new CryptoLevel
+            {
+                quote = "FOCUS ON THE GOOD AND THE GOOD GETS BETTER",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'O', assignedNumber = 40, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'G', assignedNumber = 41, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'T', assignedNumber = 42, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 15
+            levels.Add(new CryptoLevel
+            {
+                quote = "SIMPLICITY IS THE ULTIMATE SOPHISTICATION",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'I', assignedNumber = 43, hideAtPositions = new List<int> { 0, 1, 2, 3, 4, 5 } },
+                    new HiddenLetterConfig { letter = 'T', assignedNumber = 44, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'S', assignedNumber = 45, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 16
+            levels.Add(new CryptoLevel
+            {
+                quote = "PATIENCE IS BITTER BUT ITS FRUIT IS SWEET",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'I', assignedNumber = 46, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'T', assignedNumber = 47, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 48, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 17
+            levels.Add(new CryptoLevel
+            {
+                quote = "WISDOM BEGINS IN WONDER",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'W', assignedNumber = 49, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'I', assignedNumber = 50, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'N', assignedNumber = 51, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 18
+            levels.Add(new CryptoLevel
+            {
+                quote = "LEARN FROM YESTERDAY LIVE FOR TODAY",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'L', assignedNumber = 52, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'E', assignedNumber = 53, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'R', assignedNumber = 54, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 19
+            levels.Add(new CryptoLevel
+            {
+                quote = "GREAT THINGS NEVER COME FROM COMFORT ZONES",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'R', assignedNumber = 55, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'O', assignedNumber = 56, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'M', assignedNumber = 57, hideAtPositions = new List<int> { 0, 1 } }
+                }
+            });
+
+            // Level 20
+            levels.Add(new CryptoLevel
+            {
+                quote = "ACTION IS THE FOUNDATIONAL KEY TO SUCCESS",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 58, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'O', assignedNumber = 59, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'S', assignedNumber = 60, hideAtPositions = new List<int> { 0, 1 } }
+                }
+            });
+
+            // Level 21
+            levels.Add(new CryptoLevel
+            {
+                quote = "CREATIVITY TAKES COURAGE",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'C', assignedNumber = 61, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'R', assignedNumber = 62, hideAtPositions = new List<int> { 0, 1 } },
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 63, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
+
+            // Level 22
+            levels.Add(new CryptoLevel
+            {
+                quote = "MISTAKES ARE PROOF THAT YOU ARE TRYING",
+                hiddenLetters = new List<HiddenLetterConfig>
+                {
+                    new HiddenLetterConfig { letter = 'A', assignedNumber = 64, hideAtPositions = new List<int> { 0, 1, 2 } },
+                    new HiddenLetterConfig { letter = 'R', assignedNumber = 65, hideAtPositions = new List<int> { 0, 1, 2, 3 } },
+                    new HiddenLetterConfig { letter = 'T', assignedNumber = 66, hideAtPositions = new List<int> { 0, 1, 2 } }
+                }
+            });
         }
     }
 
     void SetupUI()
     {
-        if (winPanel) winPanel.Deactivate();
-        if (losePanel) losePanel.Deactivate();
+      //  if (winPanel) winPanel.Deactivate();
+      //  if (losePanel) losePanel.Deactivate();
 
         if (nextLevelButton) nextLevelButton.onClick.AddListener(NextLevel);
         if (retryButton) retryButton.onClick.AddListener(RetryLevel);
@@ -162,8 +545,34 @@ public class CryptoGramManager : MonoBehaviour
     public void Init()
     {
         currentLevel = 0;
+        SelectRandomLevels();
         StartLevel();
         Game.Activate();
+    }
+
+    void SelectRandomLevels()
+    {
+        selectedLevels.Clear();
+
+        if (levels.Count <= MAX_LEVELS_PER_GAME)
+        {
+            // If we have 5 or fewer levels, use all of them
+            selectedLevels.AddRange(levels);
+        }
+        else
+        {
+            // Randomly select 5 levels
+            List<CryptoLevel> tempLevels = new List<CryptoLevel>(levels);
+
+            for (int i = 0; i < MAX_LEVELS_PER_GAME; i++)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, tempLevels.Count);
+                selectedLevels.Add(tempLevels[randomIndex]);
+                tempLevels.RemoveAt(randomIndex);
+            }
+        }
+
+        Debug.Log($"Selected {selectedLevels.Count} levels for this game session");
     }
 
     public void End()
@@ -178,7 +587,7 @@ public class CryptoGramManager : MonoBehaviour
 
     void StartLevel()
     {
-        if (currentLevel >= levels.Count)
+        if (currentLevel >= selectedLevels.Count)
         {
             ShowWinScreen();
             return;
@@ -189,7 +598,7 @@ public class CryptoGramManager : MonoBehaviour
         selectedSlot = null;
 
         ClearLevel();
-        GenerateLevel(levels[currentLevel]);
+        GenerateLevel(selectedLevels[currentLevel]);
         UpdateUI();
     }
 
@@ -543,7 +952,7 @@ public class CryptoGramManager : MonoBehaviour
                     // Letter is completed - gray
                     targetColor = completedKeyColor;
                 }
-                else if (hiddenPositions.ContainsKey(letter) && hiddenPositions[letter].Count > 0)
+                else if (hiddenPositions.ContainsKey(letter) && hiddenPositions[letter].Count > 1)
                 {
                     // Letter has hidden positions that need to be filled - green
                     targetColor = activeKeyColor;
@@ -569,7 +978,7 @@ public class CryptoGramManager : MonoBehaviour
         if (allCompleted)
         {
             LeanTween.delayedCall(1f, () => {
-                if (currentLevel < levels.Count - 1)
+                if (currentLevel < selectedLevels.Count - 1)
                 {
                      NextLevel();
                    
@@ -616,6 +1025,8 @@ public class CryptoGramManager : MonoBehaviour
         }
     }
 
+  
+
     void UpdateUI()
     {
         if (mistakesText)
@@ -645,5 +1056,17 @@ public class CryptoGramManager : MonoBehaviour
                 }
             }
         }
+    }
+}
+
+public class   CryptoQuest
+{
+
+
+    public Action OnFinishQuest;
+
+    public void Win()
+    {
+        OnFinishQuest?.Invoke();
     }
 }
