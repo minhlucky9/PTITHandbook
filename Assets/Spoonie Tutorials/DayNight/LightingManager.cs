@@ -22,23 +22,23 @@ public class LightingManager : MonoBehaviour
     [SerializeField] private Material daySkybox;
     [SerializeField] private Material nightSkybox;
 
-    [SerializeField, Range(0, 24)] private float eveningFadeStart = 18f;  
-    [SerializeField, Min(0f)] private float eveningFadeDuration = 2f;   
+    [SerializeField, Range(0, 24)] private float eveningFadeStart = 18f;
+    [SerializeField, Min(0f)] private float eveningFadeDuration = 2f;
 
-    [SerializeField, Range(0, 24)] private float morningFadeStart = 5f;  
-    [SerializeField, Min(0f)] private float morningFadeDuration = 2f;   
+    [SerializeField, Range(0, 24)] private float morningFadeStart = 5f;
+    [SerializeField, Min(0f)] private float morningFadeDuration = 2f;
 
     private Material currentSkybox;
 
     private void Awake()
     {
-        // Khởi tạo instance và gán vào RenderSettings
         if (daySkybox != null)
         {
-            currentSkybox = new Material(daySkybox);
+            currentSkybox = new Material(daySkybox); // tạo clone để blend
             RenderSettings.skybox = currentSkybox;
         }
     }
+
 
     private void OnEnable()
     {
@@ -78,6 +78,12 @@ public class LightingManager : MonoBehaviour
 
     private void Update()
     {
+        if (RenderSettings.skybox.HasProperty("_Rotation"))
+        {
+            float rotationSpeed = 2f; // độ mỗi giây
+            float currentRotation = RenderSettings.skybox.GetFloat("_Rotation");
+            RenderSettings.skybox.SetFloat("_Rotation", currentRotation + rotationSpeed * Time.deltaTime);
+        }
         if (Preset == null)
             return;
 
@@ -98,36 +104,49 @@ public class LightingManager : MonoBehaviour
 
     private void UpdateSkybox()
     {
-        float hour = TimeOfDay;  // giả sử TimeOfDay tính theo giờ 0–24
+        if (currentSkybox == null || daySkybox == null || nightSkybox == null)
+            return;
 
-        // 1) Morning fade: 5h → 6h
+        float hour = TimeOfDay;
+        float t = 0f;
+
+        // Sáng dần: từ 5h đến 7h
         if (hour >= morningFadeStart && hour < morningFadeStart + morningFadeDuration)
         {
-            float t = (hour - morningFadeStart) / morningFadeDuration;
-            currentSkybox.Lerp(nightSkybox, daySkybox, t);
+            t = (hour - morningFadeStart) / morningFadeDuration;
         }
-        // 2) Day time: sau 6h và trước 18h
-        else if (hour >= morningFadeStart + morningFadeDuration && hour < eveningFadeStart)
-        {
-            currentSkybox.CopyPropertiesFromMaterial(daySkybox);
-        }
-        // 3) Evening fade: 18h → 19h
+        // Tối dần: từ 18h đến 20h
         else if (hour >= eveningFadeStart && hour < eveningFadeStart + eveningFadeDuration)
         {
-            float t = (hour - eveningFadeStart) / eveningFadeDuration;
-            currentSkybox.Lerp(daySkybox, nightSkybox, t);
+            t = 1f - (hour - eveningFadeStart) / eveningFadeDuration;
         }
-        // 4) Night time: sau 19h hoặc trước 5h
+        // Ngày: sau 7h và trước 18h
+        else if (hour >= morningFadeStart + morningFadeDuration && hour < eveningFadeStart)
+        {
+            t = 1f;
+        }
+        // Đêm: còn lại
         else
         {
-            currentSkybox.CopyPropertiesFromMaterial(nightSkybox);
+            t = 0f;
         }
 
-        // Cập nhật GI để phản xạ skybox mới
+        // Blend từng thuộc tính (an toàn với mọi shader)
+        if (currentSkybox.HasProperty("_SkyTint") && daySkybox.HasProperty("_SkyTint") && nightSkybox.HasProperty("_SkyTint"))
+            currentSkybox.SetColor("_SkyTint", Color.Lerp(nightSkybox.GetColor("_SkyTint"), daySkybox.GetColor("_SkyTint"), t));
+
+        if (currentSkybox.HasProperty("_GroundColor") && daySkybox.HasProperty("_GroundColor") && nightSkybox.HasProperty("_GroundColor"))
+            currentSkybox.SetColor("_GroundColor", Color.Lerp(nightSkybox.GetColor("_GroundColor"), daySkybox.GetColor("_GroundColor"), t));
+
+        if (currentSkybox.HasProperty("_Exposure") && daySkybox.HasProperty("_Exposure") && nightSkybox.HasProperty("_Exposure"))
+            currentSkybox.SetFloat("_Exposure", Mathf.Lerp(nightSkybox.GetFloat("_Exposure"), daySkybox.GetFloat("_Exposure"), t));
+
+        if (currentSkybox.HasProperty("_AtmosphereThickness") && daySkybox.HasProperty("_AtmosphereThickness") && nightSkybox.HasProperty("_AtmosphereThickness"))
+            currentSkybox.SetFloat("_AtmosphereThickness", Mathf.Lerp(nightSkybox.GetFloat("_AtmosphereThickness"), daySkybox.GetFloat("_AtmosphereThickness"), t));
+
+        RenderSettings.skybox = currentSkybox;
         DynamicGI.UpdateEnvironment();
     }
-
-
 
 
     private void UpdateLighting(float timePercent)

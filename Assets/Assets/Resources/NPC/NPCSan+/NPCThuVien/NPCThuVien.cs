@@ -808,4 +808,38 @@ public void AcquirePhotoPhaoThi()
     #endregion
 
     #endregion
+
+    #region Mission Complete & Mission Fail Popup
+
+    public void Hybrid_QuestFail()
+    {
+        StopInteract();
+        StartCoroutine(MissionFail());
+    }
+
+    private IEnumerator MissionComplete()
+    {
+        yield return new WaitForSeconds(1f);
+
+        ConservationManager.instance.missionCompleteText.text = "+ " + questConversation.goldReward;
+
+        ConservationManager.instance.missionCompleteContainer.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        ConservationManager.instance.missionCompleteContainer.Deactivate();
+    }
+
+    private IEnumerator MissionFail()
+    {
+        yield return new WaitForSeconds(1f);
+
+        ConservationManager.instance.missionFailContainer.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        ConservationManager.instance.missionFailContainer.Deactivate();
+    }
+
+    #endregion
 }

@@ -17,6 +17,7 @@ public class MoveToNPC : MonoBehaviour
     private CameraHandle cameraHandle; // Reference để tìm CameraHandle (chỉ để kiểm tra)
 
     public float stopDistance = 1.5f; // Khoảng cách an toàn để dừng lại
+    public float navMeshCheckDistance = 5f;
     private bool hasStoppedNearNPC = false;
     public bool isAutoMoving = false; // Flag để xác định có đang tự động di chuyển
     public static MoveToNPC instance; // Để PlayerLocomotion truy cập nhanh
@@ -153,29 +154,76 @@ public class MoveToNPC : MonoBehaviour
         // Delay việc bật lại InputHandle để tránh xung đột frame cuối
         StartCoroutine(DelayedEnableInputHandle());
     }
-    
+
     // Method để bắt đầu auto move đơn giản
     public void StartAutoMove()
     {
-       
+        // KIỂM TRA NAVMESH THÔNG MINH TRƯỚC KHI BẬT AUTO MOVE
+        if (!CanStartAutoMove())
+        {
+            ShowNavMeshWarning();
+            return; // Dừng lại không thực hiện auto move
+        }
 
         isAutoMoving = true;
         agent.enabled = true;
         SetOptimalSpeed();
-        
+
+        // Nếu không ở đúng trên NavMesh, warp đến vị trí gần nhất
+        Vector3 validPosition = GetNearestNavMeshPosition();
+        if (validPosition != transform.position)
+        {
+            agent.Warp(validPosition);
+            Debug.Log($"Warped player to valid NavMesh position: {validPosition}");
+        }
+
         agent.SetDestination(npcTarget.position);
-        
+        PlayerInventory.instance.SubtractGold(20);
         hasStoppedNearNPC = false;
-        
+
         // CHỈ TẮT MOVEMENT INPUT, GIỮ CAMERA INPUT
         if (inputHandle != null)
         {
             inputHandle.DisableMovementOnly();
         }
-        
+
         // KHÔNG TẮT CAMERAHANDLE - Giữ nguyên để có thể dùng chuột điều khiển camera
     }
-    
+
+    bool CanStartAutoMove()
+    {
+        // Kiểm tra khoảng cách đến NavMesh gần nhất
+        //NavMeshHit navHit;
+        Vector3 nearestPoint = GetNearestNavMeshPosition();
+        float distanceToNavMesh = Vector3.Distance(transform.position, nearestPoint);
+
+        // Nếu khoảng cách <= navMeshCheckDistance thì cho phép
+        return distanceToNavMesh <= navMeshCheckDistance;
+    }
+
+    Vector3 GetNearestNavMeshPosition()
+    {
+        NavMeshHit navHit;
+        // Tìm điểm NavMesh gần nhất trong phạm vi rộng hơn
+        if (NavMesh.SamplePosition(transform.position, out navHit, navMeshCheckDistance * 200f, NavMesh.AllAreas))
+        {
+            return navHit.position;
+        }
+
+        // Nếu không tìm thấy, trả về vị trí hiện tại
+        return transform.position;
+    }
+
+    void ShowNavMeshWarning()
+    {
+        Debug.LogWarning("Player quá xa NavMesh! Hiển thị UI cảnh báo.");
+
+        TalkInteraction.instance.StartCoroutine(TalkInteraction.instance.SmoothTransitionToTraceMiniGame());
+        MouseManager.instance.OpenNavMeshUI();
+
+
+    }
+
     // Coroutine để delay việc bật lại InputHandle
     System.Collections.IEnumerator DelayedEnableInputHandle()
     {

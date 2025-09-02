@@ -15,14 +15,14 @@ MonoBehaviour:
   <id>k__BackingField: QuestCollectStar
   displayName: "Thu th\u1EADp c\xE1c ng\xF4i sao"
   levelRequirement: 1
-  questPrerequisites:
-  - {fileID: 11400000, guid: a55a516c0793ee3408021ea44ca26ba8, type: 2}
+  questPrerequisites: []
   questSteps:
   - stepId: step1
     missionType: 0
     stepName: "Quang c\xF3 chuy\u1EC7n mu\u1ED1n n\xF3i v\u1EDBi b\u1EA1n"
-    stepDescription: "H\xE3y t\xECm Quang \u0111ang \u0111\u1EE9ng \u1EDF c\u1EA1nh
-      nh\xE0 g\u1EEDi xe, \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u nhi\u1EC7m v\u1EE5"
+    stepDescription: "H\xE3y \u0111\u1EBFn g\u1EB7p b\xED th\u01B0 chi \u0111o\xE0n
+      Duy Hi\u1EBFu \u1EDF tr\u01B0\u1EDBc c\u1ED5ng tr\u01B0\u1EDDng \u0111\u1EC3
+      tham gia gi\u1EA3i ch\u1EA1y PTIT"
     npcId: NPCQuang
     npcStatus: 1
     conservation: {fileID: 11400000, guid: debb9f7b10a4b454487d29fb96af4e16, type: 2}

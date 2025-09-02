@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: 1
-  <Text>k__BackingField: "H\xE3y tham gia tr\xF2 ch\u01A1i k\xE9o v\xE0 th\u1EA3"
+  <Text>k__BackingField: "H\xE3y tham gia tr\xF2 ch\u01A1i t\xEAn l\xE0 cryptogram"
   <Choices>k__BackingField:
   - <Text>k__BackingField: OK
     <NextDialogue>k__BackingField: {fileID: 0}
@@ -23,5 +23,5 @@ MonoBehaviour:
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 1
   <Icon>k__BackingField: {fileID: 0}
-  <ExecutedFunction>k__BackingField: 2
+  <ExecutedFunction>k__BackingField: 34
   <NextExecutedFunction>k__BackingField: 0

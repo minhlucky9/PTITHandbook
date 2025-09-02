@@ -2,6 +2,7 @@
 using GameManager;
 using Interaction;
 using Interaction.Minigame;
+using PlayerController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +20,11 @@ public class CollectQuestManager : MonoBehaviour
     LootEventSO lootEvent;
     private Coroutine CollectTimerRoutine;
     private float timeRemaining;
-    private const float COLLECT_DURATION =300f;
+    private const float COLLECT_DURATION = 480f;
+
+    private CoinLootInteraction[] coins;
+    private int currentPointerIndex = 0;
+    private bool[] coinsCollected;
 
     private void Awake()
     {
@@ -34,8 +39,16 @@ public class CollectQuestManager : MonoBehaviour
         this.lootEvent = lootEvent;
         currentCollectQuestId = lootEvent.questId;
         //
-        CoinLootInteraction[] coins = coinContainer.GetComponentsInChildren<CoinLootInteraction>();
-        foreach(CoinLootInteraction coin in coins)
+         coins = coinContainer.GetComponentsInChildren<CoinLootInteraction>();
+        currentPointerIndex = 0;
+
+        coinsCollected = new bool[coins.Length];
+        for (int i = 0; i < coinsCollected.Length; i++)
+        {
+            coinsCollected[i] = false;
+        }
+
+        foreach (CoinLootInteraction coin in coins)
         {
             coin.SetupCoinMinigame(lootEvent.minigameId);
         }
@@ -45,7 +58,7 @@ public class CollectQuestManager : MonoBehaviour
         __colectquest = collectQuest;
         collectQuest.numberToCollect = lootEvent.numberOfLoot;
         collectQuest.OnFinishQuest = () => {
-            targetNPC.SendMessage("OnQuestMinigameSuccess");
+            targetNPC.SendMessage("FinishQuestStep");
             ConservationManager.instance.StarContainer.Deactivate();
             if(CollectTimerRoutine != null)
         {
@@ -56,13 +69,15 @@ public class CollectQuestManager : MonoBehaviour
             // ẩn UI timer
             ConservationManager.instance.timerContainer.Deactivate();
             QuestManager.instance.questMap[lootEvent.questId].OnQuestFinish += OnMainQuestComplete;
+            HideAllPointers();
         };
         collectQuests.Add(lootEvent.minigameId, collectQuest);
         ConservationManager.instance.StarContainer.Activate();
         ConservationManager.instance.StarText.text =
-            $"0/{collectQuest.numberToCollect}";
+             "Số lá cờ thu thập: " + $"0/{collectQuest.numberToCollect}";
+        UpdatePointer();
         Invoke(nameof(StartCollectTimer), 0.5f);
-        //setup quest complete callback
+        
 
     }
 
@@ -92,6 +107,7 @@ public class CollectQuestManager : MonoBehaviour
             ConservationManager.instance.timerText.text = $"{minutes:00}:{seconds:00}";
 
             t -= Time.deltaTime;
+            timeRemaining = t;
             yield return null;
         }
 
@@ -112,6 +128,7 @@ public class CollectQuestManager : MonoBehaviour
         // ẩn UI timer
         ConservationManager.instance.timerContainer.Deactivate();
         ConservationManager.instance.StarContainer.Deactivate();
+        HideAllPointers();
         Destroy(container);
         collectQuests.Remove(lootEvent.minigameId);
         // reset quest về CAN_START
@@ -122,11 +139,23 @@ public class CollectQuestManager : MonoBehaviour
 
         targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
 
+        DialogConservation correctDialog = new DialogConservation();
+        DialogResponse response = new DialogResponse();
+
+        correctDialog.message = "Thời gian đã hết. Bạn đã không thể hoàn thành nhiệm vụ. Hãy thử lại vào lần tới";
+        response.executedFunction = DialogExecuteFunction.OnQuestMinigameFail;
+
+        response.message = "Đã hiểu";
+        correctDialog.possibleResponses.Add(response);
+        TalkInteraction.instance.StartCoroutine(TalkInteraction.instance.SmoothTransitionToTraceMiniGame());
+        StartCoroutine(ConservationManager.instance.UpdateConservation(correctDialog));
+
         targetNPC.SendMessage("OnQuizTimerFail");
     }
 
     public void OnMainQuestComplete()
     {
+        HideAllPointers();
         Destroy(container);
     }
 
@@ -134,7 +163,76 @@ public class CollectQuestManager : MonoBehaviour
     {
         CollectQuest quest = collectQuests[minigameId];
         quest.OnCollectedChange();
+        UpdatePointer();
     }
+
+    #region Position Flag
+
+    private void UpdatePointer()
+    {
+        // Ẩn tất cả pointer trước
+        HideAllPointers();
+
+        // Tìm lá cờ tiếp theo chưa được thu thập
+        for (int i = 0; i < coins.Length; i++)
+        {
+            if (!coinsCollected[i]) // Kiểm tra trạng thái thu thập thay vì activeInHierarchy
+            {
+                // Hiển thị pointer trên lá cờ này
+                ShowPointerOnCoin(coins[i]);
+                currentPointerIndex = i;
+                return;
+            }
+        }
+
+        currentPointerIndex = coins.Length;
+    }
+
+    private void ShowPointerOnCoin(CoinLootInteraction coin)
+    {
+        // Tìm pointer trong children của coin
+        Transform pointer = coin.transform.Find("location_flag (1)");
+        if (pointer != null)
+        {
+            pointer.gameObject.SetActive(true);
+        }
+    }
+
+    private void HideAllPointers()
+    {
+        if (coins == null) return;
+
+        foreach (var coin in coins)
+        {
+            if (coin != null)
+            {
+                Transform pointer = coin.transform.Find("location_flag (1)");
+                if (pointer != null)
+                {
+                    pointer.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    public void MarkCoinAsCollected(CoinLootInteraction collectedCoin)
+    {
+        // Kiểm tra null safety
+        if (coins == null || coinsCollected == null || collectedCoin == null) return;
+
+        // Tìm index của coin được thu thập
+        for (int i = 0; i < coins.Length; i++)
+        {
+            if (coins[i] == collectedCoin)
+            {
+                coinsCollected[i] = true;
+                break;
+            }
+        }
+    }
+
+    #endregion
+
 }
 
 public class CollectQuest

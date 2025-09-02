@@ -514,7 +514,7 @@ public class NPCController : TalkInteraction, IDialogueHandler
             TutorialManager.Instance.ShowNextStepDelayed();
             StartCoroutine(ForScene16());
         }
-
+        if (TraceQuestManager.instance.currentObject) Destroy(TraceQuestManager.instance.currentObject);
         StartCoroutine(MissionFail());
     }
     #endregion
@@ -644,6 +644,12 @@ public class NPCController : TalkInteraction, IDialogueHandler
     public void FinishQuestStepThenStartMinigame()
     {
         FinishQuestStep();
+        StartQuestMinigame();
+    }
+
+    public void FinishPassiveQuestStepThenStartMinigame()
+    {
+        FinishPassiveQuestStep();
         StartQuestMinigame();
     }
 
@@ -1020,6 +1026,22 @@ public class NPCController : TalkInteraction, IDialogueHandler
         yield return new WaitForSeconds(3f);
 
         ConservationManager.instance.missionCompleteContainer.Deactivate();
+
+        yield return new WaitForSeconds(1f);
+
+        if(questId == "QuizQuestA2")
+        {
+            DialogConservation correctDialog = new DialogConservation();
+            DialogResponse response = new DialogResponse();
+
+            correctDialog.message = "Chúc mừng bạn đã hoàn thành xong các nhiệm vụ cơ bản. Hãy chuẩn bị điện thoại để quét mã QR";
+            response.executedFunction = DialogExecuteFunction.ShowQR;
+
+            response.message = "Đã hiểu";
+            correctDialog.possibleResponses.Add(response);
+            TalkInteraction.instance.StartCoroutine(TalkInteraction.instance.SmoothTransitionToTraceMiniGame());
+            StartCoroutine(ConservationManager.instance.UpdateConservation(correctDialog));
+        }
     }
 
     private IEnumerator MissionFail()
@@ -1031,6 +1053,12 @@ public class NPCController : TalkInteraction, IDialogueHandler
         yield return new WaitForSeconds(3f);
 
         ConservationManager.instance.missionFailContainer.Deactivate();
+    }
+
+    public void ShowQR()
+    {
+        MouseManager.instance.QR_UI.Activate();
+        StartCoroutine(ConservationManager.instance.DeactivateConservationDialog());
     }
 
     #endregion

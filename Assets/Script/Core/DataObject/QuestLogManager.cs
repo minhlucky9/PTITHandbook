@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using GameManager;    // n?u QuestManager n?m namespace GameManager
-using Interaction;    // ?? dùng Quest, QuestState
+using Interaction;
+using System.Collections;    // ?? dùng Quest, QuestState
 
 public class QuestLogManager : MonoBehaviour
 {
@@ -169,19 +170,27 @@ public class QuestLogManager : MonoBehaviour
         }
 
         // 2) Basic đã hoàn tất, xét Advanced
-        if (!AreAllFinished(advancedQuestSOList))
+       else if (!AreAllFinished(advancedQuestSOList))
         {
-            if (TryFindCurrentInList(advancedQuestSOList, out var q, out int idx))
-            {
-                SetCurrentQuestUI(q, "Nâng cao", idx);
-                return;
-            }
-            SetNoCurrentQuestMessage(false);
+            StartCoroutine(DelayForAdvancedQuest());
+
             return;
         }
 
         // 3) Cả Basic & Advanced đều hoàn tất
         SetNoCurrentQuestMessage(true);
+    }
+
+    private IEnumerator DelayForAdvancedQuest()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (TryFindCurrentInList(advancedQuestSOList, out var q, out int idx))
+        {
+            SetCurrentQuestUI(q, "Nâng cao", idx);
+            yield break;
+        }
+        SetNoCurrentQuestMessage(false);
     }
 
     // Kiểm tra toàn bộ list đã FINISHED chưa
