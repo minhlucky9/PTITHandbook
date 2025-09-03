@@ -16,7 +16,7 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 7d1fd976-0c77-4b77-9aba-fb67e55db30e
     <Name>k__BackingField: NORMAL
-    <Position>k__BackingField: {x: 1433, y: -271}
+    <Position>k__BackingField: {x: 1330, y: -271}
   - <ID>k__BackingField: dd00736e-f500-41ee-a7b9-94b3902035b6
     <Name>k__BackingField: INPROGRESS
     <Position>k__BackingField: {x: 3475, y: -59}
@@ -85,28 +85,6 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 135, y: -12}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
-  - <ID>k__BackingField: 34d70b4a-f955-4ddd-9214-e9a4ceb13d83
-    <Name>k__BackingField: 1
-    <Text>k__BackingField: "Xin ch\xE0o, em l\xE0 t\xE2n sinh vi\xEAn m\u1EDBi v\xE0o
-      tr\u01B0\u1EDDng \u0111\xFAng kh\xF4ng"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: "D\u1EA1, \u0111\xFAng r\u1ED3i th\u1EA7y \u1EA1"
-      <NodeID>k__BackingField: e37b1b45-3d51-4462-a222-32ef14356dc4
-      <ExecutedFunction>k__BackingField: 0
-      <NextExecutedFunction>k__BackingField: 0
-      <Icon>k__BackingField: {fileID: 21300000, guid: 112a2c407dbbc4c409b7899ff96d1414,
-        type: 3}
-    - <Text>k__BackingField: "D\u1EA1, em h\u1ECDc tr\u01B0\u1EDDng kh\xE1c \u1EA1"
-      <NodeID>k__BackingField: 19311275-f68b-4ce4-a5dd-b4f8b8c3925d
-      <ExecutedFunction>k__BackingField: 0
-      <NextExecutedFunction>k__BackingField: 0
-      <Icon>k__BackingField: {fileID: 0}
-    <Icon>k__BackingField: {fileID: 0}
-    <GroupID>k__BackingField: 7d1fd976-0c77-4b77-9aba-fb67e55db30e
-    <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 1458, y: -99}
-    <ExecutedFunction>k__BackingField: 0
-    <NextExecutedFunction>k__BackingField: 0
   - <ID>k__BackingField: e37b1b45-3d51-4462-a222-32ef14356dc4
     <Name>k__BackingField: 2
     <Text>k__BackingField: "T\xF4i c\xF3 m\u1ED9t s\u1ED1 c\xE2u h\u1ECFi, h\xE3y
@@ -158,9 +136,9 @@ MonoBehaviour:
   - <ID>k__BackingField: 35d7635d-e7e2-4930-bfb9-f3588158d61a
     <Name>k__BackingField: 4
     <Text>k__BackingField: "C\xE1c th\xF4ng tin v\u1EC1 c\xE2u h\u1ECFi n\u1EB1m
-      trong ph\u1EA7n \"T\xECm hi\u1EC3u kh\xE1i qu\xE1t v\u1EC1 H\u1ECDc Vi\u1EC7n\"
-      n\u1EB1m trong \u0111i\u1EC7n tho\u1EA1i c\u1EE7a em. H\xE3y quay l\u1EA1i
-      g\u1EB7p th\u1EA7y khi em \u0111\xE3 s\u1EB5n s\xE0ng."
+      trong t\xE0i li\u1EC7u 1: \"T\xECm hi\u1EC3u kh\xE1i qu\xE1t v\u1EC1 H\u1ECDc
+      Vi\u1EC7n\" n\u1EB1m trong t\xFAi \u0111\u1ED3 (M) c\u1EE7a em. H\xE3y quay
+      l\u1EA1i g\u1EB7p th\u1EA7y khi em \u0111\xE3 s\u1EB5n s\xE0ng."
     <Choices>k__BackingField:
     - <Text>k__BackingField: "V\xE2ng \u1EA1, em ch\xE0o th\u1EA7y."
       <NodeID>k__BackingField: 
@@ -277,6 +255,28 @@ MonoBehaviour:
     <Position>k__BackingField: {x: 2720, y: 791}
     <ExecutedFunction>k__BackingField: 0
     <NextExecutedFunction>k__BackingField: 0
+  - <ID>k__BackingField: 34d70b4a-f955-4ddd-9214-e9a4ceb13d83
+    <Name>k__BackingField: 1
+    <Text>k__BackingField: "Xin ch\xE0o, em l\xE0 t\xE2n sinh vi\xEAn m\u1EDBi v\xE0o
+      tr\u01B0\u1EDDng \u0111\xFAng kh\xF4ng"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: "D\u1EA1, \u0111\xFAng r\u1ED3i th\u1EA7y \u1EA1"
+      <NodeID>k__BackingField: e37b1b45-3d51-4462-a222-32ef14356dc4
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 21300000, guid: 112a2c407dbbc4c409b7899ff96d1414,
+        type: 3}
+    - <Text>k__BackingField: "D\u1EA1, em h\u1ECDc tr\u01B0\u1EDDng kh\xE1c \u1EA1"
+      <NodeID>k__BackingField: 19311275-f68b-4ce4-a5dd-b4f8b8c3925d
+      <ExecutedFunction>k__BackingField: 0
+      <NextExecutedFunction>k__BackingField: 0
+      <Icon>k__BackingField: {fileID: 0}
+    <Icon>k__BackingField: {fileID: 0}
+    <GroupID>k__BackingField: 7d1fd976-0c77-4b77-9aba-fb67e55db30e
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1355, y: -119}
+    <ExecutedFunction>k__BackingField: 0
+    <NextExecutedFunction>k__BackingField: 0
   <OldGroupNames>k__BackingField:
   - NORMAL
   - INPROGRESS
@@ -292,10 +292,10 @@ MonoBehaviour:
     list:
     - Key: NORMAL
       Value:
-      - 1
       - 2
       - 3
       - 4
+      - 1
     - Key: AfterFinish
       Value:
       - a

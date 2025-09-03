@@ -40,40 +40,40 @@ MonoBehaviour:
     Explaination: "H\u1ECDc vi\u1EC7n \u0111\u01B0\u1EE3c th\xE0nh l\u1EADp v\xE0o
       n\u0103m <color=#06FFE6>1997</color>."
     QuestionImage: {fileID: 0}
-  - Question: "N\u0103m nay - 2024 k\u1EF7 ni\u1EC7m bao nhi\xEAu n\u0103m th\xE0nh
+  - Question: "N\u0103m nay - 2025 k\u1EF7 ni\u1EC7m bao nhi\xEAu n\u0103m th\xE0nh
       l\u1EADp H\u1ECDc vi\u1EC7n?"
     Answers:
-    - "26 n\u0103m"
-    - "27 n\u0103m"
+    - "18 n\u0103m"
+    - "28 n\u0103m"
     - "22 n\u0103m"
     - "25 n\u0103m"
     CorrectAnswer: 2
-    Explaination: "N\u0103m 2024 l\xE0 k\u1EF7 ni\u1EC7m <color=#06FFE6>27 n\u0103m</color>
+    Explaination: "N\u0103m 2024 l\xE0 k\u1EF7 ni\u1EC7m <color=#06FFE6>28 n\u0103m</color>
       th\xE0nh l\u1EADp h\u1ECDc vi\u1EC7n."
     QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n th\xF4ng
       c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i H\xE0 N\u1ED9i \u1EDF ph\u01B0\u1EDDng?"
     Answers:
     - "M\u1ED9 Lao"
-    - "M\u1ED7 Lao"
+    - "Thanh Xu\xE2n"
     - "Tr\u1EA7n Ph\xFA"
     - "H\xE0 \u0110\xF4ng"
-    CorrectAnswer: 1
+    CorrectAnswer: 4
     Explaination: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n
       th\xF4ng c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i th\xE0nh ph\u1ED1 H\xE0
-      N\u1ED9i n\u1EB1m t\u1EA1i ph\u01B0\u1EDDng <color=#06FFE6>M\u1ED9 Lao</color>."
+      N\u1ED9i n\u1EB1m t\u1EA1i ph\u01B0\u1EDDng <color=#06FFE6>H\xE0 \u0110\xF4ng</color>."
     QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n th\xF4ng
-      c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i TP. HCM \u1EDF qu\u1EADn?"
+      c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i TP. HCM \u1EDF ph\u01B0\u1EDDng?"
     Answers:
-    - 9
-    - 7
-    - 5
-    - 3
+    - "S\xE0i G\xF2n"
+    - "T\u0103ng Nh\u01A1n Ph\xFA"
+    - "B\xE0n C\u1EDD"
+    - "Xu\xE2n H\xF2a"
     CorrectAnswer: 1
     Explaination: "H\u1ECDc vi\u1EC7n C\xF4ng ngh\u1EC7 B\u01B0u ch\xEDnh Vi\u1EC5n
       th\xF4ng c\u01A1 s\u1EDF \u0111\xE0o t\u1EA1o t\u1EA1i th\xE0nh ph\u1ED1 H\u1ED3
-      Ch\xED Minh n\u1EB1m t\u1EA1i <color=#06FFE6>qu\u1EADn 9</color>."
+      Ch\xED Minh n\u1EB1m t\u1EA1i <color=#06FFE6>ph\u01B0\u1EDDng S\xE0i G\xF2n</color>."
     QuestionImage: {fileID: 0}
   - Question: "PTIT l\xE0 vi\u1EBFt t\u1EAFt c\u1EE7a t\u1EEB g\xEC?"
     Answers:

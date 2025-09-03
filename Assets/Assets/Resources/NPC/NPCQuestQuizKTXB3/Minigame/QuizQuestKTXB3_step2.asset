@@ -28,17 +28,18 @@ MonoBehaviour:
     CorrectAnswer: 2
     Explaination: "\u1EE8ng d\u1EE5ng <color=#06FFE6>SVChatbot</color> l\xE0 do c\xE1c
       sinh vi\xEAn t\u1EA1i PTIT ph\xE1t tri\u1EC3n."
+    QuestionImage: {fileID: 0}
   - Question: "Ai \u0111ang l\xE0 b\xED th\u01B0 \u0111o\xE0n tr\u01B0\u1EDDng c\u1EE7a
       H\u1ECDc vi\u1EC7n?"
     Answers:
     - "Th\u1EA7y Nguy\u1EC5n Trung Hi\u1EBFu"
     - "Th\u1EA7y Ph\u1EA1m Ng\u1ECDc Anh"
-    - "Th\u1EA7y Nguy\u1EC5n Vi\u1EC7t Anh"
+    - "C\xF4 Chung H\u1EA3i B\u1EB1ng"
     - "Th\u1EA7y Nguy\u1EC5n \u0110\u1EE9c Th\u1ECBnh"
-    CorrectAnswer: 1
+    CorrectAnswer: 3
     Explaination: "B\xED th\u01B0 \u0111o\xE0n tr\u01B0\u1EDDng hi\u1EC7n t\u1EA1i
-      c\u1EE7a H\u1ECDc vi\u1EC7n l\xE0 <color=#06FFE6>th\u1EA7y Nguy\u1EC5n Trung
-      Hi\u1EBFu</color>."
+      c\u1EE7a H\u1ECDc vi\u1EC7n l\xE0 <color=#06FFE6>c\xF4 Chung H\u1EA3i B\u1EB1ng</color>."
+    QuestionImage: {fileID: 0}
   - Question: "Gi\u1EDD gi\u1EDBi nghi\xEAm c\u1EE7a k\xED t\xFAc x\xE1 gi\xE0nh
       cho sinh vi\xEAn PTIT l\xE0 m\u1EA5y gi\u1EDD?"
     Answers:
@@ -49,6 +50,7 @@ MonoBehaviour:
     CorrectAnswer: 1
     Explaination: "Gi\u1EDD gi\u1EDBi nghi\xEAm c\u1EE7a k\xED t\xFAc x\xE1 gi\xE0nh
       cho sinh vi\xEAn PTIT l\xE0 <color=#06FFE6>23h00</color>."
+    QuestionImage: {fileID: 0}
   - Question: "\u0110\u1ED9i C\u1EDD \u0111\u1ECF PTIT ho\u1EA1t \u0111\u1ED9ng th\u01B0\u1EDDng
       xuy\xEAn \u1EDF nh\u1EEFng khu v\u1EF1c n\xE0o?"
     Answers:
@@ -60,6 +62,7 @@ MonoBehaviour:
     Explaination: "\u0110\u1ED9i C\u1EDD \u0111\u1ECF PTIT ho\u1EA1t \u0111\u1ED9ng
       th\u01B0\u1EDDng xuy\xEAn nh\u1EA5t \u1EDF <color=#06FFE6>Nh\xE0 A2 v\xE0 nh\xE0
       A3</color>."
+    QuestionImage: {fileID: 0}
   - Question: "H\u1ECDc vi\u1EC7n c\xF3 \xE1p d\u1EE5ng \u0111\u1ED3ng ph\u1EE5c
       d\xE0nh cho m\xF4n th\u1EC3 d\u1EE5c kh\xF4ng?"
     Answers:
@@ -70,6 +73,7 @@ MonoBehaviour:
     CorrectAnswer: 2
     Explaination: "H\u1ECDc vi\u1EC7n <color=#06FFE6>c\xF3 \xE1p d\u1EE5ng \xE1o
       kho\xE1c \u0111\u1ED3ng ph\u1EE5c</color> cho m\xF4n th\u1EC3 d\u1EE5c."
+    QuestionImage: {fileID: 0}
   - Question: "Sinh vi\xEAn l\xE0 ng\u01B0\u1EDDi d\xE2n t\u1ED9c thi\u1EC3u s\u1ED1
       \u0111\u01B0\u1EE3c gi\u1EA3m bao nhi\xEAu ph\u1EA7n tr\u0103m h\u1ECDc ph\xED?"
     Answers:
@@ -81,6 +85,7 @@ MonoBehaviour:
     Explaination: "C\xE1c sinh vi\xEAn l\xE0 ng\u01B0\u1EDDi d\xE2n t\u1ED9c thi\u1EC3u
       s\u1ED1 \u0111\u01B0\u1EE3c gi\u1EA3m <color=#06FFE6>70% h\u1ECDc ph\xED</color>
       trong qu\xE1 tr\xECnh theo h\u1ECDc t\u1EA1i H\u1ECDc vi\u1EC7n."
+    QuestionImage: {fileID: 0}
   - Question: "Gi\u1EDD ti\u1EBFp nh\u1EADn v\xE0 gi\u1EA3i quy\u1EBFt c\xE1c th\u1EAFc
       m\u1EAFc c\u1EE7a sinh vi\xEAn t\u1EA1i v\u0103n ph\xF2ng m\u1ED9t c\u1EEDa
       l\xE0 v\xE0o th\u1EDDi \u0111i\u1EC3m n\xE0o trong ng\xE0y ?"
@@ -94,6 +99,7 @@ MonoBehaviour:
       v\xE0 gi\u1EA3i quy\u1EBFt c\xE1c th\u1EAFc m\u1EAFc c\u1EE7a sinh vi\xEAn
       v\xE0o <color=#06FFE6>Bu\u1ED5i s\xE1ng 8h30 \u2013 11h v\xE0 bu\u1ED5i chi\u1EC1u
       14h -16h30</color>."
+    QuestionImage: {fileID: 0}
   - Question: "\u0110\xE2u l\xE0 m\u1ED9t cu\u1ED9c thi h\xE1t ti\u1EBFng anh do
       Khoa C\u01A1 B\u1EA3n t\u1ED5 ch\u1EE9c ?"
     Answers:
@@ -105,6 +111,7 @@ MonoBehaviour:
     Explaination: "Cu\u1ED9c thi h\xE1t ti\u1EBFng Anh <color=#06FFE6>Sing to Learn</color>
       \u0111\u01B0\u1EE3c t\u1ED5 ch\u1EE9c h\xE0ng n\u0103m b\u1EDFi khoa C\u01A1
       b\u1EA3n c\u1EE7a H\u1ECDc vi\u1EC7n."
+    QuestionImage: {fileID: 0}
   - Question: "\u0110\xE2u l\xE0 cu\u1ED9c thi d\xE0nh cho c\xE1c b\u1EA1n n\u1EEF
       khoa C\xF4ng ngh\u1EC7 th\xF4ng tin ?"
     Answers:
@@ -116,6 +123,7 @@ MonoBehaviour:
     Explaination: "Cu\u1ED9c thi <color=#06FFE6>Miss IT</color> l\xE0 cu\u1ED9c thi
       d\xE0nh cho c\xE1c b\u1EA1n n\u1EEF thu\u1ED9c khoa C\xF4ng ngh\u1EC7 th\xF4ng
       tin t\u1EA1i H\u1ECDc vi\u1EC7n."
+    QuestionImage: {fileID: 0}
   - Question: "\u0110\xE2u l\xE0 cu\u1ED9c thi l\u1EADp tr\xECnh h\xE0ng n\u0103m
       c\u1EE7a Khoa C\xF4ng ngh\u1EC7 th\xF4ng tin ?"
     Answers:
@@ -126,6 +134,7 @@ MonoBehaviour:
     CorrectAnswer: 1
     Explaination: "Cu\u1ED9c thi l\u1EADp tr\xECnh h\xE0ng n\u0103m c\u1EE7a Khoa
       C\xF4ng ngh\u1EC7 th\xF4ng tin c\xF3 t\xEAn g\u1ECDi l\xE0 <color=#06FFE6>ACM</color>."
+    QuestionImage: {fileID: 0}
   - Question: "N\u01A1i n\xE0o \u0111\u01B0\u1EE3c m\u1EC7nh danh l\xE0 \"Thi\xEAn
       \u0111\u01B0\u1EDDng \u1EA9m th\u1EF1c\" b\xEAn c\u1EA1nh H\u1ECDc vi\u1EC7n
       ?"
@@ -138,6 +147,7 @@ MonoBehaviour:
     Explaination: "<color=#06FFE6>Ng\xF5 Ao Sen</color> n\u1EB1m b\xEAn c\u1EA1nh
       H\u1ECDc vi\u1EC7n \u0111\u01B0\u1EE3c m\u1EC7nh danh l\xE0 \"Thi\xEAn \u0111\u01B0\u1EDDng
       \u1EA9m th\u1EF1c\"."
+    QuestionImage: {fileID: 0}
   - Question: "Wifi mi\u1EC5n ph\xED c\u1EE7a H\u1ECDc vi\u1EC7n l\xE0 c\u1EE7a nh\xE0
       m\u1EA1ng n\xE0o?"
     Answers:
@@ -148,6 +158,7 @@ MonoBehaviour:
     CorrectAnswer: 1
     Explaination: "Wifi mi\u1EC5n ph\xED c\u1EE7a H\u1ECDc vi\u1EC7n l\xE0 c\u1EE7a
       <color=#06FFE6>nh\xE0 m\u1EA1ng VNPT</color>."
+    QuestionImage: {fileID: 0}
   - Question: "\u0110\xE2u l\xE0 Page c\xF3 l\u01B0\u1EE3ng like l\u1EDBn nh\u1EA5t
       trong c\xE1c Page sau \u0111\xE2y?"
     Answers:
@@ -158,7 +169,8 @@ MonoBehaviour:
     CorrectAnswer: 1
     Explaination: "Page <color=#06FFE6>PTIT Confessions</color> l\xE0 page c\xF3
       l\u01B0\u1EE3ng like l\u1EDBn nh\u1EA5t trong c\xE1c page tr\xEAn."
-  - Question: "\u0110\u1ED3ng ph\u1EE5c th\u1EC3 ch\u1EA5t c\u1EE7a kh\xF3a D16 c\xF3
+    QuestionImage: {fileID: 0}
+  - Question: "\u0110\u1ED3ng ph\u1EE5c th\u1EC3 ch\u1EA5t c\u1EE7a kh\xF3a D24 c\xF3
       m\u1EA5y m\xE0u s\u1EAFc ch\u1EE7 \u0111\u1EA1o ?"
     Answers:
     - 2
@@ -166,8 +178,9 @@ MonoBehaviour:
     - 4
     - 5
     CorrectAnswer: 2
-    Explaination: "\u0110\u1ED3ng ph\u1EE5c th\u1EC3 ch\u1EA5t c\u1EE7a kh\xF3a D16
+    Explaination: "\u0110\u1ED3ng ph\u1EE5c th\u1EC3 ch\u1EA5t c\u1EE7a kh\xF3a D24
       <color=#06FFE6>c\xF3 3 m\xE0u s\u1EAFc</color> ch\u1EE7 \u0111\u1EA1o."
+    QuestionImage: {fileID: 0}
   - Question: "T\u1EEB m\u1EA5y gi\u1EDD th\xEC ti\u1EC1n g\u1EEDi xe c\u1EE7a sinh
       vi\xEAn t\u0103ng l\xEAn t\u1EEB 3k \u0111\u1EBFn 5k \u0111\u1ED1i v\u1EDBi
       xe m\xE1y ?"
@@ -180,6 +193,7 @@ MonoBehaviour:
     Explaination: "T\u1EEB <color=#06FFE6>18h00</color> tr\u1EDF \u0111i, ti\u1EC1n
       g\u1EEDi xe c\u1EE7a sinh vi\xEAn s\u1EBD t\u0103ng th\xE0nh 5k \u0111\u1ED1i
       v\u1EDBi xe m\xE1y."
+    QuestionImage: {fileID: 0}
   - Question: "Gi\xE1 v\xE9 g\u1EEDi xe m\xE1y c\u01A1 b\u1EA3n c\u1EE7a PTIT l\xE0
       bao nhi\xEAu?"
     Answers:
@@ -191,16 +205,18 @@ MonoBehaviour:
     Explaination: "Gi\xE1 g\u1EEDi xe m\xE1y c\u01A1 b\u1EA3n c\u1EE7a PTIT l\xE0
       <color=#06FFE6>3.000 VN\u0110 v\xE0o bu\u1ED5i s\xE1ng v\xE0 5.000 VN\u0110
       v\xE0o bu\u1ED5i t\u1ED1i</color>."
-  - Question: "L\u1EC7 ph\xED k\xFD t\xFAc x\xE1 B5 l\xE0 bao nhi\xEAu ti\u1EC1n
+    QuestionImage: {fileID: 0}
+  - Question: "L\u1EC7 ph\xED k\xED t\xFAc x\xE1 B5 l\xE0 bao nhi\xEAu ti\u1EC1n
       m\u1ED9t th\xE1ng ?"
     Answers:
-    - 150k
-    - 160k
-    - 170k
     - 180k
-    CorrectAnswer: 3
-    Explaination: "L\u1EC7 ph\xED k\xFD t\xFAc x\xE1 B5 l\xE0 <color=#06FFE6>170k</color>
+    - 200k
+    - 230k
+    - 250k
+    CorrectAnswer: 2
+    Explaination: "L\u1EC7 ph\xED k\xFD t\xFAc x\xE1 B5 l\xE0 <color=#06FFE6>200k</color>
       m\u1ED9t th\xE1ng."
+    QuestionImage: {fileID: 0}
   - Question: "H\u1EC7 th\u1ED1ng gi\u1EEF xe c\u1EE7a H\u1ECDc vi\u1EC7n s\u1EED
       d\u1EE5ng lo\u1EA1i v\xE9 g\xEC?"
     Answers:
@@ -211,6 +227,7 @@ MonoBehaviour:
     CorrectAnswer: 3
     Explaination: "H\u1EC7 th\u1ED1ng gi\u1EEF xe c\u1EE7a H\u1ECDc vi\u1EC7n s\u1EED
       d\u1EE5ng <color=#06FFE6>v\xE9 ng\xE0y v\xE0 v\xE9 th\xE1ng</color>."
+    QuestionImage: {fileID: 0}
   quizIntro:
     dialogId: intro
     message: "Ok v\u1EADy m\xECnh b\u1EAFt \u0111\u1EA7u nh\xE9. Anh s\u1EBD c\xF3
