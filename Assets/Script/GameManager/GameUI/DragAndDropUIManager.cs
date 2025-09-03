@@ -40,12 +40,12 @@ public class DragAndDropUIManager : MonoBehaviour
 
     public IEnumerator ActivateMiniGameUI()
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(DropContainer.GetComponent<RectTransform>());
-        DropContainer.UpdateObjectChange();
+     //   LayoutRebuilder.ForceRebuildLayoutImmediate(DropContainer.GetComponent<RectTransform>());
+     //   DropContainer.UpdateObjectChange();
         DropContainer.Activate();
         yield return new WaitForSeconds(0.3f);
-        LayoutRebuilder.ForceRebuildLayoutImmediate(DragContainer.GetComponent<RectTransform>());
-        DragContainer.UpdateObjectChange();
+      //  LayoutRebuilder.ForceRebuildLayoutImmediate(DragContainer.GetComponent<RectTransform>());
+      //  DragContainer.UpdateObjectChange();
         DragContainer.Activate();
     }
 
