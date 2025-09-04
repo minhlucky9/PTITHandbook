@@ -15,7 +15,7 @@ public class PlayerDataLoader : MonoBehaviour
     public TMP_InputField outputArea;
 
     public static PlayerDataLoader Instance;
-
+    
     // Đường dẫn API
     private string apiUrl = "http://1.55.212.49:8098/DemoBackend3D_API/player/getLastStatePlayer";
 
