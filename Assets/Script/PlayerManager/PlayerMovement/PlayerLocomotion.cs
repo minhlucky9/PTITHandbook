@@ -336,29 +336,29 @@ namespace PlayerController
             origin.y += groundDetectionRayStartPoint;
 
             //check wall to climb
-            /*
-            if(playerManager.isJumping && playerManager.isInAir && playerManager.isClimbable)
-            {
-                if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.3f, cameraHandle.environmentLayer))
-                {
-                    moveDirection = Vector3.zero;
-                    
-                    bool climbable = (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"));
-                    float dotTest = Mathf.Abs( Vector3.Dot(hit.normal, transform.up) );
 
-                    if (climbable && dotTest < 0.2f)
-                    {
-                        //start climp wall
-                        Debug.Log("asd");
-                        animatorHandle.StartClimbing();
-                        playerManager.isClimbable = false;
-                        targetPosition = hit.point + hit.normal * 0.31f;
-                        wallNormal = hit.normal;
-                        return;
-                    }
-                }
-            }
-            */
+            //if (playerManager.isJumping && playerManager.isInAir && playerManager.isClimbable)
+            //{
+            //    if (Physics.SphereCast(origin, groundDetectionRayStartPoint, moveDirection.normalized, out hit, 0.3f, cameraHandle.environmentLayer))
+            //    {
+            //        moveDirection = Vector3.zero;
+
+            //        bool climbable = (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"));
+            //        float dotTest = Mathf.Abs(Vector3.Dot(hit.normal, transform.up));
+
+            //        if (climbable && dotTest < 0.2f)
+            //        {
+            //            //start climp wall
+            //            Debug.Log("asd");
+            //            animatorHandle.StartClimbing();
+            //            playerManager.isClimbable = false;
+            //            targetPosition = hit.point + hit.normal * 0.31f;
+            //            wallNormal = hit.normal;
+            //            return;
+            //        }
+            //    }
+            //}
+
             //change velocity of rigidbody
             if (moveDirection.magnitude < 0.05f)
             {
@@ -374,7 +374,14 @@ namespace PlayerController
 
             if(isStepping)
             {
+                
                 velocity += Vector3.up * stepVelocity;
+                
+                //if(normalVector != Vector3.up)
+                //{
+                //    velocity = Vector3.ProjectOnPlane(moveDirection, normalVector).normalized * CalculateRunningSpeed(currentRunningSpeed);
+                //}
+                
                 //SetRigidbodyVelocity(CalculateRunningSpeed(currentRunningSpeed) * move.normalized);
             }
 
@@ -388,7 +395,7 @@ namespace PlayerController
             //start falling
             if (velocity.y < 0.1f)
             {
-                if (Physics.SphereCast(origin, 0.12f, -Vector3.up, out hit, minimumDistanceNeededToBeginFall, ignoreForGroundCheck))
+                if (Physics.SphereCast(origin, 0.15f, -Vector3.up, out hit, minimumDistanceNeededToBeginFall, ignoreForGroundCheck))
                 {
                     normalVector = hit.normal;
                     Vector3 tp = hit.point;
@@ -552,6 +559,7 @@ namespace PlayerController
                     animatorHandle.StartJumping();
                     playerManager.isClimbable = false;
                     fallingVelocity = 0;
+                    inAirTimer = 0f;
                     return;
                 }
 
