@@ -23,7 +23,7 @@ public class CryptoGramManager : MonoBehaviour
     CryptogramEventSO cryptoEvent;
     private Coroutine CryptoTimerRoutine;
     private float timeRemaining;
-    private const float COLLECT_DURATION = 480f;
+    private const float COLLECT_DURATION = 20f;
 
     private void Awake()
     {
@@ -112,6 +112,7 @@ public class CryptoGramManager : MonoBehaviour
 
         // ẩn UI timer
         ConservationManager.instance.timerContainer.Deactivate();
+        Game.Deactivate();
         cryptoQuests.Remove(cryptoEvent.minigameId);
         // reset quest về CAN_START
         GameManager.QuestManager.instance.UpdateQuestStep(
@@ -145,6 +146,41 @@ public class CryptoGramManager : MonoBehaviour
         CryptoQuest quest = cryptoQuests[minigameId];
         quest.Win();
    
+    }
+
+    public void Lose()
+    {
+        // dừng coroutine nếu còn chạy
+        if (CryptoTimerRoutine != null)
+        {
+            StopCoroutine(CryptoTimerRoutine);
+            CryptoTimerRoutine = null;
+        }
+
+        // ẩn UI timer
+        ConservationManager.instance.timerContainer.Deactivate();
+        Game.Deactivate();
+        cryptoQuests.Remove(cryptoEvent.minigameId);
+        // reset quest về CAN_START
+        GameManager.QuestManager.instance.UpdateQuestStep(
+         QuestState.CAN_START,
+          currentCollectQuestId
+      );
+
+        targetNPC.SendMessage("ChangeNPCState", NPCState.HAVE_QUEST);
+
+        DialogConservation correctDialog = new DialogConservation();
+        DialogResponse response = new DialogResponse();
+
+        correctDialog.message = "Bạn đã sai quá 3 lần. Hãy thử lại vào lần tới";
+        response.executedFunction = DialogExecuteFunction.OnQuestMinigameFail;
+
+        response.message = "Đã hiểu";
+        correctDialog.possibleResponses.Add(response);
+        TalkInteraction.instance.StartCoroutine(TalkInteraction.instance.SmoothTransitionToTraceMiniGame());
+        StartCoroutine(ConservationManager.instance.UpdateConservation(correctDialog));
+
+        targetNPC.SendMessage("OnQuizTimerFail");
     }
 
     //--------------------------------------------FOR MINIGAME------------------------------------------------//
@@ -198,7 +234,7 @@ public class CryptoGramManager : MonoBehaviour
     private LetterSlot selectedSlot = null;
     private bool gameActive = false;
     private List<CryptoLevel> selectedLevels = new List<CryptoLevel>(); // Levels selected for this game session
-    private const int MAX_LEVELS_PER_GAME = 5; // Maximum levels per game
+    private const int MAX_LEVELS_PER_GAME = 1; // Maximum levels per game
 
     // Classes for UI elements
     private class LetterSlot
@@ -537,7 +573,7 @@ public class CryptoGramManager : MonoBehaviour
       //  if (losePanel) losePanel.Deactivate();
 
         if (nextLevelButton) nextLevelButton.onClick.AddListener(NextLevel);
-        if (retryButton) retryButton.onClick.AddListener(RetryLevel);
+     //   if (retryButton) retryButton.onClick.AddListener(RetryLevel);
 
         CreateKeyboard();
     }
